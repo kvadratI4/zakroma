@@ -89,9 +89,10 @@ zakroma/
 │   ├── src/
 │   │   ├── app/               # провайдеры, роутер, layout
 │   │   ├── api/               # сгенерированный клиент + хуки TanStack Query
-│   │   ├── features/          # auth, households, inventory, catalog, attention …
-│   │   ├── shared/            # ui-компоненты, утилиты, форматирование
-│   │   ├── i18n/              # ресурсы ru/*.json
+│   │   ├── features/          # по разделам меню: stock, expiry, add, shopping, family; позже auth, catalog …
+│   │   ├── shared/            # ui (в т.ч. ornament/), theme (tokens.ts — единственный источник цветов), format
+│   │   ├── i18n/              # ресурсы ru/*.json (ключи <feature>.<area>.<name>)
+│   │   ├── test/              # setup, MSW-сервер, renderApp
 │   │   └── sw/                # настройки service worker
 │   ├── e2e/                   # Playwright
 │   └── public/                # иконки, manifest-ресурсы
