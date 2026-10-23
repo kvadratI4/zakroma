@@ -52,11 +52,15 @@ uv tool install pre-commit && uv tool update-shell   # затем перезап
 pre-commit install                                  # хуки на git commit в этом клоне
 pre-commit run --all-files                          # проверить весь репозиторий
 
-# backend (после T-002/T-003)
+# backend (T-002; alembic — после T-003)
+cd backend && uv sync                           # зависимости (Python 3.13, uv.lock)
+cd backend && uv run uvicorn app.main:create_app --factory --reload   # dev-сервер :8000
 cd backend && uv run pytest                     # все тесты
 cd backend && uv run pytest tests/unit -q       # быстрые доменные
-cd backend && uv run ruff check . && uv run ruff format --check . && uv run mypy app
+cd backend && uv run pytest --cov --cov-report=term-missing   # покрытие (порог 80 %)
+cd backend && uv run ruff check . && uv run ruff format --check . && uv run mypy app tests
 cd backend && uv run alembic upgrade head
+# логи в dev читаемым текстом: LOG_FORMAT=console (по умолчанию JSON)
 
 # frontend (после T-004)
 cd frontend && pnpm test && pnpm lint && pnpm typecheck
