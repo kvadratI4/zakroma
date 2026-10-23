@@ -2,19 +2,18 @@ import json
 import re
 from datetime import datetime
 from typing import Annotated, Any
-from zoneinfo import ZoneInfo
 
 import httpx
 import pytest
 from fastapi import APIRouter, Depends, FastAPI
 
 from app.api.deps import get_clock
-from app.core.clock import Clock, FixedClock
+from app.core.clock import Clock
 from app.core.config import Settings
 from app.main import create_app
+from tests.http import serve
 
 GENERATED_ID = re.compile(r"[0-9a-f]{32}")
-MOSCOW_NOON = datetime(2026, 11, 10, 12, 0, tzinfo=ZoneInfo("Europe/Moscow"))
 
 probe_router = APIRouter(prefix="/api/v1/_test")
 
@@ -30,8 +29,8 @@ async def now(clock: Annotated[Clock, Depends(get_clock)]) -> dict[str, str]:
 
 
 @pytest.fixture
-def app(settings: Settings) -> FastAPI:
-    app = create_app(settings, clock=FixedClock(MOSCOW_NOON))
+def app(app: FastAPI) -> FastAPI:
+    # The shared app runs on the `clock` fixture: 2026-11-10 12:00 Europe/Moscow.
     app.include_router(probe_router)
     return app
 
@@ -103,11 +102,10 @@ async def test_clock_dependency_returns_injected_clock(client: httpx.AsyncClient
     assert response.json() == {"now": "2026-11-10T12:00:00+03:00"}
 
 
-async def test_system_clock_is_used_by_default() -> None:
-    app = create_app(Settings(environment="test"))
+async def test_system_clock_is_used_by_default(settings: Settings) -> None:
+    app = create_app(settings)
     app.include_router(probe_router)
-    transport = httpx.ASGITransport(app=app)
-    async with httpx.AsyncClient(transport=transport, base_url="http://test") as client:
+    async with serve(app) as client:
         response = await client.get("/api/v1/_test/now")
 
     assert datetime.fromisoformat(response.json()["now"]).utcoffset() is not None

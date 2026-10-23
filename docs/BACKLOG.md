@@ -42,7 +42,7 @@
 | --- | --- | --- | --- | --- | --- |
 | T-001 | Монорепо: структура каталогов, `.editorconfig`, `.gitignore`, pre-commit (ruff, prettier, eslint, trailing whitespace), README команд | S | — | NFR-MNT-02 | Done |
 | T-002 | Каркас backend: FastAPI, `pydantic-settings`, structlog, `/api/v1/health`, problem+json обработчик ошибок, `Clock`, uv, mypy strict, pytest | M | T-001 | NFR-MNT-01 | Done |
-| T-003 | Postgres в `docker-compose.dev.yml`, SQLAlchemy async-сессия, Alembic, тестовая инфраструктура (testcontainers, фабрики, фикстура `clock`) | M | T-002 | NFR-REL-03 | Ready |
+| T-003 | Postgres в `docker-compose.dev.yml`, SQLAlchemy async-сессия, Alembic, тестовая инфраструктура (testcontainers, фабрики, фикстура `clock`) | M | T-002 | NFR-REL-03 | In progress |
 | T-004 | Каркас frontend: Vite + React + TS strict + Tailwind + Router + TanStack Query + i18next (ru) + Vitest + Testing Library + MSW; layout с нижней навигацией (заглушки экранов) | M | T-001 | NFR-UX-03..06 | Ready |
 | T-005 | Экспорт OpenAPI и генерация клиента (`openapi-typescript` + `openapi-fetch`), проверка актуальности | S | T-002, T-004 | NFR-MNT-04 | Ready |
 | T-006 | CI (GitHub Actions): lint, typecheck, тесты с покрытием (пороги), сборка frontend, проверка OpenAPI | S | T-003, T-005 | NFR-MNT-03 | Ready |
@@ -115,6 +115,7 @@
 
 - api запускается `uvicorn app.main:create_app --factory --proxy-headers --forwarded-allow-ips=<сеть compose>` (флаг `--no-access-log` не нужен — access-лог uvicorn отключён в коде).
 - Caddy передаёт в api `X-Request-ID` (`request_header X-Request-ID {http.request.uuid}`): один id в логах Caddy и api.
+- У сервиса `db` в prod-compose нет опубликованных портов — доступ только из сети compose; пароль БД — только в серверном `.env`, не в образах, compose-файлах и логах (из T-003, требование безопасности оператора).
 
 **T-010**
 

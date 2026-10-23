@@ -3,9 +3,7 @@ import pytest
 from fastapi import APIRouter, FastAPI
 from pydantic import BaseModel, Field
 
-from app.core.config import Settings
 from app.core.errors import AppError
-from app.main import create_app
 
 PROBLEM_JSON = "application/problem+json"
 
@@ -29,8 +27,7 @@ async def sign_up(body: SignUp) -> None:
 
 
 @pytest.fixture
-def app(settings: Settings) -> FastAPI:
-    app = create_app(settings)
+def app(app: FastAPI) -> FastAPI:
     app.include_router(probe_router)
     return app
 
