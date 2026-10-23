@@ -2,7 +2,9 @@ import "@testing-library/jest-dom/vitest";
 import "../i18n";
 
 import { cleanup } from "@testing-library/react";
-import { afterEach, beforeEach } from "vitest";
+import { afterAll, afterEach, beforeAll, beforeEach } from "vitest";
+
+import { server } from "./server";
 
 // jsdom has no matchMedia. A plain function (not vi.fn) so `restoreMocks` does not reset it;
 // tests that need a dark system theme stub their own with vi.stubGlobal.
@@ -23,4 +25,10 @@ beforeEach(() => {
   });
 });
 
-afterEach(() => cleanup());
+// Any request without a handler fails the test: no real network in tests.
+beforeAll(() => server.listen({ onUnhandledFrame: "error" }));
+afterEach(() => {
+  cleanup();
+  server.resetHandlers();
+});
+afterAll(() => server.close());
