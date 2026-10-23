@@ -45,3 +45,6 @@ Thumbs.db
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# taste-skill working files (draw sheets, inspector screenshots)
+.taste-skill/

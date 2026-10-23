@@ -1,0 +1,432 @@
+<title>Закрома: концепт стиля</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Triodion&family=Ruslan+Display&family=Old+Standard+TT:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: a document page; each variant is a band with its notes on the left and its screens to the right. */
+:root {
+  --page: #f6f6f4; --paper: #ffffff; --ink: #1b1b19; --muted: #5d5d58; --line: #e3e2dd; --accent: #1d4ea6;
+  --font-text: "Golos Text", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --page: #121110; --paper: #1b1a18; --ink: #efece6; --muted: #aeaaa2; --line: #2e2c29; --accent: #8db0f0; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --page: #121110; --paper: #1b1a18; --ink: #efece6; --muted: #aeaaa2; --line: #2e2c29; --accent: #8db0f0; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font: 16px/1.55 var(--font-text); }
+.wrap { max-width: 1320px; margin: 0 auto; padding-block: 40px 96px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.doc-head { display: grid; gap: 16px; max-width: 760px; margin-bottom: 56px; }
+.doc-head h1 { font-size: clamp(28px, 4vw, 40px); line-height: 1.1; font-weight: 600; letter-spacing: -0.01em; }
+.doc-head p { margin: 0; color: var(--ink); }
+.doc-head .ask { background: var(--paper); border-radius: 14px; padding: 16px 20px; }
+.doc-head .ask strong { font-weight: 600; }
+
+.variant { display: grid; grid-template-columns: minmax(0, 280px) minmax(0, 1fr); gap: 40px; padding-block: 48px; border-top: 1px solid var(--line); }
+.variant > * { min-width: 0; }
+.notes { display: grid; gap: 14px; align-content: start; }
+.notes h2 { font-size: 28px; line-height: 1.15; font-weight: 600; }
+.notes p { margin: 0; }
+.notes .muted { color: var(--muted); font-size: 15px; }
+.facts { display: grid; gap: 8px; margin: 0; font-size: 15px; }
+.facts div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 8px; }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; }
+.swatches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.sw { display: grid; gap: 6px; font-size: 13px; color: var(--muted); }
+.sw .chips { display: flex; height: 28px; border-radius: 8px; overflow: hidden; outline: 1px solid var(--line); }
+.sw .chips span { flex: 1; }
+
+.screens { display: grid; gap: 28px; }
+.phones { display: flex; flex-wrap: wrap; gap: 24px; }
+.phone-col { display: grid; gap: 10px; flex: none; }
+.phone-col figcaption { font-size: 14px; color: var(--muted); }
+.desk-box { display: grid; gap: 10px; }
+.desk-box figcaption { font-size: 14px; color: var(--muted); }
+figure { margin: 0; }
+
+.nav-compare { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 40px; padding-block: 48px; border-top: 1px solid var(--line); }
+.answer { border-top: 1px solid var(--line); padding-top: 40px; display: grid; gap: 12px; max-width: 760px; }
+.answer h2 { font-size: 28px; font-weight: 600; }
+.answer ul { margin: 0; padding-left: 20px; }
+.credits { color: var(--muted); font-size: 14px; }
+
+@media (max-width: 900px) {
+  .variant, .nav-compare { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+}
+
+/* ===================== Mockups: the app itself, in a fixed theme ===================== */
+.app {
+  /* defaults overwritten per variant and theme below */
+  --g: #fff; --s: #f2f2f2; --r: #fff; --b: #e5e5e5; --t: #111; --m: #555; --a: #1d4ea6; --a-ink: #fff;
+  --o1: #1d4ea6; --o2: #c9d6ee; --rad: 18px; --rad-s: 12px; --disp: serif; --disp-case: none; --disp-track: 0;
+  --g-size: 34px; --p-size: 22px; --kayma-h: 12px;
+  --lv-0: #5c5c5c; --lv-0-bg: #ececec; --lv-1: #a3241a; --lv-1-bg: #fde9e6; --lv-2: #8f4a07; --lv-2-bg: #fdefdc;
+  --lv-3: #23704a; --lv-3-bg: #e2f3e9; --lv-4: #1d4ea6; --lv-4-bg: #e6edfb; --lv-5: #6d2b6b; --lv-5-bg: #f4e7f3;
+  --neg: #b3261e; --warn: #8f4a07;
+  font-family: var(--font-text); color: var(--t); background: var(--g);
+  font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased;
+}
+.app[data-t="dark"] {
+  --lv-0: #b8afa3; --lv-0-bg: #2a241e; --lv-1: #ff9283; --lv-1-bg: #3b1a15; --lv-2: #f2b46a; --lv-2-bg: #3a2812;
+  --lv-3: #86d4a6; --lv-3-bg: #16301f; --lv-4: #9ab9f3; --lv-4-bg: #182644; --lv-5: #dfa9dd; --lv-5-bg: #351b37;
+  --neg: #ff8a78; --warn: #f2b46a;
+}
+/* Variant A «Фарфор»: Triodion (ustav) headings, porcelain white and cobalt / lacquer black and gold. */
+.app[data-v="farfor"] { --disp: "Triodion", "Old Standard TT", serif; --rad: 20px; --rad-s: 12px; --g-size: 36px; --p-size: 24px; --kayma-h: 12px; }
+.app[data-v="farfor"][data-t="light"] { --g: #ffffff; --s: #f0f3f9; --r: #ffffff; --b: #dde3ee; --t: #111a30; --m: #4b556e; --a: #1d4ea6; --a-ink: #ffffff; --o1: #1d4ea6; --o2: #c3d2ee; }
+.app[data-v="farfor"][data-t="dark"] { --g: #110d0a; --s: #1b1510; --r: #241b15; --b: #34291f; --t: #f4ecdf; --m: #b9aa95; --a: #d9a441; --a-ink: #1a120b; --o1: #d9a441; --o2: #c8432b; }
+/* Variant B «Лён»: Ruslan Display headings, warm linen and cobalt / warm lacquer and vermilion. */
+.app[data-v="len"] { --disp: "Ruslan Display", "Old Standard TT", serif; --disp-case: uppercase; --rad: 14px; --rad-s: 10px; --g-size: 30px; --p-size: 21px; --kayma-h: 18px; }
+.app[data-v="len"][data-t="light"] { --g: #fbf9f5; --s: #efeae1; --r: #fffdf9; --b: #e0d8cb; --t: #2a221d; --m: #5f554c; --a: #2747a0; --a-ink: #ffffff; --o1: #2747a0; --o2: #b9c6e8; }
+.app[data-v="len"][data-t="dark"] { --g: #16100c; --s: #21180f; --r: #2b2016; --b: #3b2d20; --t: #f6eddf; --m: #c1b19b; --a: #e0603e; --a-ink: #1a0f0a; --o1: #d69b37; --o2: #c8432b; }
+/* Variant C «Книга»: Old Standard TT headings, stone white and ink / near-black and gold; ornament only in emblems. */
+.app[data-v="kniga"] { --disp: "Old Standard TT", Georgia, serif; --rad: 8px; --rad-s: 6px; --g-size: 32px; --p-size: 21px; --kayma-h: 0px; }
+.app[data-v="kniga"][data-t="light"] { --g: #ffffff; --s: #f4f3ef; --r: #ffffff; --b: #e3e1db; --t: #181816; --m: #5a5955; --a: #23468c; --a-ink: #ffffff; --o1: #23468c; --o2: #d3dbea; }
+.app[data-v="kniga"][data-t="dark"] { --g: #0e0c0a; --s: #181512; --r: #201c18; --b: #2e2924; --t: #eee8df; --m: #ada497; --a: #d4a64a; --a-ink: #16110a; --o1: #d4a64a; --o2: #b33a26; }
+
+.disp { font-family: var(--disp); text-transform: var(--disp-case); letter-spacing: var(--disp-track); font-weight: 400; }
+.app[data-v="kniga"] .disp { font-weight: 700; }
+
+/* Phone frame: drawn at 390x844 and zoomed down for the page. */
+.phone { width: 390px; height: 844px; zoom: .74; border-radius: 44px; overflow: hidden; box-shadow: 0 0 0 10px #1e1e1e, 0 18px 40px rgba(0, 0, 0, .18); display: flex; flex-direction: column; position: relative; }
+@media (max-width: 520px) { .phone { zoom: .72; } }
+.sbar { height: 44px; flex: none; display: flex; justify-content: space-between; align-items: center; padding: 0 28px; font-size: 14px; font-weight: 600; color: var(--t); }
+.ahead { display: flex; align-items: center; gap: 8px; padding: 6px 16px 10px; flex: none; }
+.wm { font-family: var(--disp); text-transform: var(--disp-case); font-size: 24px; line-height: 1; color: var(--t); }
+.app[data-v="kniga"] .wm { font-weight: 700; }
+.house { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border-radius: 999px; background: var(--s); color: var(--t); font: 500 15px/1 var(--font-text); border: 0; }
+.ibtn { width: 44px; height: 44px; border-radius: 999px; display: grid; place-items: center; background: transparent; border: 0; color: var(--t); }
+.ibtn svg, .house svg { width: 20px; height: 20px; }
+.kayma, .dkayma { height: var(--kayma-h); flex: none; background: var(--o1);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='18' viewBox='0 0 56 18'%3E%3Cellipse cx='12' cy='5' rx='2.2' ry='3.6'/%3E%3Cellipse cx='12' cy='13' rx='2.2' ry='3.6'/%3E%3Cellipse cx='8' cy='9' rx='3.6' ry='2.2'/%3E%3Cellipse cx='16' cy='9' rx='3.6' ry='2.2'/%3E%3Cpath d='M26 15C28 7 35 4 40 6C36 8 31 11 26 15Z'/%3E%3Ccircle cx='46' cy='11' r='2.6'/%3E%3Ccircle cx='50.5' cy='7.5' r='1.8'/%3E%3C/svg%3E") repeat-x left center / auto 100%; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='18' viewBox='0 0 56 18'%3E%3Cellipse cx='12' cy='5' rx='2.2' ry='3.6'/%3E%3Cellipse cx='12' cy='13' rx='2.2' ry='3.6'/%3E%3Cellipse cx='8' cy='9' rx='3.6' ry='2.2'/%3E%3Cellipse cx='16' cy='9' rx='3.6' ry='2.2'/%3E%3Cpath d='M26 15C28 7 35 4 40 6C36 8 31 11 26 15Z'/%3E%3Ccircle cx='46' cy='11' r='2.6'/%3E%3Ccircle cx='50.5' cy='7.5' r='1.8'/%3E%3C/svg%3E") repeat-x left center / auto 100%; }
+.abody { flex: 1; overflow: hidden; padding: 14px 16px 0; display: grid; gap: 14px; align-content: start; }
+.greet h2 { font-size: var(--g-size); line-height: 1.02; color: var(--t); }
+.greet p { margin: 8px 0 0; font-size: 16px; line-height: 1.4; color: var(--t); }
+.greet p a { color: var(--a); font-weight: 600; text-decoration: none; }
+.seg { display: flex; gap: 6px; }
+.seg span { height: 36px; padding: 0 14px; border-radius: 999px; display: inline-flex; align-items: center; font-size: 15px; color: var(--m); }
+.seg span.on { background: var(--t); color: var(--g); font-weight: 500; }
+.place { background: var(--s); border-radius: var(--rad); padding: 14px 12px 12px; display: grid; gap: 10px; }
+.ph { display: flex; align-items: center; gap: 10px; padding: 0 4px; }
+.ph .emb { width: 34px; height: 34px; flex: none; }
+.ph h3 { font-size: var(--p-size); line-height: 1; color: var(--t); }
+.ph .cnt { margin-left: auto; font-size: 14px; color: var(--m); }
+.rows { display: grid; gap: 6px; }
+.row { background: var(--r); border-radius: var(--rad-s); min-height: 58px; padding: 9px 12px; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 2px 10px; }
+.row .nm { font-size: 16px; font-weight: 500; line-height: 1.25; color: var(--t); }
+.row .qty { font-size: 16px; text-align: right; color: var(--t); grid-row: 1 / span 2; grid-column: 2; }
+.row .meta { font-size: 14px; color: var(--m); line-height: 1.3; }
+.row .meta.neg { color: var(--neg); font-weight: 500; }
+.row .meta.warn { color: var(--warn); font-weight: 500; }
+.row .chip { grid-column: 1; }
+.chip { display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 9px; border-radius: 999px; font-size: 13px; font-weight: 500; width: max-content; }
+.chip i { width: 7px; height: 7px; border-radius: 99px; background: currentColor; }
+.lv0 { color: var(--lv-0); background: var(--lv-0-bg); } .lv1 { color: var(--lv-1); background: var(--lv-1-bg); }
+.lv2 { color: var(--lv-2); background: var(--lv-2-bg); } .lv3 { color: var(--lv-3); background: var(--lv-3-bg); }
+.lv4 { color: var(--lv-4); background: var(--lv-4-bg); } .lv5 { color: var(--lv-5); background: var(--lv-5-bg); }
+
+.anav { flex: none; display: grid; grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr)); align-items: end; padding: 8px 6px 26px; background: var(--g); border-top: 1px solid var(--b); }
+.ni { display: grid; justify-items: center; gap: 4px; min-height: 52px; align-content: end; font-size: 12px; color: var(--m); position: relative; }
+.ni svg { width: 24px; height: 24px; }
+.ni.on { color: var(--t); font-weight: 600; }
+.ni.on::after { content: ""; width: 18px; height: 3px; border-radius: 3px; background: var(--t); position: absolute; top: -8px; }
+.ni .badge { position: absolute; top: -4px; left: calc(50% + 6px); min-width: 18px; height: 18px; padding: 0 5px; border-radius: 99px; background: var(--neg); color: var(--g); font-size: 11px; font-weight: 700; display: grid; place-items: center; }
+.app[data-t="dark"] .ni .badge { color: #1a0f0a; }
+.ni.add { color: var(--t); font-weight: 600; }
+.ni.add .plus { width: 58px; height: 58px; border-radius: 999px; background: var(--a); color: var(--a-ink); display: grid; place-items: center; margin-top: -26px; box-shadow: 0 0 0 6px var(--g); }
+.ni.add .plus svg { width: 28px; height: 28px; }
+
+.today { background: var(--r); border: 1px solid var(--b); border-radius: var(--rad); padding: 12px 14px; display: grid; gap: 10px; }
+.today h3 { font-size: 15px; font-family: var(--font-text); font-weight: 600; }
+.today .line { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 8px; font-size: 15px; line-height: 1.35; }
+.today .line b { font-weight: 600; }
+.today .line .k { color: var(--m); }
+
+/* Entry screen */
+.entry { flex: 1; display: grid; grid-template-rows: auto 1fr auto; padding: 8px 24px 40px; }
+.entry .art { color: var(--o1); height: 300px; display: grid; place-items: center; }
+.entry .art svg { width: 300px; height: 300px; }
+.entry h2 { font-size: 64px; line-height: .95; color: var(--t); }
+.app[data-v="len"] .entry h2 { font-size: 52px; }
+.entry p { font-size: 18px; line-height: 1.45; margin: 14px 0 0; color: var(--t); }
+.btns { display: grid; gap: 10px; }
+.btn { height: 54px; border-radius: 999px; display: grid; place-items: center; font: 600 17px/1 var(--font-text); border: 0; }
+.app[data-v="kniga"] .btn { border-radius: 8px; }
+.btn.pri { background: var(--a); color: var(--a-ink); }
+.btn.sec { background: var(--s); color: var(--t); }
+.small { font-size: 14px; color: var(--m); text-align: center; margin-top: 4px; }
+
+/* Desktop: drawn at 1280x860 and scaled to the column. */
+.desk-scale { width: 100%; aspect-ratio: 1280 / 860; position: relative; overflow: hidden; border-radius: 14px; box-shadow: 0 0 0 1px var(--line); }
+.desk { width: 1280px; height: 860px; transform-origin: 0 0; transform: scale(var(--ds, .7)); position: absolute; inset: 0 auto auto 0; display: grid; grid-template-columns: 248px minmax(0, 1fr); }
+.side { padding: 28px 16px; display: grid; grid-template-rows: auto auto auto 1fr auto; gap: 18px; border-right: 1px solid var(--b); }
+.side .wm { font-size: 30px; padding: 0 10px; }
+.side .house { margin: 0; justify-content: space-between; width: 100%; }
+.side .addbtn { height: 46px; border-radius: 999px; background: var(--a); color: var(--a-ink); display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 16px; }
+.app[data-v="kniga"] .side .addbtn { border-radius: 8px; }
+.side .addbtn svg { width: 20px; height: 20px; }
+.snav { display: grid; gap: 2px; align-content: start; }
+.snav a { display: flex; align-items: center; gap: 12px; height: 42px; padding: 0 12px; border-radius: 10px; color: var(--m); font-size: 15px; text-decoration: none; }
+.snav a svg { width: 20px; height: 20px; }
+.snav a.on { background: var(--s); color: var(--t); font-weight: 600; }
+.snav a .c { margin-left: auto; font-size: 13px; color: var(--t); }
+.user { display: flex; align-items: center; gap: 10px; padding: 0 10px; font-size: 15px; }
+.ava { width: 32px; height: 32px; border-radius: 99px; display: grid; place-items: center; font-size: 14px; font-weight: 600; color: #2a2a2a; }
+.main { padding: 36px 40px 0; overflow: hidden; display: grid; gap: 22px; align-content: start; }
+.dkayma { margin: -36px -40px 0; }
+.dgreet h1 { font-size: 48px; line-height: 1; color: var(--t); }
+.app[data-v="len"] .dgreet h1 { font-size: 40px; }
+.dgreet p { margin: 10px 0 0; font-size: 17px; color: var(--m); }
+.dgreet p b { color: var(--t); font-weight: 500; }
+.grid12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+.tile { grid-column: span 3; background: var(--s); border-radius: var(--rad); padding: 16px 18px; display: grid; gap: 4px; }
+.tile .l { font-size: 14px; color: var(--m); }
+.tile .v { font-size: 32px; line-height: 1.1; }
+.tile .v.neg { color: var(--neg); }
+.tile .c { font-size: 14px; color: var(--t); }
+.span6 { grid-column: span 6; } .span3 { grid-column: span 3; }
+.card { background: var(--r); border: 1px solid var(--b); border-radius: var(--rad); padding: 18px; display: grid; gap: 14px; align-content: start; align-self: start; }
+.batch { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; background: var(--s); border-radius: var(--rad-s); padding: 10px 12px; font-size: 15px; }
+.batch .emb { width: 26px; height: 26px; }
+.batch .m { color: var(--m); font-size: 14px; }
+.keep { display: flex; align-items: center; justify-content: space-between; font-size: 15px; }
+.tog { width: 44px; height: 26px; border-radius: 99px; background: var(--a); position: relative; }
+.tog::after { content: ""; position: absolute; width: 20px; height: 20px; border-radius: 99px; background: var(--a-ink); top: 3px; right: 3px; }
+.card .sec-t { font-size: 14px; color: var(--m); }
+.card h3 { font-size: 26px; line-height: 1; }
+.card .sum { display: flex; gap: 12px; align-items: baseline; font-size: 15px; color: var(--m); }
+.card .sum b { font-size: 28px; font-weight: 400; color: var(--t); }
+.acts { display: flex; gap: 8px; flex-wrap: wrap; }
+.acts span { height: 40px; padding: 0 16px; border-radius: 999px; display: inline-flex; align-items: center; background: var(--s); font-size: 15px; font-weight: 500; }
+.app[data-v="kniga"] .acts span { border-radius: 6px; }
+.hist { display: grid; gap: 8px; font-size: 14px; }
+.hist div { display: flex; gap: 10px; align-items: center; }
+.hist .when { color: var(--m); }
+.hist .d { margin-left: auto; }
+.place.compact .row { min-height: 50px; }
+</style>
+
+<div class="wrap">
+  <header class="doc-head">
+    <h1>Закрома: три варианта стиля</h1>
+    <p>Один и тот же день одной семьи в трёх вариантах. Пятница, 24 октября, вечер. В холодильнике просрочена сметана, кефир — до завтра, молоко — на два дня. На балконе запас сахара, в шкафу кончается масло.</p>
+    <p>Во всех вариантах общее: дом и места хранения — главное, строки продуктов набраны спокойным шрифтом Golos Text, уровни запаса всегда подписаны словом. Отличаются шрифт заголовков, тон и сколько росписи. Светлая тема — по мотивам гжели, тёмная — хохломы. Роспись нарисована для «Закромов» и не копирует изделия.</p>
+    <div class="ask"><strong>Как ответить:</strong> назовите вариант или сочетание, например «Фарфор, но шрифт из Книги», и меню — пять пунктов или три.</div>
+  </header>
+
+  <div id="variants"></div>
+
+  <section class="nav-compare" aria-labelledby="nav-h">
+    <div class="notes">
+      <h2 id="nav-h">Меню: пять пунктов или три</h2>
+      <p><b>Пять:</b> «Добавить» ровно по центру. «Сроки» отвечают на вопрос «что съесть первым», «Покупки» — «что купить». Числа на значках — сколько требует внимания.</p>
+      <p><b>Три:</b> меньше выбора. Сроки и покупки — блоком «Сегодня важно» в начале запасов, но этот блок прокручивается вместе со списком.</p>
+      <p class="muted">Меню предварительное: после пилота с семьёй его можно поменять.</p>
+    </div>
+    <div class="phones" id="navcmp"></div>
+  </section>
+
+  <section class="answer" aria-labelledby="ans-h">
+    <h2 id="ans-h">Что дальше</h2>
+    <ul>
+      <li>Вы выбираете вариант и меню; выбор записывается в docs/10-design.md.</li>
+      <li>Каркас приложения собирается сразу в выбранном стиле: шрифты лежат в самом приложении, без внешних запросов.</li>
+      <li>Цвета уровней — те же по смыслу, что в описании экранов, подобраны под палитру и контраст.</li>
+    </ul>
+    <p class="credits">Шрифты: Triodion (А. Андреев), Ruslan Display (О. Снарский, Д. Машаров, В. Рабкин), Old Standard TT (А. Крюков), Golos Text (А. Королькова, В. Кузьмин) — все под лицензией SIL Open Font License. Данные — примерные.</p>
+  </section>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Gzhel-like kupavka: petals as strokes with a pale fill -->
+    <symbol id="e-flower" viewBox="0 0 64 64">
+      <g stroke-width="2.2" stroke-linejoin="round" style="fill:var(--o2);stroke:var(--o1)">
+        <path d="M32 30 C22 22 22 8 32 4 C42 8 42 22 32 30Z"/>
+        <path d="M32 30 C22 22 22 8 32 4 C42 8 42 22 32 30Z" transform="rotate(72 32 32)"/>
+        <path d="M32 30 C22 22 22 8 32 4 C42 8 42 22 32 30Z" transform="rotate(144 32 32)"/>
+        <path d="M32 30 C22 22 22 8 32 4 C42 8 42 22 32 30Z" transform="rotate(216 32 32)"/>
+        <path d="M32 30 C22 22 22 8 32 4 C42 8 42 22 32 30Z" transform="rotate(288 32 32)"/>
+      </g>
+      <circle cx="32" cy="32" r="5" style="fill:var(--o1)"/>
+    </symbol>
+    <!-- Snow-flower for the freezer -->
+    <symbol id="e-snow" viewBox="0 0 64 64">
+      <g stroke-width="2.4" stroke-linecap="round" fill="none" style="stroke:var(--o1)">
+        <path d="M32 6V58M9.5 19L54.5 45M9.5 45L54.5 19"/>
+        <path d="M32 14l-5-5M32 14l5-5M32 50l-5 5M32 50l5 5"/>
+      </g>
+      <g stroke-width="2" style="fill:var(--o2);stroke:var(--o1)"><circle cx="32" cy="32" r="7"/></g>
+      <g style="fill:var(--o1)"><circle cx="16" cy="23" r="2.4"/><circle cx="48" cy="23" r="2.4"/><circle cx="16" cy="41" r="2.4"/><circle cx="48" cy="41" r="2.4"/></g>
+    </symbol>
+    <!-- Ear of grain for the pantry -->
+    <symbol id="e-grain" viewBox="0 0 64 64">
+      <path d="M32 60V14" stroke-width="2.4" stroke-linecap="round" style="stroke:var(--o1)"/>
+      <g stroke-width="2" style="fill:var(--o2);stroke:var(--o1)">
+        <ellipse cx="32" cy="10" rx="4.5" ry="7"/>
+        <ellipse cx="25" cy="22" rx="4.5" ry="7.5" transform="rotate(-30 25 22)"/><ellipse cx="39" cy="22" rx="4.5" ry="7.5" transform="rotate(30 39 22)"/>
+        <ellipse cx="25" cy="34" rx="4.5" ry="7.5" transform="rotate(-30 25 34)"/><ellipse cx="39" cy="34" rx="4.5" ry="7.5" transform="rotate(30 39 34)"/>
+        <ellipse cx="25" cy="46" rx="4.5" ry="7.5" transform="rotate(-30 25 46)"/><ellipse cx="39" cy="46" rx="4.5" ry="7.5" transform="rotate(30 39 46)"/>
+      </g>
+    </symbol>
+    <!-- Rowan berries for the balcony -->
+    <symbol id="e-berry" viewBox="0 0 64 64">
+      <path d="M14 50C22 40 30 30 46 18" stroke-width="2.4" fill="none" stroke-linecap="round" style="stroke:var(--o1)"/>
+      <path d="M46 18C50 10 58 8 60 6C58 14 54 20 46 18Z" stroke-width="2" style="fill:var(--o2);stroke:var(--o1)"/>
+      <g stroke-width="2" style="fill:var(--o2);stroke:var(--o1)"><circle cx="22" cy="44" r="7"/><circle cx="33" cy="42" r="6"/><circle cx="26" cy="33" r="6"/><circle cx="14" cy="34" r="5"/></g>
+      <g style="fill:var(--o1)"><circle cx="22" cy="44" r="1.6"/><circle cx="33" cy="42" r="1.4"/><circle cx="26" cy="33" r="1.4"/></g>
+    </symbol>
+    <!-- Large entry composition: flower with leaves and berries -->
+    <symbol id="e-big" viewBox="0 0 240 240">
+      <path d="M120 140C118 172 122 200 120 232" style="stroke:var(--o1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <g style="fill:var(--o2);stroke:var(--o1)" stroke-width="2.6" stroke-linejoin="round">
+        <path d="M120 172C100 160 74 162 60 180C76 190 100 188 120 172Z"/>
+        <path d="M120 172C140 160 166 162 180 180C164 190 140 188 120 172Z"/>
+        <path d="M120 204C106 196 90 199 80 210C92 217 108 216 120 204Z"/>
+        <path d="M120 204C134 196 150 199 160 210C148 217 132 216 120 204Z"/>
+        <circle cx="52" cy="196" r="8"/><circle cx="66" cy="204" r="6"/><circle cx="188" cy="196" r="8"/><circle cx="174" cy="204" r="6"/>
+      </g>
+      <use href="#e-flower" x="64" y="20" width="112" height="112"/>
+    </symbol>
+    <!-- Icons: 24px outline -->
+    <symbol id="i-stock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 10h16M4 15h16"/><path d="M8 7h2M8 12.5h3M8 17.5h2"/></g></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></g></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></g></symbol>
+    <symbol id="i-family" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9.5" r="2.3"/><path d="M3.5 19c.6-3.3 2.8-5 5.5-5s4.9 1.7 5.5 5"/><path d="M15 14.2c2.6-.4 4.6 1 5.2 4"/></g></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></g></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(() => {
+  // Sample data for one household on Friday 24 October, evening. Counts below are computed from these rows.
+  const LV = ["Нет", "Крит. мало", "Мало", "Нормально", "Много", "Избыток"];
+  const PLACES = [
+    { id: "fridge", name: "Холодильник", emb: "e-flower", items: [
+      { n: "Сметана 15%", q: "300 г", meta: "просрочена с 22.10", st: "neg", exp: "expired" },
+      { n: "Кефир 2,5%", q: "1 л", meta: "до 25.10 · завтра", st: "warn", exp: "expiring" },
+      { n: "Молоко 3,2%", q: "730 мл", meta: "≈ до 26.10 · через 2 дня", st: "warn", exp: "expiring" },
+      { n: "Яйца С1", q: "6 шт", meta: "до 08.11" },
+      { n: "Сыр «Российский»", q: "240 г", meta: "до 10.11" },
+      { n: "Морковь", lv: 3 },
+    ]},
+    { id: "freezer", name: "Морозилка", emb: "e-snow", items: [
+      { n: "Пельмени", q: "900 г", meta: "до 03.2027" },
+      { n: "Курица, бёдра", q: "1,2 кг", meta: "до 15.01.2027" },
+      { n: "Смородина", q: "≈ 500 г", meta: "до 07.2027" },
+    ]},
+    { id: "pantry", name: "Кухонный шкаф", emb: "e-grain", items: [
+      { n: "Гречка", q: "1,8 кг", lv: 3 },
+      { n: "Макароны", q: "450 г", lv: 2 },
+      { n: "Масло подсолнечное", q: "0,3 л", lv: 1 },
+      { n: "Чай чёрный", lv: 4 },
+    ]},
+    { id: "balcony", name: "Балкон", emb: "e-berry", items: [
+      { n: "Картофель", q: "≈ 12 кг", lv: 4 },
+      { n: "Сахар", q: "≈ 20 кг", lv: 5 },
+      { n: "Варенье клубничное", q: "3 шт", meta: "до 08.2027" },
+    ]},
+  ];
+  // Out of stock items are not on the shelves, only in «Покупки».
+  const OUT = [{ n: "Соль" }];
+  const all = PLACES.flatMap(p => p.items);
+  const expired = all.filter(i => i.exp === "expired").length;
+  const expiring = all.filter(i => i.exp === "expiring").length;
+  const toBuy = OUT.length + all.filter(i => i.lv === 1 || i.lv === 2).length;
+  const excess = all.filter(i => i.lv === 5).length;
+  console.assert(expired === 1 && expiring === 2 && toBuy === 3 && excess === 1, "sample counts");
+
+  const icon = (id) => `<svg aria-hidden="true"><use href="#${id}"/></svg>`;
+  const chip = (lv) => `<span class="chip lv${lv}"><i></i>${LV[lv]}</span>`;
+  const row = (i) => `<div class="row"><span class="nm">${i.n}</span>${i.q ? `<span class="qty">${i.q}</span>` : ""}${
+    i.lv !== undefined ? chip(i.lv) : `<span class="meta ${i.st || ""}">${i.meta}</span>`}</div>`;
+  const place = (p, limit, compact) => `<section class="place${compact ? " compact" : ""}"><div class="ph"><svg class="emb" aria-hidden="true"><use href="#${p.emb}"/></svg><h3 class="disp">${p.name}</h3><span class="cnt">${p.items.length}</span></div><div class="rows">${p.items.slice(0, limit ?? 99).map(row).join("")}</div></section>`;
+  const kayma = (cls = "kayma") => `<div class="${cls}" aria-hidden="true"></div>`;
+  const sbar = `<div class="sbar"><span>19:40</span><span>●●● 82%</span></div>`;
+  const head = `<div class="ahead"><span class="wm">Закрома</span><button class="house" type="button">Квартира ${icon("i-down")}</button><button class="ibtn" type="button" aria-label="Поиск">${icon("i-search")}</button></div>`;
+
+  const nav5 = (active) => `<nav class="anav" style="--n:5">${[
+    ["stock", "Запасы", "i-stock"], ["expiry", "Сроки", "i-clock", expired + expiring], ["add"], ["shop", "Покупки", "i-bag", toBuy], ["family", "Семья", "i-family"],
+  ].map(([id, label, ic, badge]) => id === "add"
+    ? `<span class="ni add"><span class="plus">${icon("i-plus")}</span>Добавить</span>`
+    : `<span class="ni${id === active ? " on" : ""}">${badge ? `<span class="badge">${badge}</span>` : ""}${icon(ic)}${label}</span>`).join("")}</nav>`;
+  const nav3 = `<nav class="anav" style="--n:3"><span class="ni on">${icon("i-stock")}Запасы</span><span class="ni add"><span class="plus">${icon("i-plus")}</span>Добавить</span><span class="ni">${icon("i-family")}Семья</span></nav>`;
+
+  const greet = `<div class="greet"><h2 class="disp">Добрый вечер</h2><p>Кефир — до завтра, сметану пора выбросить. <a href="#nav-h">Сроки · ${expired + expiring}</a></p></div>`;
+  const seg = `<div class="seg"><span class="on">По местам</span><span>По категориям</span></div>`;
+
+  const phoneStock = (v, t) => `<div class="app phone" data-v="${v}" data-t="${t}">${sbar}${head}${kayma()}<div class="abody">${greet}${seg}${place(PLACES[0], 5)}</div>${nav5("stock")}</div>`;
+  const phoneShelves = (v, t) => `<div class="app phone" data-v="${v}" data-t="${t}">${sbar}${head}${kayma()}<div class="abody">${place(PLACES[2], 4, true)}${place(PLACES[3], 3, true)}</div>${nav5("stock")}</div>`;
+  const phoneEntry = (v, t) => `<div class="app phone" data-v="${v}" data-t="${t}">${sbar}<div class="entry"><div class="art"><svg aria-hidden="true"><use href="#e-big"/></svg></div><div><h2 class="disp">Закрома</h2><p>Что есть дома, сколько и до какого срока — для всей семьи.</p></div><div class="btns"><span class="btn pri">Войти</span><span class="btn sec">Создать аккаунт</span><span class="small">Пригласили? Откройте ссылку из сообщения</span></div></div></div>`;
+
+  const today = `<section class="today"><h3>Сегодня важно</h3><div class="line"><span class="k">Съесть</span><span><b>Кефир</b> — до завтра, <b>молоко</b> — 2 дня</span></div><div class="line"><span class="k">Выбросить</span><span><b>Сметана</b> — с 22.10</span></div><div class="line"><span class="k">Купить</span><span>соль, масло, макароны</span></div></section>`;
+  const phoneNav3 = (v, t) => `<div class="app phone" data-v="${v}" data-t="${t}">${sbar}${head}${kayma()}<div class="abody">${today}${seg}${place(PLACES[0], 4)}</div>${nav3}</div>`;
+
+  const desk = (v, t) => `<div class="desk-scale"><div class="app desk" data-v="${v}" data-t="${t}">
+    <aside class="side"><span class="wm">Закрома</span><span class="house">Квартира ${icon("i-down")}</span><span class="addbtn">${icon("i-plus")}Добавить</span>
+      <nav class="snav"><a class="on">${icon("i-stock")}Запасы</a><a>${icon("i-clock")}Сроки<span class="c">${expired + expiring}</span></a><a>${icon("i-bag")}Покупки<span class="c">${toBuy}</span></a><a>${icon("i-family")}Семья</a></nav>
+      <div class="user"><span class="ava" style="background:#f3d9c9">М</span>Мама</div></aside>
+    <div class="main">${kayma("dkayma")}
+      <div class="dgreet"><h1 class="disp">Добрый вечер, Квартира</h1><p>Пятница, 24 октября · <b>кефир — до завтра, сметану пора выбросить</b></p></div>
+      <div class="grid12">
+        <div class="tile"><span class="l">Просрочено</span><span class="v neg">${expired}</span><span class="c">сметана</span></div>
+        <div class="tile"><span class="l">Скоро испортится</span><span class="v">${expiring}</span><span class="c">кефир, молоко</span></div>
+        <div class="tile"><span class="l">Купить</span><span class="v">${toBuy}</span><span class="c">соль, масло, макароны</span></div>
+        <div class="tile"><span class="l">Пока не покупать</span><span class="v">${excess}</span><span class="c">сахар, ≈ 20 кг</span></div>
+        <div class="span6">${place(PLACES[0], 6)}</div>
+        <div class="span6 card"><h3 class="disp">Молоко 3,2%</h3><div class="sum"><b>730 мл</b><span>≈ до 26.10 · типовой срок после вскрытия</span></div>
+          <div class="batch"><svg class="emb" aria-hidden="true"><use href="#e-flower"/></svg><span>Холодильник<br><span class="m">вскрыто 23.10</span></span><span>730 мл</span></div>
+          <div class="acts"><span>− порция 200 мл</span><span>− ½</span><span>Закончилось</span></div>
+          <div class="keep"><span>Держать дома постоянно</span><span class="tog" role="img" aria-label="Включено"></span></div>
+          <span class="sec-t">История</span>
+          <div class="hist"><div><span class="ava" style="background:#f3d9c9">М</span><span>Мама</span><span class="when">вчера</span><span class="d">− 200 мл</span></div>
+          <div><span class="ava" style="background:#cfe0f4">Д</span><span>Дима</span><span class="when">22.10</span><span class="d">+ 930 мл</span></div></div></div>
+      </div>
+    </div></div></div>`;
+
+  const VARIANTS = [
+    { id: "farfor", name: "Фарфор", text: "Светлый фарфор и кобальт днём, чёрный лак и золото вечером. Заголовки — уставом, как на старых вывесках, но крупно и спокойно. Роспись — в эмблемах мест и в тонкой кайме под шапкой.", font: "Triodion — устав", radius: "мягкие, 20px", orn: "эмблемы мест и тонкая кайма",
+      sw: { light: ["#ffffff", "#f0f3f9", "#111a30", "#1d4ea6", "#c3d2ee"], dark: ["#110d0a", "#1b1510", "#f4ecdf", "#d9a441", "#c8432b"] } },
+    { id: "len", name: "Лён", text: "Тёплее и праздничнее: льняной фон, как скатерть, и гжельский синий на нём. Заголовки заглавными, с характером. Кайма шире, роспись заметнее — ближе к застолью.", font: "Ruslan Display — уставная стилизация, заглавными", radius: "средние, 14px", orn: "эмблемы и широкая кайма",
+      sw: { light: ["#fbf9f5", "#efeae1", "#2a221d", "#2747a0", "#b9c6e8"], dark: ["#16100c", "#21180f", "#f6eddf", "#e0603e", "#d69b37"] } },
+    { id: "kniga", name: "Книга", text: "Самый сдержанный: классическая русская книжная антиква, почти без росписи — только эмблемы мест. Ощущение дорогой изданной книги, строгие формы.", font: "Old Standard TT — книжная антиква", radius: "строгие, 8px", orn: "только эмблемы мест",
+      sw: { light: ["#ffffff", "#f4f3ef", "#181816", "#23468c", "#d3dbea"], dark: ["#0e0c0a", "#181512", "#eee8df", "#d4a64a", "#b33a26"] } },
+  ];
+  const sw = (title, colors) => `<div class="sw">${title}<div class="chips">${colors.map(c => `<span style="background:${c}"></span>`).join("")}</div></div>`;
+
+  document.getElementById("variants").innerHTML = VARIANTS.map((v, k) => `
+    <section class="variant" aria-labelledby="v-${v.id}">
+      <div class="notes">
+        <h2 id="v-${v.id}">${String.fromCharCode(1040 + k)}. ${v.name}</h2>
+        <p>${v.text}</p>
+        <dl class="facts"><div><dt>Заголовки</dt><dd>${v.font}</dd></div><div><dt>Текст</dt><dd>Golos Text</dd></div><div><dt>Формы</dt><dd>${v.radius}</dd></div><div><dt>Роспись</dt><dd>${v.orn}</dd></div></dl>
+        <div class="swatches">${sw("Гжель, светлая", v.sw.light)}${sw("Хохлома, тёмная", v.sw.dark)}</div>
+      </div>
+      <div class="screens">
+        <div class="phones">
+          <figure class="phone-col">${phoneStock(v.id, "light")}<figcaption>Запасы, светлая</figcaption></figure>
+          <figure class="phone-col">${phoneShelves(v.id, "dark")}<figcaption>Запасы, тёмная: шкаф и балкон</figcaption></figure>
+          <figure class="phone-col">${phoneEntry(v.id, k === 1 ? "dark" : "light")}<figcaption>Первый экран</figcaption></figure>
+        </div>
+        <figure class="desk-box">${desk(v.id, "light")}<figcaption>Компьютер: запасы и карточка продукта</figcaption></figure>
+      </div>
+    </section>`).join("");
+
+  document.getElementById("navcmp").innerHTML =
+    `<figure class="phone-col">${phoneStock("farfor", "light")}<figcaption>Пять пунктов</figcaption></figure>` +
+    `<figure class="phone-col">${phoneNav3("farfor", "light")}<figcaption>Три пункта и «Сегодня важно»</figcaption></figure>`;
+
+  // Scale each desktop mock to its column.
+  const fit = () => document.querySelectorAll(".desk-scale").forEach(box => {
+    box.querySelector(".desk").style.setProperty("--ds", String(box.clientWidth / 1280));
+  });
+  fit();
+  if ("ResizeObserver" in window) new ResizeObserver(fit).observe(document.body);
+})();
+</script>

@@ -68,8 +68,14 @@ cd backend && uv run alembic check             # модели = миграции
 # после изменения схемы — пересоздать docs/db/schema.sql (команда в шапке файла)
 # логи в dev читаемым текстом: LOG_FORMAT=console (по умолчанию JSON)
 
-# frontend (после T-004)
-cd frontend && pnpm test && pnpm lint && pnpm typecheck
+# frontend (T-004): Node 24 LTS + pnpm 12 на машине; в терминале агента — по явному пути (L-016):
+#   export PATH="/c/Program Files/nodejs:$(cygpath -u "$APPDATA")/npm:$PATH"
+cd frontend && pnpm install --frozen-lockfile    # зависимости по pnpm-lock.yaml
+cd frontend && pnpm dev                          # dev-сервер http://127.0.0.1:5173
+cd frontend && pnpm test && pnpm lint && pnpm typecheck && pnpm format:check
+cd frontend && pnpm build && pnpm size           # сборка + JS первого экрана ≤ 300 КБ gzip
+cd frontend && pnpm preview                      # собранная версия на http://127.0.0.1:4173
+# стиль: docs/10-design.md; цвета — только из src/shared/theme/tokens.ts
 cd frontend && pnpm gen:api                     # после изменения API (T-005)
 
 # справочник (на Windows — `python` или `py`: `python3` там заглушка Microsoft Store)
@@ -88,7 +94,7 @@ docker compose -f deploy/docker-compose.dev.yml up -d
 | Данные | [docs/04-data-model.md](docs/04-data-model.md), [docs/db/schema.sql](docs/db/schema.sql) (факт), [docs/db/schema_design.sql](docs/db/schema_design.sql) (проект) |
 | Логика количеств, порогов, сроков | [docs/05-domain-rules.md](docs/05-domain-rules.md) |
 | Контракт API | [docs/06-api.md](docs/06-api.md) |
-| Экраны | [docs/07-ui-ux.md](docs/07-ui-ux.md) |
+| Экраны | [docs/07-ui-ux.md](docs/07-ui-ux.md), стиль — [docs/10-design.md](docs/10-design.md) |
 | Тесты | [docs/08-testing.md](docs/08-testing.md) |
 | Деплой | [docs/09-deployment.md](docs/09-deployment.md) |
 | Стиль кода, git | [docs/agent/CONVENTIONS.md](docs/agent/CONVENTIONS.md) |

@@ -17,6 +17,7 @@
 | [07 — UI/UX](docs/07-ui-ux.md) | Экраны, сценарии, правила «ввод в 2 тапа» |
 | [08 — Тестирование](docs/08-testing.md) | Стратегия, TDD-цикл, пирамида, покрытие |
 | [09 — Развёртывание](docs/09-deployment.md) | VPS, Docker Compose, CI/CD, бэкапы |
+| [10 — Визуальный стиль](docs/10-design.md) | «Фарфор»: темы гжель/хохлома, шрифты, роспись, навигация |
 | [BACKLOG](docs/BACKLOG.md) | Kanban-план внедрения по этапам |
 | [ADR](docs/adr/) | Журнал архитектурных решений |
 | [Диаграммы](docs/diagrams/) | C4, развёртывание, ER, последовательности, состояния (Mermaid) |
@@ -52,7 +53,14 @@ docker compose -f deploy/docker-compose.dev.yml up -d --wait
 cd backend && uv run alembic upgrade head
 ```
 
-Остальные команды (backend, frontend, справочник) — в разделе «Команды» [CLAUDE.md](CLAUDE.md).
+Для frontend нужны [Node.js](https://nodejs.org/) 24 LTS и [pnpm](https://pnpm.io/):
+
+```bash
+cd frontend && pnpm install --frozen-lockfile
+cd frontend && pnpm dev    # http://127.0.0.1:5173
+```
+
+Остальные команды (backend, frontend, справочник) — в разделе «Команды» [CLAUDE.md](CLAUDE.md). Визуальный стиль — [docs/10-design.md](docs/10-design.md).
 
 ## Как вести разработку
 
