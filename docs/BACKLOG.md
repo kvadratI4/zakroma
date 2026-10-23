@@ -21,12 +21,12 @@
 
 | Этап | Задач | Done |
 | --- | --- | --- |
-| E0 Фундамент | 8 | 2 |
+| E0 Фундамент | 8 | 3 |
 | E1 Учётные записи и дома | 6 | 0 |
 | E2 Справочник и продукты | 3 | 0 |
 | E3 Запасы | 9 | 0 |
 | E4 PWA и запуск | 5 | 0 |
-| **MVP итого** | **31** | **2** |
+| **MVP итого** | **31** | **3** |
 | S2 Ввод | 9 | 0 |
 | S3 Рецепты и покупки | 7 | 0 |
 | S4 YouTube и аналитика | 4 | 0 |
@@ -42,7 +42,7 @@
 | --- | --- | --- | --- | --- | --- |
 | T-001 | Монорепо: структура каталогов, `.editorconfig`, `.gitignore`, pre-commit (ruff, prettier, eslint, trailing whitespace), README команд | S | — | NFR-MNT-02 | Done |
 | T-002 | Каркас backend: FastAPI, `pydantic-settings`, structlog, `/api/v1/health`, problem+json обработчик ошибок, `Clock`, uv, mypy strict, pytest | M | T-001 | NFR-MNT-01 | Done |
-| T-003 | Postgres в `docker-compose.dev.yml`, SQLAlchemy async-сессия, Alembic, тестовая инфраструктура (testcontainers, фабрики, фикстура `clock`) | M | T-002 | NFR-REL-03 | Review |
+| T-003 | Postgres в `docker-compose.dev.yml`, SQLAlchemy async-сессия, Alembic, тестовая инфраструктура (testcontainers, фабрики, фикстура `clock`) | M | T-002 | NFR-REL-03 | Done |
 | T-004 | Каркас frontend: Vite + React + TS strict + Tailwind + Router + TanStack Query + i18next (ru) + Vitest + Testing Library + MSW; layout с нижней навигацией (заглушки экранов) | M | T-001 | NFR-UX-03..06 | Ready |
 | T-005 | Экспорт OpenAPI и генерация клиента (`openapi-typescript` + `openapi-fetch`), проверка актуальности | S | T-002, T-004 | NFR-MNT-04 | Ready |
 | T-006 | CI (GitHub Actions): lint, typecheck, тесты с покрытием (пороги), сборка frontend, проверка OpenAPI | S | T-003, T-005 | NFR-MNT-03 | Ready |
