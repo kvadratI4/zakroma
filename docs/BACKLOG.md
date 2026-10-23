@@ -42,7 +42,7 @@
 | --- | --- | --- | --- | --- | --- |
 | T-001 | Монорепо: структура каталогов, `.editorconfig`, `.gitignore`, pre-commit (ruff, prettier, eslint, trailing whitespace), README команд | S | — | NFR-MNT-02 | Done |
 | T-002 | Каркас backend: FastAPI, `pydantic-settings`, structlog, `/api/v1/health`, problem+json обработчик ошибок, `Clock`, uv, mypy strict, pytest | M | T-001 | NFR-MNT-01 | Done |
-| T-003 | Postgres в `docker-compose.dev.yml`, SQLAlchemy async-сессия, Alembic, тестовая инфраструктура (testcontainers, фабрики, фикстура `clock`) | M | T-002 | NFR-REL-03 | In progress |
+| T-003 | Postgres в `docker-compose.dev.yml`, SQLAlchemy async-сессия, Alembic, тестовая инфраструктура (testcontainers, фабрики, фикстура `clock`) | M | T-002 | NFR-REL-03 | Review |
 | T-004 | Каркас frontend: Vite + React + TS strict + Tailwind + Router + TanStack Query + i18next (ru) + Vitest + Testing Library + MSW; layout с нижней навигацией (заглушки экранов) | M | T-001 | NFR-UX-03..06 | Ready |
 | T-005 | Экспорт OpenAPI и генерация клиента (`openapi-typescript` + `openapi-fetch`), проверка актуальности | S | T-002, T-004 | NFR-MNT-04 | Ready |
 | T-006 | CI (GitHub Actions): lint, typecheck, тесты с покрытием (пороги), сборка frontend, проверка OpenAPI | S | T-003, T-005 | NFR-MNT-03 | Ready |
@@ -110,11 +110,14 @@
 **T-006**
 
 - CI запускает `pre-commit run --all-files` — те же проверки, что локально.
+- CI запускает `pre-commit run gitleaks-history --hook-stage manual` (на коммите хук видит только индекс) и интеграционные/миграционные тесты с Docker (из T-003, L-022).
 
 **T-007**
 
 - api запускается `uvicorn app.main:create_app --factory --proxy-headers --forwarded-allow-ips=<сеть compose>` (флаг `--no-access-log` не нужен — access-лог uvicorn отключён в коде).
 - Caddy передаёт в api `X-Request-ID` (`request_header X-Request-ID {http.request.uuid}`): один id в логах Caddy и api.
+- api подключается к БД отдельной ролью без прав суперпользователя; миграции выполняет роль-владелец схемы (из T-003).
+- Образ Postgres закреплён по digest (не плавающий тег `postgres:18`) (из T-003).
 - У сервиса `db` в prod-compose нет опубликованных портов — доступ только из сети compose; пароль БД — только в серверном `.env`, не в образах, compose-файлах и логах (из T-003, требование безопасности оператора).
 
 **T-010**
@@ -124,9 +127,11 @@
 - 11-я неудачная попытка за 15 мин → `429 too_many_attempts`, даже с верным паролем.
 - Изменяющий запрос с чужим `Origin` → `403`.
 - Фикстура доступа: для каждого маршрута дома — `401` без сессии, `404` для чужого дома.
+- Фабрика `make_user` в `backend/tests/factories.py` поверх фикстуры `db_session` (перенесено из T-003, ADR-0011).
 
 **T-011**
 
+- Фабрика `make_household` (и мест по умолчанию) в `backend/tests/factories.py` поверх фикстуры `db_session` (перенесено из T-003, ADR-0011).
 - Регистрация без приглашения создаёт «Мой дом» и места Холодильник (fridge), Морозилка (freezer), Кухонный шкаф (pantry).
 - Член дома A получает `404` на любой путь дома B.
 - Последний участник покидает дом → `archived_at` заполнен, данные не удалены.
@@ -145,6 +150,7 @@
 
 - Миграция загружает 331 позицию; повторный запуск не создаёт дубликатов и обновляет изменённые поля.
 - CI запускает `validate_catalog.py`.
+- Тест миграций на заполненной БД: данные справочника переживают `upgrade head` (вторая половина NFR-REL-03, из T-003).
 
 **T-021**
 
