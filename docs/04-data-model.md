@@ -1,6 +1,6 @@
 # 04. Модель данных
 
-DDL MVP — [db/schema.sql](db/schema.sql) (проверен на PostgreSQL 16; инварианты — [db/schema_smoke_test.sql](db/schema_smoke_test.sql)). Решения — [ADR-0005](adr/0005-inventory-batches-and-event-log.md), [ADR-0006](adr/0006-quantity-levels-thresholds.md), [ADR-0007](adr/0007-household-products-from-catalog.md).
+Проектная DDL MVP — [db/schema_design.sql](db/schema_design.sql) (проверена на PostgreSQL 16 и 18; инварианты — [db/schema_smoke_test.sql](db/schema_smoke_test.sql)). Реализованная схема (дамп после миграций) — [db/schema.sql](db/schema.sql). Решения — [ADR-0005](adr/0005-inventory-batches-and-event-log.md), [ADR-0006](adr/0006-quantity-levels-thresholds.md), [ADR-0007](adr/0007-household-products-from-catalog.md).
 
 ## 1. ER-диаграмма (MVP)
 
@@ -165,8 +165,11 @@ LIMIT :limit;
 ## 5. Миграции
 
 - Alembic, имена ревизий `YYYYMMDD_HHMM_<описание>`.
-- Первая миграция воспроизводит `schema.sql`; загрузка справочника — отдельная data-миграция, читающая `docs/catalog/*.csv` (upsert по `slug`, чтобы повторные загрузки обновляли справочник).
-- После каждой миграции схемы: `pg_dump --schema-only --no-owner` → обновить `docs/db/schema.sql` (задача DoD).
+- Проект и факт разделены: `docs/db/schema_design.sql` — проект всей схемы MVP (не теряется, правится только по согласованию), `docs/db/schema.sql` — дамп реальной БД после миграций.
+- Первая миграция (T-003) — расширение `pg_trgm` и функции `zk_search_norm`/`zk_search_fold`. Таблицы переносятся из проекта в миграции задачами, которые вводят их модели (T-010, T-011, T-020, T-031…), DDL — как в `schema_design.sql`, если задача явно не меняет проект.
+- Загрузка справочника — отдельная data-миграция, читающая `docs/catalog/*.csv` (upsert по `slug`, чтобы повторные загрузки обновляли справочник).
+- После каждой миграции схемы: `pg_dump --schema-only --no-owner` из dev-БД → обновить `docs/db/schema.sql` (команда — в шапке файла; задача DoD).
+- Имена ограничений: соглашение `MetaData` повторяет имена Postgres по умолчанию (`<таблица>_pkey`, `_<колонки>_key`, `_fkey`, `_idx`); `CHECK` — только с явным именем.
 - Удаление/переименование колонок — в два релиза (expand → contract).
 
 ## 6. Будущие таблицы (эскиз, уточняется в задачах)

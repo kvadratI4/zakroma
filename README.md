@@ -11,7 +11,7 @@
 | [01 — Назначение](docs/01-vision.md) | Зачем приложение, для кого, принципы, что вне рамок |
 | [02 — Требования](docs/02-requirements.md) | Функциональные (FR) и нефункциональные (NFR) требования по этапам |
 | [03 — Архитектура](docs/03-architecture.md) | Компоненты, стек, слои backend/frontend, интеграции будущих этапов |
-| [04 — Модель данных](docs/04-data-model.md) | Таблицы, связи, инварианты; DDL в [db/schema.sql](docs/db/schema.sql) |
+| [04 — Модель данных](docs/04-data-model.md) | Таблицы, связи, инварианты; проект DDL — [db/schema_design.sql](docs/db/schema_design.sql), реализованная схема — [db/schema.sql](docs/db/schema.sql) |
 | [05 — Доменные правила](docs/05-domain-rules.md) | Единицы, уровни запаса, пороги, сроки годности, оценка «хватит на…» — с тест-векторами |
 | [06 — API](docs/06-api.md) | REST-контракт v1 |
 | [07 — UI/UX](docs/07-ui-ux.md) | Экраны, сценарии, правила «ввод в 2 тапа» |
@@ -42,6 +42,14 @@
 uv tool install pre-commit && uv tool update-shell   # затем перезапустить терминал
 pre-commit install                                  # проверки при каждом git commit
 pre-commit run --all-files                          # проверить весь репозиторий
+```
+
+Для backend нужен [Docker](https://www.docker.com/) (dev-БД и интеграционные тесты):
+
+```bash
+cd backend && uv sync && uv run python scripts/init_dev_env.py   # пароль БД — в deploy/.env.dev, файл не коммитится
+docker compose -f deploy/docker-compose.dev.yml up -d --wait
+cd backend && uv run alembic upgrade head
 ```
 
 Остальные команды (backend, frontend, справочник) — в разделе «Команды» [CLAUDE.md](CLAUDE.md).

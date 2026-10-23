@@ -12,6 +12,8 @@ paths:
 - Domain test vectors live in `docs/05-domain-rules.md`; implement them as `pytest.mark.parametrize` tables, one row per vector, with ids.
 - Fixed time: use the `clock` fixture (2026-11-10 12:00 Europe/Moscow), never real `now()`.
 - Integration tests hit a real Postgres (testcontainers); no SQLite, no mocking the DB.
+- DB isolation (ADR-0011): use the `db_session` fixture (per-test transaction rolled back; app `commit()` = SAVEPOINT) and the `app`/`client` fixtures, which override `get_session`. Never open your own `AsyncSession`/engine in app code bypassing `get_session`; never clean up with `DELETE`. Migration tests use their own empty database. An app you build in a test → `tests.http.serve(app)` so its pool is closed.
+- Credentials in tests are generated at runtime (`secrets.token_urlsafe`), never literals: ruff S105 and gitleaks must stay green.
 - External services are replaced by fakes implementing the port protocol; no network in the default test run.
 - Each new household-scoped route must be added to the access matrix (401 without session, 404 for another household, 404 for foreign entity id).
 - Do not weaken or delete an existing assertion to make a test pass without the operator's explicit OK.

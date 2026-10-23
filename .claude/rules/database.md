@@ -8,7 +8,8 @@ paths:
 
 # Database rules
 
-- `docs/db/schema.sql` is the design reference until the first migration exists; after that Alembic migrations are the source of truth and `schema.sql` is regenerated (`pg_dump --schema-only --no-owner`) in the same task.
+- Alembic migrations are the source of truth. `docs/db/schema.sql` is a dump of the migrated dev database (`pg_dump --schema-only --no-owner`, command in its header), regenerated in the task that changes the schema. `docs/db/schema_design.sql` is the design of the whole MVP schema: tables move from it into migrations with the task that adds their models; never delete or rewrite it without the operator's OK. (T-003)
+- Constraint names follow `app/db/base.py` `NAMING_CONVENTION` (Postgres defaults); every `CHECK` needs an explicit name.
 - Never edit a migration that may have been applied anywhere (merged to main). Write a new one.
 - Revision names `YYYYMMDD_HHMM_<what>`. Data migrations (catalog load) separate from schema migrations.
 - Expand → contract for renames/drops: add new column, backfill, switch code, drop in a later release.

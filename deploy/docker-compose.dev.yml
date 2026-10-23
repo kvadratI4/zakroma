@@ -1,0 +1,23 @@
+# Local development database. Credentials come from deploy/.env.dev
+# (create it once: cd backend && uv run python scripts/init_dev_env.py).
+name: zakroma-dev
+
+services:
+  db:
+    image: postgres:18
+    env_file:
+      - path: .env.dev
+        required: true
+    ports:
+      # Loopback only: the database must not be reachable from the network.
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:

@@ -1,0 +1,27 @@
+# gitleaks: default rules + project rules for database credentials (T-003, AC-10).
+# The default ruleset does not catch a password inside a connection URL.
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "credentials-in-url"
+description = "Password inside a URL (postgresql://user:password@host, etc.)"
+regex = '''(?i)\b[a-z][a-z0-9+.\-]*://[^\s:/@'"]+:([^\s:/@'"]{8,})@'''
+secretGroup = 1
+entropy = 3.5
+keywords = ["://"]
+
+[[rules]]
+id = "password-assignment"
+description = "Password assigned to a *PASSWORD* variable or key"
+regex = '''(?i)\b[a-z0-9_]*password[a-z0-9_]*["']?\s*[:=]\s*["']?([^\s"',;]{8,})'''
+secretGroup = 1
+entropy = 3.5
+keywords = ["password"]
+
+# Templates and generated values are not secrets: {PASSWORD}, ${VAR}, <пароль>, function calls.
+[[allowlists]]
+description = "placeholders and code that generates passwords"
+regexTarget = "secret"
+regexes = ['''^[{$<%]''', '''\(''', '''^\w+\.\w+''']

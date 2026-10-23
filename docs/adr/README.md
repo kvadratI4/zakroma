@@ -16,3 +16,4 @@
 | [0008](0008-generated-api-client.md) | API-клиент frontend генерируется из OpenAPI | Accepted |
 | [0009](0009-agent-workflow-tdd.md) | Процесс: предложение → вопросы → ответы → TDD-реализация | Accepted |
 | [0010](0010-llm-provider.md) | Выбор LLM-провайдера для S2–S4 | Proposed (решить до S2) |
+| [0011](0011-test-db-isolation.md) | Изоляция тестов БД: транзакция с откатом на тест | Accepted |
