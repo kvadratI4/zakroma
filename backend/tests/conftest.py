@@ -7,6 +7,7 @@ from zoneinfo import ZoneInfo
 
 import httpx
 import pytest
+from alembic import command
 from fastapi import FastAPI
 from sqlalchemy.ext.asyncio import AsyncConnection, AsyncSession, create_async_engine
 from sqlalchemy.pool import NullPool
@@ -18,6 +19,7 @@ from app.core.clock import FixedClock
 from app.core.config import Settings
 from app.main import create_app
 from tests.http import serve
+from tests.migrations.alembic_config import alembic_config
 
 POSTGRES_IMAGE = "postgres:18"
 # Fixed "now" of the domain test vectors (docs/05-domain-rules.md).
@@ -46,7 +48,12 @@ def postgres() -> Iterator[PostgresContainer]:
 
 @pytest.fixture(scope="session")
 def database_url(postgres: PostgresContainer) -> str:
-    return postgres.get_connection_url(host="127.0.0.1")
+    """Shared test database, migrated to head once per run."""
+    url = postgres.get_connection_url(host="127.0.0.1")
+    config = alembic_config(url)
+    config.attributes["skip_logging_config"] = True  # keep the app's structlog setup
+    command.upgrade(config, "head")
+    return url
 
 
 @pytest.fixture

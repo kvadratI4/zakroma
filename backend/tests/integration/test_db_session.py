@@ -99,3 +99,9 @@ def test_test_database_container_listens_on_loopback_only(postgres: PostgresCont
 
     assert bindings
     assert {binding["HostIp"] for binding in bindings} == {"127.0.0.1"}
+
+
+async def test_shared_test_database_is_migrated(db_session: AsyncSession) -> None:
+    folded = await db_session.scalar(text("SELECT zk_search_fold('Малако')"))
+
+    assert folded == "малака"
