@@ -99,6 +99,10 @@
 - pre-commit-хуки `ruff check` и `ruff format` срабатывают на изменённом файле в `backend/` (проверка: файл с нарушением → хук падает/исправляет).
 - `.claude/settings.json` разрешает `Bash(pre-commit run *)` и `Bash(python docs/catalog/validate_catalog.py *)` (на Windows `python3` не работает — L-014).
 
+**T-003**
+
+- `GET /api/v1/health` → `200 {"status": "ok", "db": "ok"}`; при недоступной БД — `503` problem+json (`code: db_unavailable`) — договорено в T-002, вопрос 3.
+
 **T-004**
 
 - pre-commit-хуки `eslint` и `prettier` срабатывают на изменённом файле в `frontend/`.
@@ -106,6 +110,11 @@
 **T-006**
 
 - CI запускает `pre-commit run --all-files` — те же проверки, что локально.
+
+**T-007**
+
+- api запускается `uvicorn app.main:create_app --factory --proxy-headers --forwarded-allow-ips=<сеть compose>` (флаг `--no-access-log` не нужен — access-лог uvicorn отключён в коде).
+- Caddy передаёт в api `X-Request-ID` (`request_header X-Request-ID {http.request.uuid}`): один id в логах Caddy и api.
 
 **T-010**
 
@@ -125,6 +134,11 @@
 
 - Ссылка работает 7 дней; отозванная/просроченная → `404 invite_invalid`.
 - Повторное принятие членом дома — идемпотентно (`200`, без дубликатов).
+- Токен из пути `/invites/{token}` не попадает в логи: в access-логе — шаблон маршрута (`/api/v1/invites/{token}`) или маска; тест «токен не появляется в stdout» (из T-002).
+
+**T-013**
+
+- Токен из пути `/auth/password-reset/{token}` не попадает в логи (как у T-012; из T-002).
 
 **T-020**
 
