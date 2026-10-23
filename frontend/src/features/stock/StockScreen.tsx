@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 
 import { greetingKey } from "../../shared/format/greeting";
 import { EmptyState } from "../../shared/ui/EmptyState";
@@ -10,7 +11,19 @@ export function StockScreen() {
   return (
     <div className="grid gap-5">
       <ScreenTitle>{t(`greeting.${greetingKey(new Date())}`)}</ScreenTitle>
-      <EmptyState title={t("stock.empty.title")}>{t("stock.empty.text")}</EmptyState>
+      <EmptyState
+        title={t("stock.empty.title")}
+        action={
+          <Link
+            to="/add"
+            className="inline-flex h-12 items-center rounded-full bg-accent px-6 font-semibold text-on-accent"
+          >
+            {t("stock.empty.action")}
+          </Link>
+        }
+      >
+        {t("stock.empty.text")}
+      </EmptyState>
     </div>
   );
 }

@@ -63,6 +63,14 @@ describe("app shell (AC-3)", () => {
     expect(screen.getByRole("heading", { level: 1, name: /добр(ое|ый|ой)/i })).toBeInTheDocument();
   });
 
+  it("offers the first action right where the stock will appear", async () => {
+    const { user } = renderApp("/");
+
+    await user.click(screen.getByRole("link", { name: "Добавить продукт" }));
+
+    expect(screen.getByRole("heading", { level: 1, name: "Добавить продукт" })).toBeInTheDocument();
+  });
+
   it("gives every icon-only control an accessible name (AC-7)", () => {
     renderApp("/");
 
