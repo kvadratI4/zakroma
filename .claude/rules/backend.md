@@ -15,3 +15,4 @@ paths:
 - Async SQLAlchemy 2.0 style (`select()`, `session.execute`), no legacy `Query`.
 - Typing: `mypy --strict` clean; no `Any` in public signatures without a comment why.
 - Logging: structlog, key-value, no personal data (emails, tokens) in logs.
+- Log the request path without the query string; keep `httpx`/`httpcore` loggers at WARNING or above (at INFO they log full URLs, query included). The access line is written only by `RequestContextMiddleware`; uvicorn's access log is disabled in `configure_logging`, so `--no-access-log` is not needed. (T-002)

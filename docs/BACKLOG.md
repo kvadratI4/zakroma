@@ -21,12 +21,12 @@
 
 | Этап | Задач | Done |
 | --- | --- | --- |
-| E0 Фундамент | 8 | 0 |
+| E0 Фундамент | 8 | 2 |
 | E1 Учётные записи и дома | 6 | 0 |
 | E2 Справочник и продукты | 3 | 0 |
 | E3 Запасы | 9 | 0 |
 | E4 PWA и запуск | 5 | 0 |
-| **MVP итого** | **31** | **0** |
+| **MVP итого** | **31** | **2** |
 | S2 Ввод | 9 | 0 |
 | S3 Рецепты и покупки | 7 | 0 |
 | S4 YouTube и аналитика | 4 | 0 |
@@ -41,7 +41,7 @@
 | ID | Задача | Размер | Зависит от | Требования | Статус |
 | --- | --- | --- | --- | --- | --- |
 | T-001 | Монорепо: структура каталогов, `.editorconfig`, `.gitignore`, pre-commit (ruff, prettier, eslint, trailing whitespace), README команд | S | — | NFR-MNT-02 | Done |
-| T-002 | Каркас backend: FastAPI, `pydantic-settings`, structlog, `/api/v1/health`, problem+json обработчик ошибок, `Clock`, uv, mypy strict, pytest | M | T-001 | NFR-MNT-01 | Ready |
+| T-002 | Каркас backend: FastAPI, `pydantic-settings`, structlog, `/api/v1/health`, problem+json обработчик ошибок, `Clock`, uv, mypy strict, pytest | M | T-001 | NFR-MNT-01 | Done |
 | T-003 | Postgres в `docker-compose.dev.yml`, SQLAlchemy async-сессия, Alembic, тестовая инфраструктура (testcontainers, фабрики, фикстура `clock`) | M | T-002 | NFR-REL-03 | Ready |
 | T-004 | Каркас frontend: Vite + React + TS strict + Tailwind + Router + TanStack Query + i18next (ru) + Vitest + Testing Library + MSW; layout с нижней навигацией (заглушки экранов) | M | T-001 | NFR-UX-03..06 | Ready |
 | T-005 | Экспорт OpenAPI и генерация клиента (`openapi-typescript` + `openapi-fetch`), проверка актуальности | S | T-002, T-004 | NFR-MNT-04 | Ready |
@@ -99,6 +99,10 @@
 - pre-commit-хуки `ruff check` и `ruff format` срабатывают на изменённом файле в `backend/` (проверка: файл с нарушением → хук падает/исправляет).
 - `.claude/settings.json` разрешает `Bash(pre-commit run *)` и `Bash(python docs/catalog/validate_catalog.py *)` (на Windows `python3` не работает — L-014).
 
+**T-003**
+
+- `GET /api/v1/health` → `200 {"status": "ok", "db": "ok"}`; при недоступной БД — `503` problem+json (`code: db_unavailable`) — договорено в T-002, вопрос 3.
+
 **T-004**
 
 - pre-commit-хуки `eslint` и `prettier` срабатывают на изменённом файле в `frontend/`.
@@ -106,6 +110,11 @@
 **T-006**
 
 - CI запускает `pre-commit run --all-files` — те же проверки, что локально.
+
+**T-007**
+
+- api запускается `uvicorn app.main:create_app --factory --proxy-headers --forwarded-allow-ips=<сеть compose>` (флаг `--no-access-log` не нужен — access-лог uvicorn отключён в коде).
+- Caddy передаёт в api `X-Request-ID` (`request_header X-Request-ID {http.request.uuid}`): один id в логах Caddy и api.
 
 **T-010**
 
@@ -125,6 +134,11 @@
 
 - Ссылка работает 7 дней; отозванная/просроченная → `404 invite_invalid`.
 - Повторное принятие членом дома — идемпотентно (`200`, без дубликатов).
+- Токен из пути `/invites/{token}` не попадает в логи: в access-логе — шаблон маршрута (`/api/v1/invites/{token}`) или маска; тест «токен не появляется в stdout» (из T-002).
+
+**T-013**
+
+- Токен из пути `/auth/password-reset/{token}` не попадает в логи (как у T-012; из T-002).
 
 **T-020**
 

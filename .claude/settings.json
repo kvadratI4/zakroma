@@ -14,6 +14,8 @@
       "Bash(pnpm gen:api)",
       "Bash(pnpm build)",
       "Bash(python3 docs/catalog/validate_catalog.py *)",
+      "Bash(python docs/catalog/validate_catalog.py *)",
+      "Bash(pre-commit run *)",
       "Bash(git status *)",
       "Bash(git diff *)",
       "Bash(git log *)",
