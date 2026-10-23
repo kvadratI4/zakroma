@@ -94,6 +94,16 @@
 
 ### Критерии приёмки MVP-задач (кратко; подробно — в файле задачи)
 
+**T-002**
+- pre-commit-хуки `ruff check` и `ruff format` срабатывают на изменённом файле в `backend/` (проверка: файл с нарушением → хук падает/исправляет).
+- `.claude/settings.json` разрешает `Bash(pre-commit run *)` и `Bash(python docs/catalog/validate_catalog.py *)` (на Windows `python3` не работает — L-014).
+
+**T-004**
+- pre-commit-хуки `eslint` и `prettier` срабатывают на изменённом файле в `frontend/`.
+
+**T-006**
+- CI запускает `pre-commit run --all-files` — те же проверки, что локально.
+
 **T-010**
 - Регистрация с занятым email → `409 email_taken`; с паролем < 8 → `422 weak_password`.
 - После входа cookie `HttpOnly; Secure; SameSite=Lax`, в БД хранится только хеш токена.
