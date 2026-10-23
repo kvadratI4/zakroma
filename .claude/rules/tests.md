@@ -16,3 +16,4 @@ paths:
 - Each new household-scoped route must be added to the access matrix (401 without session, 404 for another household, 404 for foreign entity id).
 - Do not weaken or delete an existing assertion to make a test pass without the operator's explicit OK.
 - Bug fix = first a failing test that reproduces it.
+- Helper routers/classes inside test modules must not be named `test_*`/`Test*` (use `probe_router`, `FakeX`): pytest tries to collect them (`PytestCollectionWarning`). (T-002)
