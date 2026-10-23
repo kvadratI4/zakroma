@@ -47,6 +47,11 @@
 > Заполняются по мере создания каркаса (T-001…T-007). Агент, выполнивший задачу каркаса, обновляет этот раздел.
 
 ```bash
+# pre-commit (после T-001): установка один раз на машину и на клон
+uv tool install pre-commit && uv tool update-shell   # затем перезапустить терминал
+pre-commit install                                  # хуки на git commit в этом клоне
+pre-commit run --all-files                          # проверить весь репозиторий
+
 # backend (после T-002/T-003)
 cd backend && uv run pytest                     # все тесты
 cd backend && uv run pytest tests/unit -q       # быстрые доменные
@@ -57,7 +62,7 @@ cd backend && uv run alembic upgrade head
 cd frontend && pnpm test && pnpm lint && pnpm typecheck
 cd frontend && pnpm gen:api                     # после изменения API (T-005)
 
-# справочник
+# справочник (на Windows — `python` или `py`: `python3` там заглушка Microsoft Store)
 python3 docs/catalog/validate_catalog.py
 
 # весь стек локально (после T-007)
