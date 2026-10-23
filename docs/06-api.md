@@ -127,7 +127,7 @@
 
 | Метод | Путь | Ответ |
 |---|---|---|
-| GET | `/health` | `200 {status: "ok"}` (T-002); с T-003 — `{status: "ok", db: "ok"}`, при недоступной БД — `503` |
+| GET | `/health` | `200 {status: "ok", db: "ok"}`; БД недоступна или не ответила за 5 с → `503` problem+json `db_unavailable` (без деталей подключения) |
 | GET | `/openapi.json` | схема |
 | GET | `/docs` | Swagger UI — кроме `ENVIRONMENT=prod` |
 

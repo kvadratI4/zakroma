@@ -1,5 +1,3 @@
-import asyncio
-
 import structlog
 from fastapi import APIRouter
 from sqlalchemy.exc import SQLAlchemyError
@@ -18,8 +16,7 @@ logger = structlog.get_logger(__name__)
 @router.get("/health")
 async def get_health(session: SessionDep) -> HealthOut:
     try:
-        async with asyncio.timeout(DB_CHECK_TIMEOUT_SECONDS):
-            await ping(session)
+        await ping(session, timeout_seconds=DB_CHECK_TIMEOUT_SECONDS)
     except (OSError, SQLAlchemyError, TimeoutError) as exc:
         # Only the exception class: driver messages may contain host and user names.
         logger.warning("db_unavailable", error=type(exc).__name__)

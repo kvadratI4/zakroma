@@ -60,6 +60,8 @@ pythonpath = ["."]
 [tool.coverage.run]
 source = ["app"]
 branch = true
+# SQLAlchemy async runs on greenlets; without this, lines after DB awaits look uncovered.
+concurrency = ["greenlet", "thread"]
 
 [tool.coverage.report]
 fail_under = 80

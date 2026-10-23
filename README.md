@@ -44,6 +44,14 @@ pre-commit install                                  # проверки при к
 pre-commit run --all-files                          # проверить весь репозиторий
 ```
 
+Для backend нужен [Docker](https://www.docker.com/) (dev-БД и интеграционные тесты):
+
+```bash
+cd backend && uv sync && uv run python scripts/init_dev_env.py   # пароль БД — в deploy/.env.dev, файл не коммитится
+docker compose -f deploy/docker-compose.dev.yml up -d --wait
+cd backend && uv run alembic upgrade head
+```
+
 Остальные команды (backend, frontend, справочник) — в разделе «Команды» [CLAUDE.md](CLAUDE.md).
 
 ## Как вести разработку

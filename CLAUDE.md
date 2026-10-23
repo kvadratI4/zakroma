@@ -51,15 +51,21 @@
 uv tool install pre-commit && uv tool update-shell   # затем перезапустить терминал
 pre-commit install                                  # хуки на git commit в этом клоне
 pre-commit run --all-files                          # проверить весь репозиторий
+pre-commit run gitleaks-history --hook-stage manual # секреты во всей истории git
 
-# backend (T-002; alembic — после T-003)
+# backend (T-002, T-003); интеграционным тестам нужен запущенный Docker
 cd backend && uv sync                           # зависимости (Python 3.13, uv.lock)
+cd backend && uv run python scripts/init_dev_env.py   # один раз: deploy/.env.dev со случайным паролем БД (не читать, не коммитить)
+docker compose -f deploy/docker-compose.dev.yml up -d --wait   # dev Postgres 18 на 127.0.0.1:5432
 cd backend && uv run uvicorn app.main:create_app --factory --reload   # dev-сервер :8000
 cd backend && uv run pytest                     # все тесты
 cd backend && uv run pytest tests/unit -q       # быстрые доменные
 cd backend && uv run pytest --cov --cov-report=term-missing   # покрытие (порог 80 %)
-cd backend && uv run ruff check . && uv run ruff format --check . && uv run mypy app tests
-cd backend && uv run alembic upgrade head
+cd backend && uv run ruff check . && uv run ruff format --check . && uv run mypy app tests scripts alembic
+cd backend && uv run alembic upgrade head      # миграции dev-БД
+cd backend && uv run alembic revision --autogenerate -m "what"   # новая ревизия (имя файла YYYYMMDD_HHMM_what)
+cd backend && uv run alembic check             # модели = миграции
+# после изменения схемы — пересоздать docs/db/schema.sql (команда в шапке файла)
 # логи в dev читаемым текстом: LOG_FORMAT=console (по умолчанию JSON)
 
 # frontend (после T-004)
