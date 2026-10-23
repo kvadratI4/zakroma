@@ -20,6 +20,19 @@ repos:
       - id: check-added-large-files
         args: [--maxkb=500]
 
+  # Secrets (passwords in DSNs, tokens, keys) must never reach a commit (T-003, AC-10).
+  # Rules: .gitleaks.toml. On commit only staged changes are scanned; the whole history:
+  #   pre-commit run gitleaks-history --hook-stage manual
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+      - id: gitleaks
+        alias: gitleaks-history
+        name: Detect hardcoded secrets (whole git history)
+        entry: gitleaks git --redact --verbose
+        stages: [manual]
+
   - repo: local
     hooks:
       - id: validate-catalog
