@@ -21,12 +21,12 @@
 
 | Этап | Задач | Done |
 | --- | --- | --- |
-| E0 Фундамент | 8 | 3 |
+| E0 Фундамент | 8 | 4 |
 | E1 Учётные записи и дома | 6 | 0 |
 | E2 Справочник и продукты | 3 | 0 |
 | E3 Запасы | 9 | 0 |
 | E4 PWA и запуск | 5 | 0 |
-| **MVP итого** | **31** | **3** |
+| **MVP итого** | **31** | **4** |
 | S2 Ввод | 9 | 0 |
 | S3 Рецепты и покупки | 7 | 0 |
 | S4 YouTube и аналитика | 4 | 0 |
@@ -43,11 +43,11 @@
 | T-001 | Монорепо: структура каталогов, `.editorconfig`, `.gitignore`, pre-commit (ruff, prettier, eslint, trailing whitespace), README команд | S | — | NFR-MNT-02 | Done |
 | T-002 | Каркас backend: FastAPI, `pydantic-settings`, structlog, `/api/v1/health`, problem+json обработчик ошибок, `Clock`, uv, mypy strict, pytest | M | T-001 | NFR-MNT-01 | Done |
 | T-003 | Postgres в `docker-compose.dev.yml`, SQLAlchemy async-сессия, Alembic, тестовая инфраструктура (testcontainers, фабрики, фикстура `clock`) | M | T-002 | NFR-REL-03 | Done |
-| T-004 | Каркас frontend: Vite + React + TS strict + Tailwind + Router + TanStack Query + i18next (ru) + Vitest + Testing Library + MSW; layout с нижней навигацией (заглушки экранов) | M | T-001 | NFR-UX-03..06 | In progress |
+| T-004 | Каркас frontend: Vite + React + TS strict + Tailwind + Router + TanStack Query + i18next (ru) + Vitest + Testing Library + MSW; layout с нижней навигацией (заглушки экранов) | M | T-001 | NFR-UX-03..06 | Done |
 | T-005 | Экспорт OpenAPI и генерация клиента (`openapi-typescript` + `openapi-fetch`), проверка актуальности | S | T-002, T-004 | NFR-MNT-04 | Ready |
 | T-006 | CI (GitHub Actions): lint, typecheck, тесты с покрытием (пороги), сборка frontend, проверка OpenAPI | S | T-003, T-005 | NFR-MNT-03 | Ready |
 | T-007 | Dockerfile api (multi-stage), образ caddy со сборкой SPA, `deploy/docker-compose.yml`, `Caddyfile`, `.env.example` — локальный запуск prod-сборки | M | T-003, T-004 | NFR-MNT-06 | Ready |
-| T-008 | Дизайн-система и визуальный стиль: палитра (включая цвета уровней), типографика, отступы, токены Tailwind, базовые компоненты (кнопка, поле, строка списка, бейдж уровня, тост), макеты ключевых экранов (Запасы, Добавление, Внимание) на согласование с оператором; результат — `docs/10-design.md` + `shared/ui` | M | T-004 | NFR-UX-03..06, 07-ui-ux | Backlog |
+| T-008 | Библиотека компонентов в стиле «Фарфор» (стиль и токены — в T-004, `docs/10-design.md`): строка продукта, чип уровня, эмблемы мест (снежинка, колос, рябина), кнопки, поля, тост «Отменить», переключатель; макеты ключевых экранов на согласование (страницей-концептом, L-023); компоненты — в `shared/ui` | M | T-004 | NFR-UX-03..06, 07-ui-ux | Backlog |
 
 ### E1. Учётные записи и дома
 
@@ -90,7 +90,7 @@
 | T-041 | Выбор VPS/домена/S3 (сравнение тарифов на дату задачи), подготовка сервера по 09-deployment, деплой из CI с откатом | M | T-007, T-006 | NFR-SEC-01, NFR-MNT-06, NFR-COST-01 | Ready |
 | T-042 | Бэкапы: контейнер, шифрование, ротация, `RESTORE.md`, первая проверка восстановления | S | T-041 | NFR-REL-01, 02 | Ready |
 | T-043 | E2E Playwright: 6 сценариев из 08-testing (Chromium + WebKit, мобильный viewport) | M | T-036..T-040 | — | Ready |
-| T-044 | Пилот с семьёй 2 недели: сбор замечаний → LESSONS (UX) → новые задачи; решение о порядке S2/S3 | S | T-041..T-043 | Критерии успеха MVP | Backlog |
+| T-044 | Пилот с семьёй 2 недели: сбор замечаний → LESSONS (UX) → новые задачи; пересмотр предварительного меню (T-004, 10-design §6); решение о порядке S2/S3 | S | T-041..T-043 | Критерии успеха MVP | Backlog |
 
 ### Критерии приёмки MVP-задач (кратко; подробно — в файле задачи)
 
@@ -107,8 +107,13 @@
 
 - pre-commit-хуки `eslint` и `prettier` срабатывают на изменённом файле в `frontend/`.
 
+**T-005**
+
+- Dev-прокси Vite `/api` → `http://127.0.0.1:8000`: frontend и backend работают вместе в разработке (из T-004).
+
 **T-006**
 
+- CI для frontend: `pnpm install --frozen-lockfile`, `typecheck`, `lint`, `format:check`, `test` с покрытием (порог 08-testing §6), `build`, `pnpm size` ≤ 300 КБ (из T-004).
 - CI запускает `pre-commit run --all-files` — те же проверки, что локально.
 - CI запускает `pre-commit run gitleaks-history --hook-stage manual` (на коммите хук видит только индекс) и интеграционные/миграционные тесты с Docker (из T-003, L-022).
 
@@ -196,6 +201,7 @@
 
 **T-040**
 
+- Тема до загрузки JS: токены `--zk-*` встроены в `index.html` (генерируются при сборке из `tokens.ts`), чтобы при тёмной системной теме не мелькал белый экран (из T-004).
 - Lighthouse PWA: устанавливаемо; оболочка открывается офлайн; при офлайне кнопки изменений неактивны с подсказкой.
 
 ---
