@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate docs/catalog/*.csv against the rules in docs/05-domain-rules.md and docs/db/schema.sql.
+"""Validate docs/catalog/*.csv against the rules in docs/05-domain-rules.md and docs/db/schema_design.sql.
 
 Stdlib only. Usage:  python3 docs/catalog/validate_catalog.py [catalog_dir]
 Exit code 0 = OK, 1 = errors found. Run after every manual edit of the catalog

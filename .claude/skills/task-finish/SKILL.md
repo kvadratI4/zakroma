@@ -12,7 +12,7 @@ disable-model-invocation: true
 2. Каждый критерий приёмки → ссылка на тест(ы), которые его проверяют.
 3. Документация — обнови то, что изменилось:
    - API → `docs/06-api.md` + перегенерированный клиент;
-   - схема → `docs/db/schema.sql` (из `pg_dump --schema-only`), `docs/04-data-model.md`;
+   - схема → `docs/db/schema.sql` (из `pg_dump --schema-only`, команда в шапке файла), `docs/04-data-model.md`; если таблица перенесена из проекта — сверить с `docs/db/schema_design.sql`;
    - доменное правило (только согласованное) → `docs/05-domain-rules.md`;
    - новые команды/порядок запуска → раздел «Команды» в `CLAUDE.md`;
    - архитектурное решение → новый ADR + индекс `docs/adr/README.md`;

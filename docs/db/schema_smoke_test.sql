@@ -1,5 +1,5 @@
--- Проверка инвариантов schema.sql на реальном Postgres.
--- Запуск: psql -v ON_ERROR_STOP=1 -d <пустая БД со schema.sql> -f schema_smoke_test.sql
+-- Проверка инвариантов проектной схемы schema_design.sql на реальном Postgres.
+-- Запуск: psql -v ON_ERROR_STOP=1 -d <пустая БД со schema_design.sql> -f schema_smoke_test.sql
 -- Каждая проверка «должно упасть» выполняется в SAVEPOINT; если не упала — RAISE.
 
 BEGIN;

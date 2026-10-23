@@ -39,7 +39,7 @@
 6. **Ошибки API** — `application/problem+json` со стабильным `code`; frontend переводит `code` через i18n.
 7. **API-клиент frontend генерируется** из OpenAPI; файлы `frontend/src/api/schema.d.ts` и `openapi.json` руками не редактируются.
 8. **Доменные правила** — источник истины [docs/05-domain-rules.md](docs/05-domain-rules.md). Сначала меняется документ (с согласия оператора), потом тест, потом код.
-9. **Миграции** — только Alembic, только вперёд; применённую миграцию не редактировать. После изменения схемы обновить `docs/db/schema.sql`.
+9. **Миграции** — только Alembic, только вперёд; применённую миграцию не редактировать. После изменения схемы обновить `docs/db/schema.sql` (дамп реальной БД); проект ещё не реализованных таблиц — `docs/db/schema_design.sql`, его не терять.
 10. **Секреты** — только в `.env` на сервере; во frontend и в репозитории их нет.
 
 ## Команды
@@ -79,7 +79,7 @@ docker compose -f deploy/docker-compose.dev.yml up -d
 | --- | --- |
 | Что и зачем | [docs/01-vision.md](docs/01-vision.md), [docs/02-requirements.md](docs/02-requirements.md) |
 | Как устроено | [docs/03-architecture.md](docs/03-architecture.md), [docs/adr/](docs/adr/) |
-| Данные | [docs/04-data-model.md](docs/04-data-model.md), [docs/db/schema.sql](docs/db/schema.sql) |
+| Данные | [docs/04-data-model.md](docs/04-data-model.md), [docs/db/schema.sql](docs/db/schema.sql) (факт), [docs/db/schema_design.sql](docs/db/schema_design.sql) (проект) |
 | Логика количеств, порогов, сроков | [docs/05-domain-rules.md](docs/05-domain-rules.md) |
 | Контракт API | [docs/06-api.md](docs/06-api.md) |
 | Экраны | [docs/07-ui-ux.md](docs/07-ui-ux.md) |
