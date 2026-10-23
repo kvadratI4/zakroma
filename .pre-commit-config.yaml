@@ -1,0 +1,56 @@
+# Install once per clone:  pre-commit install
+# Check everything:        pre-commit run --all-files
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: check-yaml
+      - id: check-json
+        # tsconfig files are JSONC (comments allowed) and would fail strict parsing.
+        exclude: (^|/)tsconfig[^/]*\.json$
+      - id: check-merge-conflict
+        # Without this flag the hook only checks while a merge is in progress.
+        args: [--assume-in-merge]
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: [--maxkb=500]
+
+  - repo: local
+    hooks:
+      - id: validate-catalog
+        name: validate catalog CSV
+        # language: python instead of system: on Windows `python3` may be a Microsoft Store stub.
+        language: python
+        entry: python docs/catalog/validate_catalog.py
+        files: ^docs/catalog/.*\.csv$
+        pass_filenames: false
+
+      # Linters below run tool versions pinned in backend/uv.lock and frontend/pnpm-lock.yaml.
+      # They are skipped until backend/ (T-002) and frontend/ (T-004) contain matching files.
+      - id: ruff-check
+        name: ruff check
+        language: system
+        entry: uv run --project backend ruff check --fix
+        files: ^backend/.*\.py$
+      - id: ruff-format
+        name: ruff format
+        language: system
+        entry: uv run --project backend ruff format
+        files: ^backend/.*\.py$
+      - id: eslint
+        name: eslint
+        language: system
+        entry: pnpm --dir frontend exec eslint --fix --cache .
+        files: ^frontend/.*\.(ts|tsx|js|jsx)$
+        pass_filenames: false
+      - id: prettier
+        name: prettier
+        language: system
+        entry: pnpm --dir frontend exec prettier --write --ignore-unknown .
+        files: ^frontend/.*\.(ts|tsx|js|jsx|json|css|html|md|ya?ml)$
+        pass_filenames: false

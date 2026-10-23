@@ -1,0 +1,332 @@
+slug,name_ru,aliases,category,unit,tracking_mode,default_location_kind,package_size,portion,low_below,plenty_from,excess_from,shelf_life_days,shelf_life_opened_days,shelf_life_frozen_days,keep_in_stock
+potato,Картофель,картошка,vegetables,g,level,pantry,,200,1000,5000,20000,60,,,true
+onion,Лук репчатый,лук,vegetables,g,level,pantry,,50,300,2000,10000,60,,,true
+red_onion,Лук красный,лук ялтинский,vegetables,g,level,pantry,,50,200,1000,3000,30,,,false
+garlic,Чеснок,,vegetables,g,level,pantry,,10,50,300,1000,90,,,true
+carrot,Морковь,морковка,vegetables,g,level,fridge,,100,500,2000,10000,30,,365,true
+beet,Свёкла,свекла|буряк,vegetables,g,level,fridge,,100,500,2000,10000,45,,,false
+cabbage,Капуста белокочанная,капуста,vegetables,g,level,fridge,,200,500,3000,10000,30,,,false
+red_cabbage,Капуста краснокочанная,,vegetables,g,level,fridge,,200,500,3000,10000,30,,,false
+chinese_cabbage,Капуста пекинская,,vegetables,g,level,fridge,,100,500,2000,10000,10,,,false
+cauliflower,Капуста цветная,,vegetables,g,level,fridge,,200,300,1500,5000,7,,240,false
+broccoli,Брокколи,,vegetables,g,level,fridge,,150,300,1500,5000,5,,240,false
+cucumber,Огурцы,огурец,vegetables,g,level,fridge,,100,500,2000,10000,7,,,false
+tomato,Помидоры,томаты|помидор,vegetables,g,level,fridge,,100,500,2000,10000,7,,,false
+cherry_tomato,Помидоры черри,черри,vegetables,g,exact,fridge,250,50,200,1000,3000,7,,,false
+bell_pepper,Перец болгарский,перец сладкий,vegetables,g,level,fridge,,100,500,2000,10000,10,,240,false
+chili_pepper,Перец острый (чили),чили,vegetables,g,level,fridge,,10,50,300,1000,14,,,false
+zucchini,Кабачки,цукини|кабачок,vegetables,g,level,fridge,,100,500,2000,10000,14,,,false
+eggplant,Баклажаны,баклажан,vegetables,g,level,fridge,,100,500,2000,10000,7,,,false
+pumpkin,Тыква,,vegetables,g,level,pantry,,100,500,2000,10000,60,,,false
+radish,Редис,редиска,vegetables,g,level,fridge,,50,200,1000,3000,7,,,false
+daikon,"Редька, дайкон",,vegetables,g,level,fridge,,50,200,1000,3000,21,,,false
+celery_root,Сельдерей корневой,,vegetables,g,level,fridge,,50,200,1000,3000,30,,,false
+celery_stalk,Сельдерей черешковый,,vegetables,g,level,fridge,,50,200,1000,3000,10,,,false
+leek,Лук-порей,порей,vegetables,g,level,fridge,,50,200,1000,3000,14,,,false
+ginger,Имбирь,,vegetables,g,level,fridge,,10,50,300,1000,21,,180,false
+corn_cob,Кукуруза в початках,,vegetables,pcs,exact,fridge,,1,2,6,12,3,,240,false
+sweet_potato,Батат,,vegetables,g,level,pantry,,100,500,2000,10000,21,,,false
+asparagus,Спаржа,,vegetables,g,exact,fridge,250,50,200,1000,3000,4,,,false
+green_beans,Фасоль стручковая,,vegetables,g,level,fridge,,50,200,1000,3000,5,,240,false
+champignons,Шампиньоны,грибы,mushrooms,g,exact,fridge,400,50,200,1000,3000,5,,240,false
+oyster_mushrooms,Вешенки,,mushrooms,g,exact,fridge,300,50,200,1000,3000,4,,240,false
+dried_mushrooms,Грибы сушёные,,mushrooms,g,exact,pantry,50,10,20,300,1000,365,,,false
+apple,Яблоки,яблоко,fruits,g,level,fridge,,150,500,3000,10000,30,,,false
+banana,Бананы,банан,fruits,g,level,pantry,,150,500,3000,10000,5,,,false
+orange,Апельсины,апельсин,fruits,g,level,fridge,,150,500,3000,10000,14,,,false
+mandarin,Мандарины,мандарин,fruits,g,level,fridge,,150,500,3000,10000,14,,,false
+lemon,Лимоны,лимон,fruits,pcs,exact,fridge,,,1,5,12,21,5,,false
+lime,Лайм,,fruits,pcs,exact,fridge,,,1,5,12,14,4,,false
+grapefruit,Грейпфрут,,fruits,pcs,exact,fridge,,,1,5,10,14,,,false
+pear,Груши,груша,fruits,g,level,fridge,,150,500,3000,10000,10,,,false
+grapes,Виноград,,fruits,g,level,fridge,,100,200,1000,3000,5,,,false
+kiwi,Киви,,fruits,pcs,exact,fridge,,1,2,10,20,14,,,false
+pineapple,Ананас,,fruits,pcs,exact,pantry,,,,2,4,5,3,,false
+mango,Манго,,fruits,pcs,exact,pantry,,,,3,6,5,,,false
+pomegranate,Гранат,,fruits,pcs,exact,fridge,,,,4,10,30,,,false
+persimmon,Хурма,,fruits,g,level,fridge,,150,500,3000,10000,7,,,false
+plum,Сливы,слива,fruits,g,level,fridge,,100,200,1000,3000,5,,,false
+peach,Персики,персик|нектарины,fruits,g,level,fridge,,100,200,1000,3000,4,,,false
+apricot,Абрикосы,абрикос,fruits,g,level,fridge,,100,200,1000,3000,4,,,false
+strawberry,Клубника,земляника,fruits,g,exact,fridge,500,100,200,1000,3000,3,,365,false
+raspberry,Малина,,fruits,g,exact,fridge,125,100,200,1000,3000,2,,365,false
+blueberry,"Голубика, черника",черника|голубика,fruits,g,exact,fridge,125,100,200,1000,3000,7,,365,false
+cherry,"Черешня, вишня",вишня|черешня,fruits,g,exact,fridge,,100,200,1000,3000,5,,365,false
+cranberry,"Клюква, брусника",клюква|брусника,fruits,g,exact,fridge,,100,200,1000,3000,30,,365,false
+watermelon,Арбуз,,fruits,pcs,exact,pantry,,,,,,14,2,,false
+melon,Дыня,,fruits,pcs,exact,pantry,,,,,,7,2,,false
+avocado,Авокадо,,fruits,pcs,exact,pantry,,,1,4,10,5,1,,false
+dill,Укроп,,greens,g,level,fridge,,10,20,100,300,5,,180,false
+parsley,Петрушка,,greens,g,level,fridge,,10,20,100,300,5,,180,false
+cilantro,Кинза,кориандр зелень,greens,g,level,fridge,,10,20,100,300,5,,,false
+green_onion,Лук зелёный,перья лука,greens,g,level,fridge,,10,20,100,300,5,,,false
+basil,Базилик свежий,базилик,greens,g,level,fridge,,10,20,100,300,5,,,false
+lettuce,Салат листовой,салат|айсберг|романо,greens,g,level,fridge,,10,20,100,300,5,,,false
+arugula,Руккола,рукола,greens,g,level,fridge,,10,20,100,300,3,,,false
+spinach,Шпинат,,greens,g,level,fridge,,10,20,100,300,3,,180,false
+mint,Мята,,greens,g,level,fridge,,10,20,100,300,5,,,false
+sorrel,Щавель,,greens,g,level,fridge,,10,20,100,300,3,,,false
+milk,Молоко,,dairy,ml,exact,fridge,930,200,500,3000,6000,7,4,,true
+milk_uht,Молоко ультрапастеризованное,молоко долгого хранения,dairy,ml,exact,pantry,1000,200,500,3000,6000,180,4,,false
+kefir,Кефир,,dairy,ml,exact,fridge,930,200,300,2000,4000,10,3,,false
+ryazhenka,Ряженка,,dairy,ml,exact,fridge,500,200,300,2000,4000,7,3,,false
+prostokvasha,Простокваша,,dairy,ml,exact,fridge,500,200,300,2000,4000,7,3,,false
+ayran,"Айран, тан",тан|айран,dairy,ml,exact,fridge,500,200,300,2000,4000,14,2,,false
+drinking_yogurt,Йогурт питьевой,,dairy,ml,exact,fridge,270,200,300,2000,4000,21,2,,false
+yogurt,Йогурт,,dairy,g,exact,fridge,125,125,250,1500,3000,21,2,,false
+cottage_cheese,Творог,,dairy,g,exact,fridge,200,100,200,1500,3000,7,3,60,false
+curd_snack,Сырок глазированный,,dairy,pcs,exact,fridge,,,1,6,15,14,,,false
+sour_cream,Сметана,,dairy,g,exact,fridge,300,20,100,1000,2000,14,5,,false
+cream,Сливки,,dairy,ml,exact,fridge,200,20,100,1000,2000,30,4,,false
+butter,Масло сливочное,,dairy,g,exact,fridge,180,10,100,1000,3000,30,21,180,true
+plant_milk,Растительное молоко,овсяное молоко|соевое молоко|миндальное молоко,dairy,ml,exact,pantry,1000,200,300,2000,4000,180,5,,false
+baked_milk,Молоко топлёное,,dairy,ml,exact,fridge,950,200,300,2000,4000,10,3,,false
+hard_cheese,Сыр твёрдый,сыр|российский|гауда|маасдам,cheese,g,exact,fridge,200,30,100,1000,3000,30,14,90,false
+mozzarella,Моцарелла,,cheese,g,exact,fridge,125,30,100,1000,3000,14,3,,false
+feta,"Брынза, фета",фета|брынза,cheese,g,exact,fridge,200,30,100,1000,3000,30,5,,false
+processed_cheese,Сыр плавленый,плавленый сырок,cheese,g,exact,fridge,200,30,100,1000,3000,60,7,,false
+cream_cheese,Сыр сливочный (творожный),творожный сыр|креметте,cheese,g,exact,fridge,180,30,100,1000,3000,30,7,,false
+parmesan,Пармезан,,cheese,g,exact,fridge,150,10,30,500,1500,60,30,,false
+suluguni,Сулугуни,,cheese,g,exact,fridge,300,30,100,1000,3000,30,7,,false
+mascarpone,Маскарпоне,,cheese,g,exact,fridge,250,30,100,1000,3000,21,3,,false
+adyghe_cheese,Сыр адыгейский,,cheese,g,exact,fridge,300,30,100,1000,3000,10,3,,false
+ricotta,Рикотта,,cheese,g,exact,fridge,250,30,100,1000,3000,10,3,,false
+blue_cheese,Сыр с плесенью,дорблю|камамбер|бри,cheese,g,exact,fridge,100,30,100,1000,3000,30,7,,false
+chicken_eggs,Яйца куриные,яйца|яйцо,eggs,pcs,exact,fridge,10,2,4,20,40,25,,,true
+quail_eggs,Яйца перепелиные,,eggs,pcs,exact,fridge,20,4,6,40,80,30,,,false
+beef,Говядина,,meat,g,exact,fridge,,150,300,2000,5000,3,,240,false
+veal,Телятина,,meat,g,exact,fridge,,150,300,2000,5000,3,,240,false
+pork,Свинина,шея|карбонад|окорок,meat,g,exact,fridge,,150,300,2000,5000,3,,180,false
+pork_ribs,Рёбра свиные,ребрышки,meat,g,exact,fridge,,150,300,2000,5000,3,,180,false
+lamb,Баранина,,meat,g,exact,fridge,,150,300,2000,5000,3,,240,false
+minced_beef,Фарш говяжий,фарш,meat,g,exact,fridge,400,150,300,2000,5000,1,,90,false
+minced_mixed,Фарш свино-говяжий,фарш домашний|фарш смешанный,meat,g,exact,fridge,400,150,300,2000,5000,1,,90,false
+beef_liver,Печень говяжья,печень,meat,g,exact,fridge,,150,300,2000,5000,2,,90,false
+beef_tongue,Язык говяжий,,meat,g,exact,fridge,,150,300,2000,5000,3,,180,false
+chicken_whole,Курица целая,бройлер|цыплёнок,poultry,g,exact,fridge,,150,300,2000,5000,3,,365,false
+chicken_breast,Куриное филе,грудка куриная|филе грудки,poultry,g,exact,fridge,,150,300,2000,5000,3,,270,false
+chicken_thigh,Куриные бёдра,бедро|филе бедра,poultry,g,exact,fridge,,150,300,2000,5000,3,,270,false
+chicken_wings,Куриные крылья,крылышки,poultry,g,exact,fridge,,150,300,2000,5000,3,,270,false
+chicken_drumstick,Куриные голени,голень|ножки,poultry,g,exact,fridge,,150,300,2000,5000,3,,270,false
+turkey_fillet,Филе индейки,индейка,poultry,g,exact,fridge,,150,300,2000,5000,3,,270,false
+minced_chicken,Фарш куриный,,poultry,g,exact,fridge,400,150,300,2000,5000,1,,90,false
+chicken_liver,Печень куриная,,poultry,g,exact,fridge,500,150,300,2000,5000,2,,90,false
+chicken_hearts,Сердечки куриные,сердца,poultry,g,exact,fridge,500,150,300,2000,5000,2,,90,false
+duck,Утка,,poultry,g,exact,fridge,,150,300,2000,5000,3,,270,false
+salmon,"Сёмга, форель",лосось|форель|семга,fish,g,exact,fridge,,150,300,1500,4000,2,,120,false
+salted_salmon,Красная рыба слабосолёная,,fish,g,exact,fridge,150,30,50,500,1500,30,5,,false
+cod,Треска,хек|пикша,fish,g,exact,fridge,,150,300,1500,4000,2,,180,false
+pollock,Минтай,,fish,g,exact,freezer,,150,300,1500,4000,2,,180,false
+white_fish_fillet,Филе белой рыбы (замороженное),филе рыбы|тилапия|пангасиус,fish,g,exact,freezer,400,150,300,1500,4000,2,,180,false
+herring,Сельдь солёная,селёдка|сельдь,fish,g,exact,fridge,300,50,100,1000,2000,14,3,,false
+smoked_mackerel,Скумбрия копчёная,скумбрия,fish,g,exact,fridge,,50,100,1000,2000,7,3,,false
+shrimp,Креветки,,fish,g,exact,freezer,500,150,300,1500,4000,2,,180,false
+squid,Кальмары,,fish,g,exact,freezer,,150,300,1500,4000,2,,180,false
+mussels,Мидии,,fish,g,exact,freezer,500,150,300,1500,4000,2,,180,false
+crab_sticks,Крабовые палочки,,fish,g,exact,fridge,200,50,100,1000,2000,14,2,90,false
+red_caviar,Икра красная,икра,fish,g,exact,fridge,100,10,30,500,1500,180,3,,false
+boiled_sausage,Колбаса варёная,докторская|молочная колбаса,sausages,g,exact,fridge,400,50,150,1000,3000,30,5,,false
+smoked_sausage,"Колбаса варёно-копчёная, сервелат",сервелат|колбаса копчёная,sausages,g,exact,fridge,350,50,150,1000,3000,60,14,,false
+dry_sausage,Колбаса сыровяленая,салями|сырокопчёная,sausages,g,exact,fridge,250,50,150,1000,3000,90,21,,false
+frankfurters,Сосиски,,sausages,g,exact,fridge,400,50,150,1000,3000,20,3,60,false
+sardelki,Сардельки,,sausages,g,exact,fridge,500,50,150,1000,3000,15,3,60,false
+ham,Ветчина,,sausages,g,exact,fridge,300,50,150,1000,3000,20,4,,false
+bacon,Бекон,,sausages,g,exact,fridge,200,50,150,1000,3000,30,5,90,false
+buzhenina,"Буженина, карбонад",карбонад|буженина,sausages,g,exact,fridge,300,50,150,1000,3000,14,3,,false
+smoked_chicken,Курица копчёная,,sausages,g,exact,fridge,,50,150,1000,3000,7,3,,false
+salo,Сало,,sausages,g,exact,fridge,,50,150,1000,3000,30,14,180,false
+homemade_soup,Суп домашний,борщ|щи|бульон,ready_meals,ml,level,fridge,,250,500,3000,6000,3,,90,false
+leftovers,Готовое блюдо (остатки),остатки|рагу|плов|гарнир,ready_meals,g,level,fridge,,250,300,2000,4000,3,,60,false
+homemade_cutlets,Котлеты домашние,,ready_meals,g,exact,fridge,,250,300,2000,4000,3,,90,false
+salad_ready,Салат готовый,оливье|винегрет,ready_meals,g,level,fridge,,250,300,2000,4000,1,,,false
+cooked_porridge,Каша варёная,,ready_meals,g,level,fridge,,250,300,2000,4000,2,,,false
+buckwheat,Гречка,гречневая крупа,grains,g,exact,pantry,900,70,300,3000,8000,540,,,true
+rice,Рис,рис круглый|рис длиннозёрный|рис для плова,grains,g,exact,pantry,900,70,300,3000,8000,540,,,true
+rice_basmati,Рис басмати / жасмин,басмати|жасмин,grains,g,exact,pantry,500,70,300,3000,8000,540,,,false
+oat_flakes,Овсяные хлопья,овсянка|геркулес,grains,g,exact,pantry,400,50,200,2000,5000,365,,,false
+millet,Пшено,,grains,g,exact,pantry,900,70,300,3000,8000,300,,,false
+semolina,Манка,манная крупа,grains,g,exact,pantry,700,40,200,2000,5000,300,,,false
+pearl_barley,Перловка,,grains,g,exact,pantry,900,70,300,3000,8000,540,,,false
+barley_grits,Ячневая крупа,,grains,g,exact,pantry,700,70,300,3000,8000,365,,,false
+wheat_grits,Пшеничная крупа,артек|полтавская,grains,g,exact,pantry,700,70,300,3000,8000,365,,,false
+corn_grits,Кукурузная крупа,полента|мамалыга,grains,g,exact,pantry,700,70,300,3000,8000,365,,,false
+bulgur,Булгур,,grains,g,exact,pantry,400,70,300,3000,8000,365,,,false
+couscous,Кускус,кус-кус,grains,g,exact,pantry,400,70,300,3000,8000,365,,,false
+quinoa,Киноа,,grains,g,exact,pantry,400,70,300,3000,8000,365,,,false
+lentils,Чечевица,,grains,g,exact,pantry,450,70,300,3000,8000,365,,,false
+split_peas,Горох колотый,горох,grains,g,exact,pantry,800,70,300,3000,8000,365,,,false
+dry_beans,Фасоль сухая,,grains,g,exact,pantry,450,70,300,3000,8000,365,,,false
+chickpeas,Нут,,grains,g,exact,pantry,450,70,300,3000,8000,365,,,false
+muesli,"Мюсли, гранола",гранола,grains,g,exact,pantry,400,50,100,1500,3000,180,60,,false
+corn_flakes,Хлопья для завтрака,кукурузные хлопья|шарики,grains,g,exact,pantry,250,30,100,1500,3000,270,60,,false
+pasta_generic,Макароны,паста|макаронные изделия,pasta,g,exact,pantry,450,80,400,1500,4000,730,,,true
+spaghetti,Спагетти,,pasta,g,exact,pantry,450,80,400,1500,4000,730,,,false
+penne,Макароны перья (пенне),пенне|перья,pasta,g,exact,pantry,450,80,400,1500,4000,730,,,false
+fusilli,Спиральки (фузилли),фузилли|спирали,pasta,g,exact,pantry,450,80,400,1500,4000,730,,,false
+farfalle,Бантики (фарфалле),фарфалле,pasta,g,exact,pantry,400,80,400,1500,4000,730,,,false
+horns,Рожки,,pasta,g,exact,pantry,450,80,400,1500,4000,730,,,false
+shells,Ракушки,,pasta,g,exact,pantry,450,80,400,1500,4000,730,,,false
+vermicelli,Вермишель,паутинка,pasta,g,exact,pantry,450,60,200,1500,4000,730,,,false
+egg_noodles,Лапша яичная,,pasta,g,exact,pantry,400,80,400,1500,4000,365,,,false
+rice_noodles,Лапша рисовая,фунчоза,pasta,g,exact,pantry,200,80,400,1500,4000,730,,,false
+soba,Лапша гречневая (соба),соба|удон,pasta,g,exact,pantry,300,80,400,1500,4000,730,,,false
+instant_noodles,Лапша быстрого приготовления,доширак|роллтон,pasta,pcs,exact,pantry,,,2,10,30,270,,,false
+lasagna_sheets,Листы для лазаньи,лазанья,pasta,g,exact,pantry,500,80,400,1500,4000,730,,,false
+wheat_flour,Мука пшеничная,мука,flour_baking,g,exact,pantry,2000,100,500,5000,10000,365,,,true
+wholegrain_flour,Мука цельнозерновая,,flour_baking,g,exact,pantry,1000,100,300,3000,6000,180,,,false
+rye_flour,Мука ржаная,,flour_baking,g,exact,pantry,1000,100,300,3000,6000,180,,,false
+corn_starch,Крахмал,крахмал картофельный|крахмал кукурузный,flour_baking,g,exact,pantry,200,10,50,1000,2000,730,,,false
+baking_powder,Разрыхлитель,,flour_baking,g,exact,pantry,15,5,10,100,300,730,,,false
+baking_soda,Сода пищевая,сода,flour_baking,g,exact,pantry,500,5,50,1000,2000,1095,,,true
+dry_yeast,Дрожжи сухие,дрожжи,flour_baking,g,exact,pantry,11,5,11,100,300,365,30,,false
+fresh_yeast,Дрожжи прессованные,,flour_baking,g,exact,fridge,100,10,20,200,500,12,,90,false
+vanilla_sugar,"Ванильный сахар, ванилин",ванилин,flour_baking,g,exact,pantry,8,,8,100,300,730,,,false
+gelatin,Желатин,,flour_baking,g,exact,pantry,10,,10,200,500,730,,,false
+breadcrumbs,Сухари панировочные,панировка,flour_baking,g,exact,pantry,200,20,50,1000,2000,180,,,false
+coconut_flakes,Кокосовая стружка,,flour_baking,g,exact,pantry,100,,20,500,1000,180,,,false
+baking_chocolate,"Шоколад для выпечки, капли",,flour_baking,g,exact,pantry,100,,50,1000,2000,365,,,false
+white_bread,"Хлеб белый, батон",батон|хлеб,bread,g,exact,pantry,400,50,150,1200,2500,4,,90,true
+rye_bread,"Хлеб ржаной, бородинский",бородинский|чёрный хлеб,bread,g,exact,pantry,400,50,150,1200,2500,5,,90,false
+baguette,Багет,,bread,pcs,exact,pantry,,,,3,6,2,,60,false
+buns,Булочки,булки,bread,pcs,exact,pantry,,,1,8,16,3,,60,false
+lavash,Лаваш,,bread,g,exact,pantry,250,,100,1000,2000,5,,60,false
+tortilla,Тортильи,,bread,pcs,exact,pantry,6,,2,12,30,30,5,,false
+pita,Пита,,bread,pcs,exact,pantry,5,,2,10,20,5,,60,false
+crispbread,Хлебцы,,bread,g,exact,pantry,100,,50,600,1500,180,,,false
+sushki,"Сушки, баранки",баранки|сухари,bread,g,exact,pantry,200,,50,1000,2000,120,,,false
+stewed_meat,Тушёнка,тушенка|говядина тушёная,canned,pcs,exact,pantry,,,2,6,15,1095,2,,false
+canned_tuna,Тунец консервированный,тунец,canned,pcs,exact,pantry,,,2,6,15,1095,2,,false
+sprats,Шпроты,,canned,pcs,exact,pantry,,,2,6,15,730,1,,false
+canned_fish,"Рыбные консервы (сайра, сардины)",сайра|сардины|горбуша консервы,canned,pcs,exact,pantry,,,2,6,15,730,1,,false
+canned_corn,Кукуруза консервированная,,canned,pcs,exact,pantry,,,2,6,15,730,2,,false
+canned_peas,Горошек зелёный консервированный,горошек,canned,pcs,exact,pantry,,,2,6,15,730,2,,false
+canned_beans,Фасоль консервированная,,canned,pcs,exact,pantry,,,2,6,15,730,3,,false
+canned_tomatoes,Томаты в собственном соку,помидоры консервированные,canned,pcs,exact,pantry,,,2,6,15,730,5,,false
+tomato_paste,Томатная паста,,canned,g,exact,pantry,270,,70,1000,3000,730,7,,false
+olives,"Оливки, маслины",маслины,canned,pcs,exact,pantry,,,2,6,15,1095,3,,false
+pickled_cucumbers,Огурцы маринованные,корнишоны|солёные огурцы,canned,pcs,exact,pantry,,,2,6,15,730,14,,false
+pickled_mushrooms,Грибы маринованные,,canned,pcs,exact,pantry,,,2,6,15,730,3,,false
+canned_pineapple,Ананасы консервированные,,canned,pcs,exact,pantry,,,2,6,15,730,2,,false
+canned_peaches,Персики консервированные,,canned,pcs,exact,pantry,,,2,6,15,730,2,,false
+squash_caviar,Икра кабачковая,кабачковая икра,canned,pcs,exact,pantry,,,2,6,15,730,5,,false
+lecho,Лечо,,canned,pcs,exact,pantry,,,2,6,15,730,5,,false
+liver_pate,Паштет,,canned,pcs,exact,pantry,,,2,6,15,730,2,,false
+coconut_milk,Кокосовое молоко,,canned,ml,exact,pantry,400,,200,2000,4000,730,3,,false
+home_preserves,Домашние заготовки,соленья|закрутки|компот домашний,canned,pcs,exact,cellar,,,2,10,40,365,14,,false
+mayonnaise,Майонез,,sauces,g,exact,fridge,400,,100,1000,3000,90,30,,false
+ketchup,Кетчуп,,sauces,g,exact,fridge,350,,100,1000,3000,180,30,,false
+mustard,Горчица,,sauces,g,exact,fridge,100,,30,500,1000,90,30,,false
+horseradish,Хрен,,sauces,g,exact,fridge,140,,30,500,1000,60,14,,false
+soy_sauce,Соевый соус,,sauces,ml,exact,pantry,250,,50,1000,2000,730,180,,false
+vinegar,Уксус столовый,уксус,sauces,ml,exact,pantry,500,,50,1000,2000,730,,,false
+apple_vinegar,"Уксус яблочный, винный",винный уксус,sauces,ml,exact,pantry,500,,50,1000,2000,730,,,false
+balsamic,Бальзамический уксус,бальзамик,sauces,ml,exact,pantry,250,,30,500,1000,1095,,,false
+adjika,Аджика,,sauces,g,exact,fridge,200,,50,500,1500,180,21,,false
+tkemali,Ткемали,,sauces,ml,exact,fridge,300,,50,500,1500,365,30,,false
+pesto,Песто,,sauces,g,exact,fridge,190,,50,500,1000,180,7,,false
+pasta_sauce,Соус томатный для пасты,соус для пасты|соус болоньезе,sauces,g,exact,pantry,500,,100,1000,3000,365,5,,false
+sweet_chili,Соус сладкий чили,,sauces,ml,exact,pantry,200,,50,500,1000,365,60,,false
+teriyaki,Соус терияки,,sauces,ml,exact,pantry,250,,50,500,1000,365,60,,false
+tahini,Тахини,кунжутная паста,sauces,g,exact,pantry,300,,50,600,1500,365,90,,false
+hummus,Хумус,,sauces,g,exact,fridge,200,,50,600,1500,30,5,,false
+sour_cream_sauce,"Соус сырный, чесночный",сырный соус|чесночный соус,sauces,g,exact,fridge,200,,50,500,1000,60,7,,false
+salt,Соль,соль йодированная|морская соль|соль поваренная,spices,g,level,pantry,1000,2,200,2000,5000,1825,,,true
+black_pepper,Перец чёрный молотый,перец,spices,g,level,pantry,,,10,100,300,730,,,true
+black_pepper_whole,Перец чёрный горошком,перец горошек,spices,g,level,pantry,,,10,100,300,730,,,false
+allspice,Перец душистый,,spices,g,level,pantry,,,10,100,300,730,,,false
+red_pepper,"Перец красный молотый, чили",хлопья чили|кайенский,spices,g,level,pantry,,,10,100,300,730,,,false
+paprika,Паприка,,spices,g,level,pantry,,,10,100,300,730,,,false
+turmeric,Куркума,,spices,g,level,pantry,,,10,100,300,730,,,false
+cumin,Зира (кумин),кумин|зира,spices,g,level,pantry,,,10,100,300,730,,,false
+coriander_seed,Кориандр,,spices,g,level,pantry,,,10,100,300,730,,,false
+bay_leaf,Лавровый лист,лаврушка,spices,g,level,pantry,,,10,100,300,730,,,true
+cinnamon,Корица,,spices,g,level,pantry,,,10,100,300,730,,,false
+oregano,Орегано,душица,spices,g,level,pantry,,,10,100,300,730,,,false
+dried_basil,Базилик сушёный,,spices,g,level,pantry,,,10,100,300,730,,,false
+italian_herbs,Итальянские травы,прованские травы,spices,g,level,pantry,,,10,100,300,730,,,false
+khmeli_suneli,Хмели-сунели,,spices,g,level,pantry,,,10,100,300,730,,,false
+curry,Карри,,spices,g,level,pantry,,,10,100,300,730,,,false
+ground_ginger,Имбирь молотый,,spices,g,level,pantry,,,10,100,300,730,,,false
+dried_garlic,Чеснок сушёный,чесночный порошок,spices,g,level,pantry,,,10,100,300,730,,,false
+nutmeg,Мускатный орех,,spices,g,level,pantry,,,10,100,300,730,,,false
+cloves,Гвоздика,,spices,g,level,pantry,,,10,100,300,730,,,false
+thyme,"Тимьян, чабрец",чабрец,spices,g,level,pantry,,,10,100,300,730,,,false
+rosemary,Розмарин,,spices,g,level,pantry,,,10,100,300,730,,,false
+dried_dill,Укроп сушёный,,spices,g,level,pantry,,,10,100,300,730,,,false
+plov_spice,Приправа для плова,,spices,g,level,pantry,,,10,100,300,730,,,false
+universal_seasoning,Приправа универсальная,вегета,spices,g,level,pantry,,,10,100,300,730,,,false
+sesame,Кунжут,,spices,g,level,pantry,,,10,100,300,730,,,false
+bouillon_cubes,Бульонные кубики,кубик бульонный|магги,spices,pcs,exact,pantry,8,1,3,30,60,540,,,false
+sunflower_oil,Масло подсолнечное,растительное масло|масло,oils,ml,exact,pantry,1000,15,300,3000,8000,365,120,,true
+olive_oil,Масло оливковое,,oils,ml,exact,pantry,500,15,100,1500,4000,540,180,,false
+ghee,Масло топлёное (гхи),гхи,oils,g,exact,pantry,200,10,50,1000,2000,365,90,,false
+margarine,"Маргарин, спред",спред,oils,g,exact,fridge,200,10,50,1000,2000,60,21,,false
+linseed_oil,Масло льняное,,oils,ml,exact,fridge,250,10,50,500,1000,180,30,,false
+sesame_oil,Масло кунжутное,,oils,ml,exact,pantry,250,5,30,500,1000,365,90,,false
+sugar,Сахар,сахар-песок|рафинад,sweets,g,exact,pantry,1000,10,300,3000,10000,1825,,,true
+cane_sugar,Сахар тростниковый,,sweets,g,exact,pantry,900,10,100,2000,5000,1825,,,false
+powdered_sugar,Сахарная пудра,,sweets,g,exact,pantry,250,,50,1000,2000,730,,,false
+honey,Мёд,мед,sweets,g,exact,pantry,500,20,100,2000,5000,730,,,true
+jam,"Варенье, джем",джем|конфитюр|повидло,sweets,g,exact,pantry,400,30,100,1000,3000,365,30,,false
+condensed_milk,Сгущённое молоко,сгущёнка|сгущенка|варёная сгущёнка,sweets,g,exact,pantry,380,30,100,1000,3000,365,7,,false
+chocolate,Шоколад,,sweets,g,exact,pantry,90,30,100,1000,3000,365,60,,false
+candies,Конфеты,,sweets,g,exact,pantry,200,30,100,1000,3000,180,,,false
+cookies,Печенье,,sweets,g,exact,pantry,200,30,100,1000,3000,120,30,,false
+gingerbread,Пряники,,sweets,g,exact,pantry,300,30,100,1000,3000,60,14,,false
+wafers,Вафли,,sweets,g,exact,pantry,200,30,100,1000,3000,180,30,,false
+zefir,"Зефир, пастила",пастила|маршмеллоу,sweets,g,exact,pantry,250,30,100,1000,3000,45,14,,false
+marmalade,Мармелад,,sweets,g,exact,pantry,250,30,100,1000,3000,180,30,,false
+halva,Халва,,sweets,g,exact,pantry,250,30,100,1000,3000,180,30,,false
+chocolate_spread,Шоколадная паста,нутелла,sweets,g,exact,pantry,350,30,100,1000,3000,365,60,,false
+syrup,"Сироп, топпинг",топпинг|кленовый сироп,sweets,ml,exact,pantry,300,,50,1000,2000,365,90,,false
+cake,"Торт, пирожные",пирожное|торт,sweets,g,exact,fridge,,,,,,3,,60,false
+black_tea,Чай чёрный листовой,чай,tea_coffee,g,exact,pantry,100,2,20,300,1000,730,,,true
+tea_bags,Чай в пакетиках,пакетики чая,tea_coffee,pcs,exact,pantry,100,1,10,200,500,730,,,false
+green_tea,Чай зелёный,,tea_coffee,g,exact,pantry,100,2,20,300,1000,730,,,false
+herbal_tea,"Чай травяной, иван-чай",иван-чай|ромашка,tea_coffee,g,exact,pantry,50,2,10,200,500,730,,,false
+coffee_beans,Кофе в зёрнах,,tea_coffee,g,exact,pantry,1000,10,100,1500,4000,365,30,,false
+ground_coffee,Кофе молотый,,tea_coffee,g,exact,pantry,250,10,50,1000,3000,365,30,,false
+instant_coffee,Кофе растворимый,,tea_coffee,g,exact,pantry,95,2,20,500,1000,730,90,,false
+coffee_capsules,Кофе в капсулах,,tea_coffee,pcs,exact,pantry,10,1,5,100,300,365,,,false
+cocoa,Какао-порошок,какао|несквик,tea_coffee,g,exact,pantry,100,5,30,500,1000,730,,,false
+chicory,Цикорий,,tea_coffee,g,exact,pantry,100,2,20,300,600,730,,,false
+water,Вода питьевая,вода,drinks,ml,exact,pantry,5000,250,2000,20000,50000,365,14,,false
+mineral_water,Вода минеральная,минералка|газированная вода,drinks,ml,exact,pantry,1500,250,500,6000,20000,365,3,,false
+juice,Сок,нектар,drinks,ml,exact,pantry,1000,200,500,6000,15000,365,3,,false
+mors,"Морс, компот",компот,drinks,ml,exact,fridge,1000,200,500,3000,6000,5,3,,false
+soda,"Газировка, лимонад",лимонад|кола,drinks,ml,exact,pantry,1500,,500,6000,15000,270,3,,false
+kvass,Квас,,drinks,ml,exact,fridge,1500,,500,4500,10000,30,2,,false
+beer,Пиво,,drinks,ml,exact,pantry,,,,,,180,1,,false
+wine,Вино,,drinks,ml,exact,pantry,,,,,,1095,3,,false
+spirits,Крепкий алкоголь,водка|коньяк|виски,drinks,ml,exact,pantry,,,,,,1825,1825,,false
+pelmeni,Пельмени,равиоли,frozen,g,exact,freezer,800,200,400,2000,5000,2,,180,false
+vareniki,Вареники,,frozen,g,exact,freezer,900,200,400,2000,5000,2,,180,false
+khinkali,"Хинкали, манты",манты,frozen,g,exact,freezer,800,200,400,2000,5000,2,,180,false
+frozen_blini,Блинчики замороженные,блины,frozen,g,exact,freezer,400,200,400,2000,5000,2,,180,false
+frozen_cutlets,"Котлеты, наггетсы (полуфабрикат)",наггетсы|котлеты,frozen,g,exact,freezer,500,200,400,2000,5000,2,,180,false
+frozen_veg_mix,Овощная смесь замороженная,мексиканская смесь|лечо замороженное,frozen,g,exact,freezer,400,150,400,2000,5000,2,,365,false
+frozen_berries,Ягоды замороженные,,frozen,g,exact,freezer,300,100,300,2000,5000,2,,365,false
+frozen_broccoli,"Брокколи, цветная капуста замороженные",,frozen,g,exact,freezer,400,150,400,2000,5000,2,,365,false
+frozen_green_beans,Фасоль стручковая замороженная,,frozen,g,exact,freezer,400,150,400,2000,5000,2,,365,false
+frozen_mushrooms,Грибы замороженные,,frozen,g,exact,freezer,400,150,400,2000,5000,2,,365,false
+french_fries,Картофель фри,,frozen,g,exact,freezer,1000,150,400,2000,5000,2,,365,false
+frozen_pizza,Пицца замороженная,,frozen,pcs,exact,freezer,,,1,4,10,2,,180,false
+puff_pastry,Тесто слоёное,тесто,frozen,g,exact,freezer,500,,250,2000,4000,3,,180,false
+ice_cream,Мороженое,пломбир|эскимо,frozen,g,exact,freezer,400,80,200,2000,4000,1,,180,false
+frozen_dough,Тесто дрожжевое замороженное,,frozen,g,exact,freezer,500,,250,2000,4000,2,,180,false
+walnuts,Грецкие орехи,,nuts_snacks,g,exact,pantry,200,30,100,1000,3000,180,60,365,false
+peanuts,Арахис,,nuts_snacks,g,exact,pantry,200,30,100,1000,3000,180,60,,false
+almonds,Миндаль,,nuts_snacks,g,exact,pantry,200,30,100,1000,3000,365,90,,false
+cashews,Кешью,,nuts_snacks,g,exact,pantry,200,30,100,1000,3000,180,60,,false
+hazelnuts,Фундук,,nuts_snacks,g,exact,pantry,200,30,100,1000,3000,180,60,,false
+sunflower_seeds,Семечки подсолнечные,семечки,nuts_snacks,g,exact,pantry,200,30,100,1000,3000,180,30,,false
+pumpkin_seeds,Семечки тыквенные,,nuts_snacks,g,exact,pantry,150,30,100,1000,3000,180,30,,false
+raisins,Изюм,,nuts_snacks,g,exact,pantry,200,30,100,1000,3000,365,90,,false
+dried_apricots,Курага,,nuts_snacks,g,exact,pantry,200,30,100,1000,3000,365,90,,false
+prunes,Чернослив,,nuts_snacks,g,exact,pantry,200,30,100,1000,3000,365,90,,false
+dates,Финики,,nuts_snacks,g,exact,pantry,200,30,100,1000,3000,365,90,,false
+peanut_butter,Арахисовая паста,,nuts_snacks,g,exact,pantry,340,20,50,1000,2000,365,90,,false
+chips,Чипсы,,nuts_snacks,g,exact,pantry,150,,50,600,1500,180,3,,false
+crackers,"Крекеры, сухарики",сухарики|солёные палочки,nuts_snacks,g,exact,pantry,200,,50,800,2000,180,14,,false
+cereal_bars,Батончики злаковые,,nuts_snacks,pcs,exact,pantry,,,2,20,50,180,,,false
+popcorn,Попкорн,,nuts_snacks,g,exact,pantry,100,,50,500,1500,270,,,false
