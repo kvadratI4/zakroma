@@ -76,7 +76,7 @@ flowchart LR
 | `backend/app` в целом | 80 % |
 | `frontend/src` (без сгенерированного API и UI-обёрток) | 70 % |
 
-CI на каждый push/PR: `ruff`, `mypy --strict`, `pytest --cov`, `eslint`, `tsc --noEmit`, `vitest --coverage`, проверка, что сгенерированный API-клиент актуален (`pnpm api:check`: `openapi.json` из backend совпадает с закоммиченным, `schema.d.ts` — с `openapi.json`; локально то же ловят тест pytest и хук `openapi-fresh`), сборка frontend. E2E — на PR в `main` и ночью.
+CI (T-006, [09-deployment §4.1](09-deployment.md#41-ci-на-каждый-pr-t-006)) на каждый PR в `main` и push в `main`: `pre-commit run --all-files` (ruff, eslint, prettier, gitleaks…), история git на секреты, `mypy --strict`, `pytest --cov` (порог 80 % в `pyproject.toml`), `tsc`, `pnpm test:coverage` (пороги 70 % в `vite.config.ts`), проверка, что сгенерированный API-клиент актуален (`pnpm api:check`: `openapi.json` из backend совпадает с закоммиченным, `schema.d.ts` — с `openapi.json`; локально то же ловят тест pytest и хук `openapi-fresh`), сборка frontend. E2E — на PR в `main` и ночью (T-043). Порог `app/domain` 90 % добавит T-030 вместе с каталогом.
 
 ## 7. Команды (после создания каркаса — уточнить в CLAUDE.md)
 
@@ -89,6 +89,7 @@ cd backend && uv run ruff check . && uv run mypy app
 
 # frontend
 cd frontend && pnpm test                          # vitest
+cd frontend && pnpm test:coverage                 # vitest + пороги покрытия, как в CI
 cd frontend && pnpm test:e2e                      # playwright
 cd frontend && pnpm lint && pnpm typecheck
 cd frontend && pnpm gen:api && pnpm api:check     # API-клиент из OpenAPI (T-005)

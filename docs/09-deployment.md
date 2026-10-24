@@ -81,6 +81,56 @@ flowchart LR
 - Предыдущий тег хранится в `/opt/zakroma/.previous_tag` для отката.
 - Секреты CI: `SSH_HOST`, `SSH_USER`, `SSH_KEY`, токен GHCR.
 - Резервный вариант, если реестр недоступен с VPS: `git pull && docker compose build` на сервере (скрипт `deploy/deploy-local-build.sh`).
+- Сборка образов и деплой — T-007, T-041; ниже — то, что уже работает.
+
+### 4.1. CI на каждый PR (T-006)
+
+Workflow [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) запускается на PR в `main`, на push в `main` и вручную (Actions → CI → Run workflow). Три задачи идут параллельно:
+
+| Задача (имя проверки) | Что делает | Типичная причина красного |
+|---|---|---|
+| `pre-commit and secrets` | `pre-commit run --all-files` (ruff, eslint, prettier, YAML/JSON, gitleaks, справочник, `openapi-fresh`, actionlint) и `gitleaks-history` по всей истории | файл не отформатирован (дифф — в логе шага), устарел API-клиент (`pnpm gen:api`), секрет в коммите |
+| `backend` | `uv sync --frozen`, `mypy --strict`, `pytest --cov` с интеграционными тестами на Postgres (testcontainers) | упавший тест, покрытие < 80 %, ошибка типов |
+| `frontend` | `pnpm install --frozen-lockfile`, `typecheck`, `test:coverage` (≥ 70 %), `build`, `size` (≤ 300 КБ) | упавший тест, покрытие ниже порога, бандл вырос |
+
+Как читать красный прогон: PR → вкладка **Checks** → красная задача → первый красный шаг. Тот же шаг запускается локально той же командой (CLAUDE.md, «Команды»), у всех задач одинаковые версии инструментов: uv 0.13.5, Python из `backend/.python-version`, Node из `frontend/.nvmrc`, pnpm из `packageManager`.
+
+Безопасность CI:
+
+- токен только на чтение (`contents: read`), секретов нет — их и не нужно до деплоя (T-041);
+- событие `pull_request` (не `pull_request_target`): PR из форков не получают прав;
+- сторонние actions закреплены по SHA на версии старше 7 дней; обновляет Dependabot.
+
+### 4.2. Dependabot (T-006)
+
+[`.github/dependabot.yml`](../.github/dependabot.yml) по понедельникам предлагает обновления (GitHub Actions, uv в `backend/`, npm/pnpm во `frontend/`): minor и patch — одним PR на экосистему, каждый major — отдельно, свежий выпуск — не раньше чем через 7 дней. Каждый PR проходит CI; merge — оператор, после чтения changelog для major.
+
+### 4.3. Настройки репозитория (делает оператор, один раз)
+
+**A. Оповещения и исправления уязвимостей.** Settings → **Advanced Security** (в старом интерфейсе — «Code security and analysis»):
+
+1. **Dependency graph** — Enabled (у публичного репозитория включён по умолчанию).
+2. **Dependabot alerts** — Enable.
+3. **Dependabot security updates** — Enable: при уязвимости Dependabot сам откроет PR с исправленной версией.
+
+**B. Права Actions.** Settings → Actions → General:
+
+1. **Workflow permissions** — «Read repository contents and packages permissions».
+2. «Allow GitHub Actions to create and approve pull requests» — выключено.
+3. **Fork pull request workflows** — «Require approval for first-time contributors» (по умолчанию).
+
+**C. Защита `main`** — после первого зелёного прогона CI на PR (до него GitHub не знает имён проверок). Settings → **Rules** → **Rulesets** → New ruleset → **New branch ruleset**:
+
+1. Ruleset name: `main`; Enforcement status: **Active**; Bypass list — пусто.
+2. Target branches → Add target → **Include default branch**.
+3. Отметить правила:
+   - **Restrict deletions**;
+   - **Block force pushes**;
+   - **Require a pull request before merging**, Required approvals: **0** (оператор один и не может одобрить свой PR; смысл правила — только через PR);
+   - **Require status checks to pass** → Add checks: `pre-commit and secrets`, `backend`, `frontend`; включить **Require branches to be up to date before merging** (CI проверяет именно то, что окажется в `main`).
+4. **Create**.
+
+Проверка: в PR с красной проверкой кнопка Merge недоступна; прямой `git push` в `main` отклоняется. Если CI сломан не по вине кода (сбой GitHub) — перезапустить задачу (Re-run failed jobs), а не отключать правило.
 
 ## 5. Бэкапы (NFR-REL-01/02)
 

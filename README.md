@@ -1,5 +1,7 @@
 # Закрома
 
+[![CI](https://github.com/kvadratI4/zakroma/actions/workflows/ci.yml/badge.svg)](https://github.com/kvadratI4/zakroma/actions/workflows/ci.yml)
+
 > Домашнее веб-приложение (PWA) для учёта продуктов: холодильник, морозилка, крупы, овощи, запасы на балконе — с количеством, сроками годности и предупреждениями «мало / критически мало / избыток».
 
 Статус: **MVP, этап E0 «Фундамент»** — каркас backend, БД и frontend готов, функций учёта ещё нет. Задачи — [BACKLOG](docs/BACKLOG.md), сводки состояния — [docs/status/](docs/status/README.md).
