@@ -100,6 +100,7 @@ docker compose -f deploy/docker-compose.dev.yml up -d
 | Тесты | [docs/08-testing.md](docs/08-testing.md) |
 | Деплой | [docs/09-deployment.md](docs/09-deployment.md) |
 | Стиль кода, git | [docs/agent/CONVENTIONS.md](docs/agent/CONVENTIONS.md) |
+| Статус проекта (сводки каждые 5 задач и по этапам) | [docs/status/](docs/status/README.md) |
 
 Читай только то, что нужно для текущей задачи: файл задачи указывает ссылки.
 
