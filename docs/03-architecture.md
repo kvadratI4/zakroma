@@ -101,7 +101,7 @@ zakroma/
 │   ├── docker-compose.dev.yml
 │   ├── Caddyfile
 │   └── backup/                # скрипты бэкапа и восстановления
-└── .github/workflows/         # CI/CD
+└── .github/                  # workflows/ci.yml (CI, T-006), dependabot.yml
 ```
 
 ## 4. Backend: слои и правила зависимостей

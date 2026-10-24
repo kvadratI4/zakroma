@@ -15,5 +15,12 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./src/test/setup.ts"],
     restoreMocks: true,
+    // NFR-MNT-03 / 08-testing §6: frontend code ≥ 70 %, generated API and the entry point excluded.
+    coverage: {
+      provider: "v8",
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: ["src/**/*.test.{ts,tsx}", "src/test/**", "src/api/schema.d.ts", "src/main.tsx"],
+      thresholds: { lines: 70, statements: 70, branches: 70, functions: 70 },
+    },
   },
 });

@@ -30,6 +30,15 @@ TEST_NOW = datetime(2026, 11, 10, 12, 0, tzinfo=ZoneInfo("Europe/Moscow"))
 testcontainers_config.ryuk_disabled = True
 
 
+@pytest.fixture(scope="session", autouse=True)
+def no_dev_env_file() -> Iterator[None]:
+    """Tests never read deploy/.env.dev: it holds the local database password and CI has no
+    such file, so a test relying on it passes only on the developer's machine (L-033)."""
+    with pytest.MonkeyPatch.context() as patch:
+        patch.setitem(Settings.model_config, "env_file", None)
+        yield
+
+
 @pytest.fixture(scope="session")
 def postgres() -> Iterator[PostgresContainer]:
     container = PostgresContainer(

@@ -36,6 +36,13 @@ repos:
         entry: gitleaks git --redact --verbose
         stages: [manual]
 
+  # GitHub Actions workflows cannot be run locally: catch typos in keys and expressions before
+  # the push (T-006). pre-commit builds actionlint with its own Go toolchain.
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.12
+    hooks:
+      - id: actionlint
+
   - repo: local
     hooks:
       - id: validate-catalog

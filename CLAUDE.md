@@ -50,7 +50,7 @@
 # pre-commit (после T-001): установка один раз на машину и на клон
 uv tool install pre-commit && uv tool update-shell   # затем перезапустить терминал
 pre-commit install                                  # хуки на git commit в этом клоне
-pre-commit run --all-files                          # проверить весь репозиторий
+pre-commit run --all-files                          # проверить весь репозиторий (то же делает CI, T-006: .github/workflows/ci.yml)
 pre-commit run gitleaks-history --hook-stage manual --all-files   # секреты во всей истории git (без --all-files хук пропускается, если индекс пуст)
 
 # backend (T-002, T-003); интеграционным тестам нужен запущенный Docker
@@ -73,6 +73,7 @@ cd backend && uv run alembic check             # модели = миграции
 cd frontend && pnpm install --frozen-lockfile    # зависимости по pnpm-lock.yaml
 cd frontend && pnpm dev                          # dev-сервер http://127.0.0.1:5173; /api → backend на 127.0.0.1:8000
 cd frontend && pnpm test && pnpm lint && pnpm typecheck && pnpm format:check
+cd frontend && pnpm test:coverage                # тесты + пороги покрытия 70 % (как в CI)
 cd frontend && pnpm build && pnpm size           # сборка + JS первого экрана ≤ 300 КБ gzip
 cd frontend && pnpm preview                      # собранная версия на http://127.0.0.1:4173
 # стиль: docs/10-design.md; цвета — только из src/shared/theme/tokens.ts
@@ -100,6 +101,7 @@ docker compose -f deploy/docker-compose.dev.yml up -d
 | Тесты | [docs/08-testing.md](docs/08-testing.md) |
 | Деплой | [docs/09-deployment.md](docs/09-deployment.md) |
 | Стиль кода, git | [docs/agent/CONVENTIONS.md](docs/agent/CONVENTIONS.md) |
+| Статус проекта (сводки каждые 5 задач и по этапам) | [docs/status/](docs/status/README.md) |
 
 Читай только то, что нужно для текущей задачи: файл задачи указывает ссылки.
 

@@ -21,12 +21,12 @@
 
 | Этап | Задач | Done |
 | --- | --- | --- |
-| E0 Фундамент | 9 | 5 |
+| E0 Фундамент | 9 | 6 |
 | E1 Учётные записи и дома | 6 | 0 |
 | E2 Справочник и продукты | 3 | 0 |
 | E3 Запасы | 9 | 0 |
 | E4 PWA и запуск | 5 | 0 |
-| **MVP итого** | **32** | **5** |
+| **MVP итого** | **32** | **6** |
 | S2 Ввод | 9 | 0 |
 | S3 Рецепты и покупки | 7 | 0 |
 | S4 YouTube и аналитика | 4 | 0 |
@@ -45,7 +45,7 @@
 | T-003 | Postgres в `docker-compose.dev.yml`, SQLAlchemy async-сессия, Alembic, тестовая инфраструктура (testcontainers, фабрики, фикстура `clock`) | M | T-002 | NFR-REL-03 | Done |
 | T-004 | Каркас frontend: Vite + React + TS strict + Tailwind + Router + TanStack Query + i18next (ru) + Vitest + Testing Library + MSW; layout с нижней навигацией (заглушки экранов) | M | T-001 | NFR-UX-03..06 | Done |
 | T-005 | Экспорт OpenAPI и генерация клиента (`openapi-typescript` + `openapi-fetch`), проверка актуальности | S | T-002, T-004 | NFR-MNT-04 | Done |
-| T-006 | CI (GitHub Actions): lint, typecheck, тесты с покрытием (пороги), сборка frontend, проверка OpenAPI | S | T-003, T-005 | NFR-MNT-03 | Ready |
+| T-006 | CI (GitHub Actions): lint, typecheck, тесты с покрытием (пороги), сборка frontend, проверка OpenAPI | S | T-003, T-005 | NFR-MNT-03 | Done |
 | T-007 | Dockerfile api (multi-stage), образ caddy со сборкой SPA, `deploy/docker-compose.yml`, `Caddyfile`, `.env.example` — локальный запуск prod-сборки | M | T-003, T-004 | NFR-MNT-06 | Ready |
 | T-008 | Библиотека компонентов в стиле «Фарфор» (стиль и токены — в T-004, `docs/10-design.md`): строка продукта, чип уровня, эмблемы мест (снежинка, колос, рябина), кнопки, поля, тост «Отменить», переключатель; макеты ключевых экранов на согласование (страницей-концептом, L-023); компоненты — в `shared/ui` | M | T-004 | NFR-UX-03..06, 07-ui-ux | Backlog |
 | T-009 | Ручной выбор темы: «Как на устройстве» (по умолчанию) / «Светлая» (гжель) / «Тёмная» (хохлома); выбор хранится на устройстве; тема применяется до загрузки JS | S | T-004 | NFR-UX-05 | Ready |
@@ -134,6 +134,8 @@
 - api подключается к БД отдельной ролью без прав суперпользователя; миграции выполняет роль-владелец схемы (из T-003).
 - Образ Postgres закреплён по digest (не плавающий тег `postgres:18`) (из T-003).
 - У сервиса `db` в prod-compose нет опубликованных портов — доступ только из сети compose; пароль БД — только в серверном `.env`, не в образах, compose-файлах и логах (из T-003, требование безопасности оператора).
+- Caddy отдаёт заголовки безопасности: CSP без `unsafe-inline` для скриптов (встроенный скрипт темы из T-009 — по хешу), HSTS, `X-Content-Type-Options: nosniff`, `Referrer-Policy: same-origin`, `Permissions-Policy` без лишних разрешений; тест — запрос к prod-сборке (сводка 01, согласовано оператором 2026-10-24).
+- В prod OpenAPI-схема не отдаётся: `/api/v1/openapi.json` и `/api/v1/docs` → `404`. Клиент генерируется из закоммиченного `openapi.json` при разработке, во время работы схема не нужна; `export_openapi` строит схему через `app.openapi()` и от маршрута не зависит. Проверка `schema.status_code == 200` в `test_docs_are_hidden_in_prod` меняется на `404` — согласовано оператором 2026-10-24 (сводка 01, §5.1 п. 4).
 
 **T-010**
 
@@ -189,6 +191,7 @@
 - Все тест-векторы из [05-domain-rules.md](05-domain-rules.md) реализованы параметризованными тестами.
 - Свойства hypothesis из [08-testing.md](08-testing.md#инварианты-для-property-based-тестов-hypothesis) проходят.
 - Покрытие `app/domain` ≥ 90 % (строки и ветвления); модуль не импортирует FastAPI/SQLAlchemy (проверка тестом импорта).
+- Порог в CI: шаг задачи `backend` после `pytest --cov` — `uv run coverage report --include='app/domain/*' --fail-under=90` (из T-006: до появления каталога порог не ставился).
 
 **T-032**
 
