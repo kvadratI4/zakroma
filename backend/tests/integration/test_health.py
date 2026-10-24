@@ -42,9 +42,11 @@ async def test_docs_are_hidden_in_prod(settings: Settings) -> None:
 
 
 def test_invalid_env_fails_at_startup(monkeypatch: pytest.MonkeyPatch) -> None:
+    # A valid URL, so the failure comes from ENVIRONMENT and not from a missing database_url.
+    monkeypatch.setenv("DATABASE_URL", "postgresql+asyncpg://zakroma@127.0.0.1:5432/zakroma")
     monkeypatch.setenv("ENVIRONMENT", "staging")
 
-    with pytest.raises(ValidationError):
+    with pytest.raises(ValidationError, match="environment"):
         create_app()
 
 
