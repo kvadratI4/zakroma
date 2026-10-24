@@ -5,6 +5,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from app.api.deps import SessionDep
 from app.api.v1.health.schemas import HealthOut
 from app.core.errors import AppError
+from app.core.openapi import problem_response
 from app.db.health import ping
 
 DB_CHECK_TIMEOUT_SECONDS = 5
@@ -13,7 +14,7 @@ router = APIRouter(tags=["service"])
 logger = structlog.get_logger(__name__)
 
 
-@router.get("/health")
+@router.get("/health", responses={503: problem_response("Database unavailable: db_unavailable")})
 async def get_health(session: SessionDep) -> HealthOut:
     try:
         await ping(session, timeout_seconds=DB_CHECK_TIMEOUT_SECONDS)

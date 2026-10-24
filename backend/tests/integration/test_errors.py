@@ -3,7 +3,7 @@ import pytest
 from fastapi import APIRouter, FastAPI
 from pydantic import BaseModel, Field
 
-from app.core.errors import AppError
+from app.core.errors import AppError, Problem, ValidationProblem
 
 PROBLEM_JSON = "application/problem+json"
 
@@ -75,3 +75,27 @@ async def test_validation_error_lists_fields_without_echoing_input(
     assert {tuple(e["loc"]) for e in body["errors"]} == {("body", "login"), ("body", "password")}
     assert all(set(e) == {"loc", "type", "msg"} for e in body["errors"])
     assert "secret1" not in response.text
+
+
+@pytest.mark.parametrize(
+    ("method", "path", "body", "model"),
+    [
+        ("GET", "/api/v1/nope", None, Problem),
+        ("POST", "/api/v1/health", None, Problem),
+        ("GET", "/api/v1/_test/conflict", None, Problem),
+        ("POST", "/api/v1/_test/signup", {"password": "x"}, ValidationProblem),
+    ],
+    ids=["not_found", "method_not_allowed", "app_error", "validation_error"],
+)
+async def test_error_bodies_match_openapi_problem_schemas(
+    client: httpx.AsyncClient,
+    method: str,
+    path: str,
+    body: dict[str, str] | None,
+    model: type[Problem],
+) -> None:
+    """The schemas the frontend client is generated from describe real responses (T-005)."""
+    response = await client.request(method, path, json=body)
+
+    problem = model.model_validate(response.json())
+    assert problem.model_dump(exclude_none=True) == response.json()

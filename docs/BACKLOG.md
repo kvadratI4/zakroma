@@ -44,7 +44,7 @@
 | T-002 | Каркас backend: FastAPI, `pydantic-settings`, structlog, `/api/v1/health`, problem+json обработчик ошибок, `Clock`, uv, mypy strict, pytest | M | T-001 | NFR-MNT-01 | Done |
 | T-003 | Postgres в `docker-compose.dev.yml`, SQLAlchemy async-сессия, Alembic, тестовая инфраструктура (testcontainers, фабрики, фикстура `clock`) | M | T-002 | NFR-REL-03 | Done |
 | T-004 | Каркас frontend: Vite + React + TS strict + Tailwind + Router + TanStack Query + i18next (ru) + Vitest + Testing Library + MSW; layout с нижней навигацией (заглушки экранов) | M | T-001 | NFR-UX-03..06 | Done |
-| T-005 | Экспорт OpenAPI и генерация клиента (`openapi-typescript` + `openapi-fetch`), проверка актуальности | S | T-002, T-004 | NFR-MNT-04 | Ready |
+| T-005 | Экспорт OpenAPI и генерация клиента (`openapi-typescript` + `openapi-fetch`), проверка актуальности | S | T-002, T-004 | NFR-MNT-04 | In progress |
 | T-006 | CI (GitHub Actions): lint, typecheck, тесты с покрытием (пороги), сборка frontend, проверка OpenAPI | S | T-003, T-005 | NFR-MNT-03 | Ready |
 | T-007 | Dockerfile api (multi-stage), образ caddy со сборкой SPA, `deploy/docker-compose.yml`, `Caddyfile`, `.env.example` — локальный запуск prod-сборки | M | T-003, T-004 | NFR-MNT-06 | Ready |
 | T-008 | Библиотека компонентов в стиле «Фарфор» (стиль и токены — в T-004, `docs/10-design.md`): строка продукта, чип уровня, эмблемы мест (снежинка, колос, рябина), кнопки, поля, тост «Отменить», переключатель; макеты ключевых экранов на согласование (страницей-концептом, L-023); компоненты — в `shared/ui` | M | T-004 | NFR-UX-03..06, 07-ui-ux | Backlog |

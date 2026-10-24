@@ -6,6 +6,7 @@ from typing import Any, cast
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel, ConfigDict
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 PROBLEM_JSON = "application/problem+json"
@@ -22,6 +23,31 @@ _HTTP_CODES: dict[int, tuple[str, str]] = {
 _GENERIC_HTTP = ("http_error", "Ошибка запроса")
 VALIDATION_ERROR = ("validation_error", "Некорректные данные")
 INTERNAL_ERROR = ("internal_error", "Внутренняя ошибка сервера")
+
+
+class Problem(BaseModel):
+    """Error body (RFC 9457); the UI translates `code`, `title` is a fallback text."""
+
+    # Scenario errors add their own fields, e.g. `current` of 409 version_conflict.
+    model_config = ConfigDict(extra="allow")
+
+    type: str
+    title: str
+    status: int
+    code: str
+    detail: str | None = None
+
+
+class ValidationIssue(BaseModel):
+    loc: list[str | int]
+    type: str
+    msg: str
+
+
+class ValidationProblem(Problem):
+    """422 validation_error: which fields failed; submitted values are never echoed."""
+
+    errors: list[ValidationIssue]
 
 
 class AppError(Exception):

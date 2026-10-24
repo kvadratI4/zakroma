@@ -10,6 +10,7 @@ from app.core.config import Settings
 from app.core.errors import install_error_handlers
 from app.core.logging import configure_logging
 from app.core.middleware import RequestContextMiddleware
+from app.core.openapi import install_problem_openapi, operation_id
 from app.db.session import create_engine, create_sessionmaker
 
 
@@ -30,6 +31,7 @@ def create_app(settings: Settings | None = None, clock: Clock | None = None) -> 
         openapi_url=f"{API_V1_PREFIX}/openapi.json",
         docs_url=f"{API_V1_PREFIX}/docs" if settings.environment != "prod" else None,
         redoc_url=None,
+        generate_unique_id_function=operation_id,
         lifespan=lifespan,
     )
     app.state.settings = settings
@@ -38,5 +40,6 @@ def create_app(settings: Settings | None = None, clock: Clock | None = None) -> 
     app.state.sessionmaker = create_sessionmaker(engine)
     app.add_middleware(RequestContextMiddleware)
     install_error_handlers(app)
+    install_problem_openapi(app)
     app.include_router(api_v1_router)
     return app
