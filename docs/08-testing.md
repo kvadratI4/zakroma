@@ -76,7 +76,7 @@ flowchart LR
 | `backend/app` в целом | 80 % |
 | `frontend/src` (без сгенерированного API и UI-обёрток) | 70 % |
 
-CI на каждый push/PR: `ruff`, `mypy --strict`, `pytest --cov`, `eslint`, `tsc --noEmit`, `vitest --coverage`, проверка, что сгенерированный API-клиент актуален (`openapi.json` из backend совпадает с закоммиченным), сборка frontend. E2E — на PR в `main` и ночью.
+CI на каждый push/PR: `ruff`, `mypy --strict`, `pytest --cov`, `eslint`, `tsc --noEmit`, `vitest --coverage`, проверка, что сгенерированный API-клиент актуален (`pnpm api:check`: `openapi.json` из backend совпадает с закоммиченным, `schema.d.ts` — с `openapi.json`; локально то же ловят тест pytest и хук `openapi-fresh`), сборка frontend. E2E — на PR в `main` и ночью.
 
 ## 7. Команды (после создания каркаса — уточнить в CLAUDE.md)
 
@@ -91,6 +91,7 @@ cd backend && uv run ruff check . && uv run mypy app
 cd frontend && pnpm test                          # vitest
 cd frontend && pnpm test:e2e                      # playwright
 cd frontend && pnpm lint && pnpm typecheck
+cd frontend && pnpm gen:api && pnpm api:check     # API-клиент из OpenAPI (T-005)
 
 # весь стек локально
 docker compose -f deploy/docker-compose.dev.yml up

@@ -115,7 +115,7 @@
 
 - CI для frontend: `pnpm install --frozen-lockfile`, `typecheck`, `lint`, `format:check`, `test` с покрытием (порог 08-testing §6), `build`, `pnpm size` ≤ 300 КБ (из T-004).
 - CI запускает `pre-commit run --all-files` — те же проверки, что локально.
-- CI запускает `pre-commit run gitleaks-history --hook-stage manual` (на коммите хук видит только индекс) и интеграционные/миграционные тесты с Docker (из T-003, L-022).
+- CI запускает `pre-commit run gitleaks-history --hook-stage manual --all-files` (на коммите хук видит только индекс) и интеграционные/миграционные тесты с Docker (из T-003, L-022).
 
 **T-007**
 

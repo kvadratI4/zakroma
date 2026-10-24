@@ -24,7 +24,8 @@ repos:
 
   # Secrets (passwords in DSNs, tokens, keys) must never reach a commit (T-003, AC-10).
   # Rules: .gitleaks.toml. On commit only staged changes are scanned; the whole history:
-  #   pre-commit run gitleaks-history --hook-stage manual
+  #   pre-commit run gitleaks-history --hook-stage manual --all-files
+  # (without --all-files the hook is skipped when nothing is staged)
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.30.1
     hooks:

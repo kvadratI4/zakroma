@@ -23,6 +23,8 @@
 | 500 | `internal_error` | непредвиденная ошибка; деталей в ответе нет, трассировка — в логе по `X-Request-ID` |
 | … | свой `code` | ошибки сценариев (`email_taken`, `version_conflict`, `unit_mismatch` …) — описаны у маршрутов |
 
+В OpenAPI-схеме тело ошибки — `Problem` (дополнительные поля разрешены), у `422` — `ValidationProblem`; у каждой операции есть ответ `default` (`application/problem+json`), ошибки сценариев объявляются у маршрута (`problem_response` в `app/core/openapi.py`). `operationId` — имя функции маршрута.
+
 ## Аутентификация
 
 | Метод | Путь | Тело / параметры | Ответ | Требования |
