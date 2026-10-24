@@ -130,7 +130,7 @@
 | Метод | Путь | Ответ |
 |---|---|---|
 | GET | `/health` | `200 {status: "ok", db: "ok"}`; БД недоступна или не ответила за 5 с → `503` problem+json `db_unavailable` (без деталей подключения) |
-| GET | `/openapi.json` | схема |
+| GET | `/openapi.json` | схема — кроме `ENVIRONMENT=prod` (с T-007; решение оператора 2026-10-24) |
 | GET | `/docs` | Swagger UI — кроме `ENVIRONMENT=prod` |
 
 ## Будущие этапы (черновик, уточняется в задачах)
