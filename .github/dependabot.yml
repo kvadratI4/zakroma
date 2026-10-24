@@ -1,0 +1,45 @@
+# Dependency updates (T-006). Every update is a PR that goes through CI; merging stays with the
+# operator. Security updates (Dependabot alerts) are switched on in the repository settings:
+# docs/09-deployment.md §4.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    # A brand-new release is offered only after a week (L-025: let others hit the bugs first).
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: ci
+
+  - package-ecosystem: uv
+    directory: /backend
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    # Minor and patch updates together; each major separately (peer ranges, L-025).
+    groups:
+      backend:
+        update-types: [minor, patch]
+    commit-message:
+      prefix: chore(backend)
+
+  - package-ecosystem: npm
+    directory: /frontend
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    groups:
+      frontend:
+        update-types: [minor, patch]
+    commit-message:
+      prefix: chore(frontend)
