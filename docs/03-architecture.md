@@ -79,7 +79,7 @@ zakroma/
 │   │   │   ├── deps.py        # current_user, household_member и т.п.
 │   │   │   └── v1/            # роутеры по ресурсам + Pydantic-схемы
 │   │   └── integrations/      # S2+: порты (Protocol) и адаптеры внешних API
-│   ├── scripts/               # загрузка справочника и т.п.
+│   ├── scripts/               # init_dev_env, export_openapi (схема для frontend), загрузка справочника
 │   └── tests/
 │       ├── unit/              # domain, без БД
 │       ├── integration/       # API + реальный Postgres
@@ -88,7 +88,7 @@ zakroma/
 │   ├── package.json
 │   ├── src/
 │   │   ├── app/               # провайдеры, роутер, layout
-│   │   ├── api/               # сгенерированный клиент + хуки TanStack Query
+│   │   ├── api/               # openapi.json и schema.d.ts (генерируются `pnpm gen:api`), client.ts; хуки — в features
 │   │   ├── features/          # по разделам меню: stock, expiry, add, shopping, family; позже auth, catalog …
 │   │   ├── shared/            # ui (в т.ч. ornament/), theme (tokens.ts — единственный источник цветов), format
 │   │   ├── i18n/              # ресурсы ru/*.json (ключи <feature>.<area>.<name>)

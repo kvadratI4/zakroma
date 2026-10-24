@@ -1,0 +1,6 @@
+# pnpm settings for frontend/ (a single package, no workspace members).
+peerDependencyRules:
+  allowedVersions:
+    # openapi-typescript 7.13 declares typescript ^5.x; generation and tsc were checked
+    # with TypeScript 6.0 (T-005, §3.6). The generator runs only in `pnpm gen:api`.
+    openapi-typescript>typescript: "6"

@@ -51,7 +51,7 @@
 uv tool install pre-commit && uv tool update-shell   # затем перезапустить терминал
 pre-commit install                                  # хуки на git commit в этом клоне
 pre-commit run --all-files                          # проверить весь репозиторий
-pre-commit run gitleaks-history --hook-stage manual # секреты во всей истории git
+pre-commit run gitleaks-history --hook-stage manual --all-files   # секреты во всей истории git (без --all-files хук пропускается, если индекс пуст)
 
 # backend (T-002, T-003); интеграционным тестам нужен запущенный Docker
 cd backend && uv sync                           # зависимости (Python 3.13, uv.lock)
@@ -71,12 +71,14 @@ cd backend && uv run alembic check             # модели = миграции
 # frontend (T-004): Node 24 LTS + pnpm 12 на машине; в терминале агента — по явному пути (L-016):
 #   export PATH="/c/Program Files/nodejs:$(cygpath -u "$APPDATA")/npm:$PATH"
 cd frontend && pnpm install --frozen-lockfile    # зависимости по pnpm-lock.yaml
-cd frontend && pnpm dev                          # dev-сервер http://127.0.0.1:5173
+cd frontend && pnpm dev                          # dev-сервер http://127.0.0.1:5173; /api → backend на 127.0.0.1:8000
 cd frontend && pnpm test && pnpm lint && pnpm typecheck && pnpm format:check
 cd frontend && pnpm build && pnpm size           # сборка + JS первого экрана ≤ 300 КБ gzip
 cd frontend && pnpm preview                      # собранная версия на http://127.0.0.1:4173
 # стиль: docs/10-design.md; цвета — только из src/shared/theme/tokens.ts
-cd frontend && pnpm gen:api                     # после изменения API (T-005)
+# API-клиент (T-005, ADR-0008): после любого изменения API backend — перегенерировать и закоммитить
+cd frontend && pnpm gen:api                     # backend → src/api/openapi.json → src/api/schema.d.ts (без БД и .env.dev)
+cd frontend && pnpm api:check                   # схема и типы актуальны (то же — хук openapi-fresh и тест pytest)
 
 # справочник (на Windows — `python` или `py`: `python3` там заглушка Microsoft Store)
 python3 docs/catalog/validate_catalog.py

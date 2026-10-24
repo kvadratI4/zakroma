@@ -24,7 +24,8 @@ repos:
 
   # Secrets (passwords in DSNs, tokens, keys) must never reach a commit (T-003, AC-10).
   # Rules: .gitleaks.toml. On commit only staged changes are scanned; the whole history:
-  #   pre-commit run gitleaks-history --hook-stage manual
+  #   pre-commit run gitleaks-history --hook-stage manual --all-files
+  # (without --all-files the hook is skipped when nothing is staged)
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.30.1
     hooks:
@@ -62,6 +63,14 @@ repos:
         language: system
         entry: pnpm --dir frontend exec eslint --fix --cache .
         files: ^frontend/.*\.(ts|tsx|js|jsx)$
+        pass_filenames: false
+      # The generated API client must match the backend (ADR-0008, T-005); fix: `pnpm gen:api`
+      # in frontend/. uv.lock is included: a FastAPI upgrade may change the schema by itself.
+      - id: openapi-fresh
+        name: OpenAPI schema and API client are up to date
+        language: system
+        entry: pnpm --dir frontend api:check
+        files: ^(backend/(app|scripts)/.*\.py|backend/uv\.lock|frontend/src/api/.*|frontend/package\.json)$
         pass_filenames: false
       - id: prettier
         name: prettier
