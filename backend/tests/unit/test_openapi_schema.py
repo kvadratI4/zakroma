@@ -53,6 +53,14 @@ def test_problem_schemas_replace_fastapi_validation_schemas(schema: dict[str, An
     assert problem["additionalProperties"] is True
 
 
+def test_problem_detail_is_optional_string_without_default(schema: dict[str, Any]) -> None:
+    # problem_body omits a missing detail instead of sending null; a `default` would make
+    # openapi-typescript type the field as required.
+    detail = schema["components"]["schemas"]["Problem"]["properties"]["detail"]
+
+    assert detail == {"title": "Detail", "type": "string"}
+
+
 def test_every_operation_has_default_problem_response(schema: dict[str, Any]) -> None:
     for path, operations in schema["paths"].items():
         for method, operation in operations.items():

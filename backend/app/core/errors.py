@@ -6,7 +6,7 @@ from typing import Any, cast
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 PROBLEM_JSON = "application/problem+json"
@@ -25,6 +25,16 @@ VALIDATION_ERROR = ("validation_error", "Некорректные данные")
 INTERNAL_ERROR = ("internal_error", "Внутренняя ошибка сервера")
 
 
+def _omitted_when_missing(schema: dict[str, Any]) -> None:
+    """An optional string that is left out, never sent as null (see `problem_body`).
+
+    Without a `default` in the schema openapi-typescript types it as optional, not required.
+    """
+    schema.pop("anyOf", None)
+    schema.pop("default", None)
+    schema["type"] = "string"
+
+
 class Problem(BaseModel):
     """Error body (RFC 9457); the UI translates `code`, `title` is a fallback text."""
 
@@ -35,7 +45,7 @@ class Problem(BaseModel):
     title: str
     status: int
     code: str
-    detail: str | None = None
+    detail: str | None = Field(default=None, json_schema_extra=_omitted_when_missing)
 
 
 class ValidationIssue(BaseModel):
