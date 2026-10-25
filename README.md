@@ -65,6 +65,8 @@ cd frontend && pnpm dev    # http://127.0.0.1:5173
 
 `pnpm dev` пересылает `/api` на backend (`127.0.0.1:8000`). После изменения API backend — `cd frontend && pnpm gen:api` (типы клиента генерируются из OpenAPI, [ADR-0008](docs/adr/0008-generated-api-client.md)).
 
+Prod-сборку целиком (Caddy с HTTPS, api, миграции, Postgres) можно запустить локально на `https://127.0.0.1:8443` — [09-deployment §2.3](docs/09-deployment.md#23-локальный-запуск-prod-сборки).
+
 Остальные команды (backend, frontend, справочник) — в разделе «Команды» [CLAUDE.md](CLAUDE.md). Визуальный стиль — [docs/10-design.md](docs/10-design.md).
 
 ## Как вести разработку

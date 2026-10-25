@@ -97,10 +97,13 @@ zakroma/
 │   ├── e2e/                   # Playwright
 │   └── public/                # иконки, manifest-ресурсы
 ├── deploy/
-│   ├── docker-compose.yml     # prod
-│   ├── docker-compose.dev.yml
-│   ├── Caddyfile
-│   └── backup/                # скрипты бэкапа и восстановления
+│   ├── docker-compose.yml     # prod (T-007): caddy, api, migrate, db
+│   ├── docker-compose.dev.yml # dev: только Postgres
+│   ├── Caddyfile              # HTTPS, SPA, /api, заголовки безопасности
+│   ├── caddy.Dockerfile       # образ caddy со сборкой SPA
+│   ├── db-init/               # роли БД при инициализации тома (ADR-0012)
+│   ├── .env.example           # переменные; сам .env — init_prod_env.py, не в git
+│   └── backup/                # скрипты бэкапа и восстановления (T-042)
 └── .github/                  # workflows/ci.yml (CI, T-006), dependabot.yml
 ```
 
