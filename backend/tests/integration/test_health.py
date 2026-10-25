@@ -38,7 +38,8 @@ async def test_docs_are_hidden_in_prod(settings: Settings) -> None:
         schema = await client.get("/api/v1/openapi.json")
 
     assert docs.status_code == 404
-    assert schema.status_code == 200
+    # The client is generated from the committed openapi.json; prod does not publish it (T-007).
+    assert schema.status_code == 404
 
 
 def test_invalid_env_fails_at_startup(monkeypatch: pytest.MonkeyPatch) -> None:
