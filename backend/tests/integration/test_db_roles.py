@@ -6,13 +6,17 @@ its own Postgres container.
 
 import asyncio
 import secrets
-from collections.abc import Iterator
+from collections.abc import Iterator, Sequence
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
-import asyncpg
 import pytest
 from alembic import command
+from sqlalchemy import Row, text
+from sqlalchemy.exc import DBAPIError
+from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy.pool import NullPool
 from testcontainers.community.postgres import PostgresContainer
 
 from tests.conftest import POSTGRES_IMAGE
@@ -20,6 +24,7 @@ from tests.migrations.alembic_config import alembic_config
 
 INIT_DIR = Path(__file__).resolve().parents[3] / "deploy" / "db-init"
 DATABASE = "zakroma"
+INSUFFICIENT_PRIVILEGE = "42501"
 
 
 @dataclass(frozen=True)
@@ -30,16 +35,16 @@ class Cluster:
     owner_password: str
     app_password: str
 
-    def dsn(self, user: str, password: str, database: str = DATABASE) -> str:
-        return f"postgresql://{user}:{password}@{self.host}:{self.port}/{database}"
+    def url(self, user: str, password: str, database: str = DATABASE) -> str:
+        return f"postgresql+asyncpg://{user}:{password}@{self.host}:{self.port}/{database}"
 
     @property
     def owner(self) -> str:
-        return self.dsn("zakroma_owner", self.owner_password)
+        return self.url("zakroma_owner", self.owner_password)
 
     @property
     def app(self) -> str:
-        return self.dsn("zakroma_app", self.app_password)
+        return self.url("zakroma_app", self.app_password)
 
 
 @pytest.fixture(scope="module")
@@ -59,35 +64,43 @@ def cluster() -> Iterator[Cluster]:
         yield Cluster("127.0.0.1", port, *passwords)
 
 
-def fetch(dsn: str, query: str) -> list[asyncpg.Record]:
-    async def run() -> list[asyncpg.Record]:
-        connection = await asyncpg.connect(dsn)
+def execute(url: str, statement: str) -> Sequence[Row[Any]]:
+    async def run() -> Sequence[Row[Any]]:
+        engine = create_async_engine(url, poolclass=NullPool, isolation_level="AUTOCOMMIT")
         try:
-            return await connection.fetch(query)
+            async with engine.connect() as connection:
+                result = await connection.execute(text(statement))
+                return result.all() if result.returns_rows else []
         finally:
-            await connection.close()
+            await engine.dispose()
 
     return asyncio.run(run())
 
 
+def assert_denied(url: str, statement: str) -> None:
+    with pytest.raises(DBAPIError) as error:
+        execute(url, statement)
+    assert getattr(error.value.orig, "sqlstate", None) == INSUFFICIENT_PRIVILEGE, error.value
+
+
 def test_owner_runs_migrations(cluster: Cluster) -> None:
-    config = alembic_config(cluster.owner.replace("postgresql://", "postgresql+asyncpg://"))
+    config = alembic_config(cluster.owner)
     config.attributes["skip_logging_config"] = True
 
     command.upgrade(config, "head")
 
-    assert fetch(cluster.app, "SELECT zk_search_fold('Молоко') AS folded")[0]["folded"]
+    assert execute(cluster.app, "SELECT zk_search_fold('Молоко')")[0][0]
 
 
 def test_app_reads_and_writes_tables_the_owner_creates(cluster: Cluster) -> None:
-    fetch(cluster.owner, "CREATE TABLE probe (id serial PRIMARY KEY, name text NOT NULL)")
+    execute(cluster.owner, "CREATE TABLE probe (id serial PRIMARY KEY, name text NOT NULL)")
 
-    fetch(cluster.app, "INSERT INTO probe (name) VALUES ('молоко')")
-    fetch(cluster.app, "UPDATE probe SET name = 'сыр'")
-    rows = fetch(cluster.app, "SELECT name FROM probe")
-    fetch(cluster.app, "DELETE FROM probe")
+    execute(cluster.app, "INSERT INTO probe (name) VALUES ('молоко')")
+    execute(cluster.app, "UPDATE probe SET name = 'сыр'")
+    rows = execute(cluster.app, "SELECT name FROM probe")
+    execute(cluster.app, "DELETE FROM probe")
 
-    assert [row["name"] for row in rows] == ["сыр"]
+    assert [row.name for row in rows] == ["сыр"]
 
 
 @pytest.mark.parametrize(
@@ -102,18 +115,16 @@ def test_app_reads_and_writes_tables_the_owner_creates(cluster: Cluster) -> None
     ids=["create_table", "drop_table", "alter_table", "create_role", "create_extension"],
 )
 def test_app_cannot_change_the_schema(cluster: Cluster, statement: str) -> None:
-    with pytest.raises(asyncpg.InsufficientPrivilegeError):
-        fetch(cluster.app, statement)
+    assert_denied(cluster.app, statement)
 
 
 def test_app_cannot_connect_to_the_postgres_database(cluster: Cluster) -> None:
-    with pytest.raises(asyncpg.InsufficientPrivilegeError):
-        fetch(cluster.dsn("zakroma_app", cluster.app_password, "postgres"), "SELECT 1")
+    assert_denied(cluster.url("zakroma_app", cluster.app_password, "postgres"), "SELECT 1")
 
 
 def test_owner_and_app_are_not_superusers(cluster: Cluster) -> None:
-    rows = fetch(
-        cluster.dsn("postgres", cluster.superuser_password, "postgres"),
+    rows = execute(
+        cluster.url("postgres", cluster.superuser_password, "postgres"),
         "SELECT rolname, rolsuper, rolcreatedb, rolcreaterole FROM pg_roles "
         "WHERE rolname LIKE 'zakroma%' ORDER BY rolname",
     )
