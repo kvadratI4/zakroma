@@ -1,0 +1,9 @@
+# The api image needs only the dependency files, alembic and app (backend/Dockerfile).
+*
+!pyproject.toml
+!uv.lock
+!.python-version
+!alembic.ini
+!alembic/
+!app/
+**/__pycache__
