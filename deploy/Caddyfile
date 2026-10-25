@@ -17,7 +17,19 @@
 	request_header X-Request-ID {http.request.uuid}
 
 	handle /api/* {
-		reverse_proxy api:8000
+		# API bodies are small JSON. A declared size of 1 000 000 bytes or more is refused at once;
+		# max_size also cuts a chunked or understated body when the api reads it.
+		request_body {
+			max_size 1MB
+		}
+		@too_large header_regexp Content-Length ^[0-9]{7,}$
+		handle @too_large {
+			header Content-Type application/problem+json
+			respond `{"type":"https://zakroma/errors/payload-too-large","title":"Слишком большой запрос","status":413,"code":"payload_too_large"}` 413
+		}
+		handle {
+			reverse_proxy api:8000
+		}
 	}
 
 	handle {

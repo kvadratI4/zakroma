@@ -60,6 +60,16 @@ def test_caddy_replaces_a_client_request_id(client: httpx.Client) -> None:
     assert UUID.fullmatch(response.headers["x-request-id"])
 
 
+def test_large_api_bodies_are_refused_by_caddy(client: httpx.Client) -> None:
+    # API bodies are small JSON; a 2 MB body never reaches the api (limit 1 MB in the Caddyfile).
+    response = client.post("/api/v1/health", content=b"x" * 2_000_000)
+
+    assert response.status_code == 413
+    assert response.headers["content-type"] == PROBLEM_JSON
+    assert response.json()["code"] == "payload_too_large"
+    assert client.post("/api/v1/health", content=b"x" * 999_999).status_code == 405  # reaches api
+
+
 @pytest.mark.parametrize("path", ["/api/v1/openapi.json", "/api/v1/docs"])
 def test_schema_and_docs_are_not_published(client: httpx.Client, path: str) -> None:
     response = client.get(path)
