@@ -101,3 +101,35 @@ jobs:
       - run: pnpm test:coverage
       - run: pnpm build
       - run: pnpm size
+
+  # The prod stack as it will run on the VPS (T-007): images, compose, Caddy, database roles.
+  prod-stack:
+    name: prod stack
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      COMPOSE_FILE: deploy/docker-compose.yml
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      # Random passwords for this run only; never printed (no `docker compose config` here).
+      - run: python3 backend/scripts/init_prod_env.py --site-address 127.0.0.1
+      - run: docker compose up -d --build --wait
+      - run: docker compose cp caddy:/data/caddy/pki/authorities/local/root.crt "$RUNNER_TEMP/caddy-root.crt"
+      - run: uv sync --frozen && uv run pytest tests/smoke -v
+        working-directory: backend
+        env:
+          ZAKROMA_SMOKE_URL: https://127.0.0.1:8443
+          ZAKROMA_SMOKE_HTTP_URL: http://127.0.0.1:8080
+          ZAKROMA_SMOKE_CA: ${{ runner.temp }}/caddy-root.crt
+          ZAKROMA_SMOKE_COMPOSE_FILE: ../deploy/docker-compose.yml
+      - if: failure()
+        run: docker compose ps -a && docker compose logs --no-color --tail 100
+      - if: always()
+        run: docker compose down -v

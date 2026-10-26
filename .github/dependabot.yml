@@ -1,4 +1,4 @@
-# Dependency updates (T-006). Every update is a PR that goes through CI; merging stays with the
+# Dependency updates (T-006; images since T-007). Every update is a PR that goes through CI; merging stays with the
 # operator. Security updates (Dependabot alerts) are switched on in the repository settings:
 # docs/09-deployment.md §4.
 version: 2
@@ -41,5 +41,41 @@ updates:
     groups:
       frontend:
         update-types: [minor, patch]
+    ignore:
+      # Node types follow the runtime in frontend/.nvmrc (24): both move together, by hand.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     commit-message:
       prefix: chore(frontend)
+
+  # Base images of backend/Dockerfile, deploy/caddy.Dockerfile and deploy/docker-compose.yml
+  # (pinned by digest, T-007). Majors by hand: Postgres needs a data upgrade (pg_upgrade), Node and
+  # Python move with .nvmrc and .python-version.
+  - package-ecosystem: docker
+    directories: [/backend, /deploy]
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    groups:
+      images:
+        update-types: [minor, patch]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    commit-message:
+      prefix: chore(deploy)
+
+  - package-ecosystem: docker-compose
+    directory: /deploy
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    commit-message:
+      prefix: chore(deploy)

@@ -17,3 +17,4 @@
 | [0009](0009-agent-workflow-tdd.md) | Процесс: предложение → вопросы → ответы → TDD-реализация | Accepted |
 | [0010](0010-llm-provider.md) | Выбор LLM-провайдера для S2–S4 | Proposed (решить до S2) |
 | [0011](0011-test-db-isolation.md) | Изоляция тестов БД: транзакция с откатом на тест | Accepted |
+| [0012](0012-prod-stack-least-privilege.md) | Prod-стек с минимальными правами: роли БД, сети, CSP | Accepted |

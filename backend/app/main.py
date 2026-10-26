@@ -25,11 +25,14 @@ def create_app(settings: Settings | None = None, clock: Clock | None = None) -> 
         yield
         await app.state.engine.dispose()
 
+    # Prod publishes neither the schema nor Swagger: the frontend client is generated from the
+    # committed openapi.json (scripts/export_openapi.py builds it with app.openapi()).
+    published = settings.environment != "prod"
     app = FastAPI(
         title="Zakroma API",
         version="0.1.0",
-        openapi_url=f"{API_V1_PREFIX}/openapi.json",
-        docs_url=f"{API_V1_PREFIX}/docs" if settings.environment != "prod" else None,
+        openapi_url=f"{API_V1_PREFIX}/openapi.json" if published else None,
+        docs_url=f"{API_V1_PREFIX}/docs" if published else None,
         redoc_url=None,
         generate_unique_id_function=operation_id,
         lifespan=lifespan,

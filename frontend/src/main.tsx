@@ -11,9 +11,10 @@ import { createRoot } from "react-dom/client";
 import { App } from "./app/App";
 import { themeCss } from "./shared/theme/cssVariables";
 
-const tokens = document.createElement("style");
-tokens.textContent = themeCss();
-document.head.append(tokens);
+// A constructed stylesheet, not a <style> element: the prod CSP allows no inline styles (T-007).
+const tokens = new CSSStyleSheet();
+tokens.replaceSync(themeCss());
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, tokens];
 
 const root = document.getElementById("root");
 if (!root) throw new Error("#root is missing in index.html");

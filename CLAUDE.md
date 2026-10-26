@@ -84,8 +84,13 @@ cd frontend && pnpm api:check                   # схема и типы акт�
 # справочник (на Windows — `python` или `py`: `python3` там заглушка Microsoft Store)
 python3 docs/catalog/validate_catalog.py
 
-# весь стек локально (после T-007)
-docker compose -f deploy/docker-compose.dev.yml up -d
+# prod-сборка локально (T-007, docs/09-deployment.md §2.3): https://127.0.0.1:8443
+cd backend && uv run python scripts/init_prod_env.py --site-address 127.0.0.1   # один раз: deploy/.env (не читать, не коммитить)
+docker compose -f deploy/docker-compose.yml up -d --build --wait               # весь стек, без имени сервиса
+docker compose -f deploy/docker-compose.yml cp caddy:/data/caddy/pki/authorities/local/root.crt caddy-root.crt
+cd backend && ZAKROMA_SMOKE_URL=https://127.0.0.1:8443 ZAKROMA_SMOKE_CA=../caddy-root.crt ZAKROMA_SMOKE_COMPOSE_FILE=../deploy/docker-compose.yml uv run pytest tests/smoke
+docker compose -f deploy/docker-compose.yml down                                # остановить (-v — удалить данные)
+# никогда: `docker compose config` без --images — печатает пароли
 ```
 
 ## Карта документации

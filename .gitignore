@@ -48,3 +48,6 @@ Thumbs.db
 
 # taste-skill working files (draw sheets, inspector screenshots)
 .taste-skill/
+
+# Caddy's local root CA, copied for smoke tests (docs/09-deployment.md §2.3)
+caddy-root.crt

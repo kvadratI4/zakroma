@@ -1,0 +1,107 @@
+# Prod stack (T-007, docs/09-deployment.md §2): the same file locally and on the VPS.
+#   python3 backend/scripts/init_prod_env.py --site-address <domain | 127.0.0.1>   # once: deploy/.env
+#   docker compose -f deploy/docker-compose.yml up -d --build --wait
+# Secrets live only in deploy/.env; this file only references them. Never run `docker compose
+# config` in CI or paste its output: it prints the values.
+name: zakroma
+
+x-hardening: &hardening
+  security_opt: ["no-new-privileges:true"]
+  logging:
+    driver: json-file
+    options: {max-size: "10m", max-file: "3"}
+
+services:
+  db:
+    <<: *hardening
+    image: postgres:18@sha256:edb0c08dc33befd0262ab3b5cf1c4f3f8cfd8b09e88c05b45adee29d6761ddb6
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?run init_prod_env.py}
+      ZAKROMA_OWNER_PASSWORD: ${ZAKROMA_OWNER_PASSWORD:?run init_prod_env.py}
+      ZAKROMA_APP_PASSWORD: ${ZAKROMA_APP_PASSWORD:?run init_prod_env.py}
+    volumes:
+      - pgdata:/var/lib/postgresql
+      # Roles and database, once on a new volume (T-007, AC-3).
+      - ./db-init:/docker-entrypoint-initdb.d:ro
+    # No ports: reachable only from the internal network `db`.
+    networks: [db]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d zakroma"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  migrate:
+    <<: *hardening
+    image: zakroma-api
+    build: ../backend
+    command: ["alembic", "upgrade", "head"]
+    environment:
+      ENVIRONMENT: prod
+      DATABASE_URL: postgresql+asyncpg://zakroma_owner:${ZAKROMA_OWNER_PASSWORD}@db:5432/zakroma
+    depends_on:
+      db: {condition: service_healthy}
+    networks: [db]
+    read_only: true
+    cap_drop: [ALL]
+
+  api:
+    <<: *hardening
+    image: zakroma-api
+    # Built by `migrate` (same image); never looked up on Docker Hub. The registry comes in T-041.
+    pull_policy: never
+    restart: unless-stopped
+    environment:
+      ENVIRONMENT: prod
+      DATABASE_URL: postgresql+asyncpg://zakroma_app:${ZAKROMA_APP_PASSWORD}@db:5432/zakroma
+    depends_on:
+      # Migrations always run before the new code starts (docs/09-deployment.md §4).
+      migrate: {condition: service_completed_successfully}
+    networks: [web, db]
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health', timeout=4)"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+  caddy:
+    <<: *hardening
+    image: zakroma-caddy
+    build:
+      context: ..
+      dockerfile: deploy/caddy.Dockerfile
+    restart: unless-stopped
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:?run init_prod_env.py}
+    ports:
+      # Locally deploy/.env binds these to 127.0.0.1:8080 and 127.0.0.1:8443.
+      - "${HTTP_BIND:-80}:80"
+      - "${HTTPS_BIND:-443}:443"
+      - "${HTTPS_BIND:-443}:443/udp"
+    depends_on:
+      api: {condition: service_healthy}
+    networks: [web]
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    read_only: true
+    cap_drop: [ALL]
+    cap_add: [NET_BIND_SERVICE]
+
+networks:
+  web:
+    # Fixed subnet: uvicorn trusts X-Forwarded-For only from here (backend/Dockerfile).
+    ipam:
+      config: [{subnet: 172.30.250.0/24}]
+  db:
+    # No way out to the internet and no way in except from api and migrate.
+    internal: true
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:
