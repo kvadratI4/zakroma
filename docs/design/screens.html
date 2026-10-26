@@ -549,14 +549,14 @@ p { margin: 0; }
 
 <div class="wrap">
   <header class="doc-head">
-    <h1>Закрома: ключевые экраны, круг 3</h1>
+    <h1>Закрома: ключевые экраны, итог</h1>
     <p>Тот же вечер той же семьи: понедельник, 26 октября, 19:40, дом «Квартира». Учёт наличия, бытовые меры, все цифры посчитаны из одного набора данных.</p>
     <p>Круг 3 — по замечаниям круга 2: новый порядок добавления, уровни без точек, «на всех», «Закончился» по роду продукта, «Покупки» второй вкладкой, «Испортилась» в ревизии и три варианта тёмной темы. Остальные экраны приняты и не менялись.</p>
     <div class="ask">
-      <strong>Что выбрать:</strong>
+      <strong>Решения круга 3 (оператор, 2026-10-26):</strong>
       <ol>
-        <li><a class="lnk" href="#s-dark">Тёмная тема</a> — один из трёх вариантов: «Лак», «Графит» или «Зелень».</li>
-        <li>Название раздела «Покупки» — о том, что всегда должно быть дома; варианты — в чате.</li>
+        <li><a class="lnk" href="#s-dark">Тёмная тема</a> — выбран «Графит» (из «Лака», «Графита» и «Зелени»).</li>
+        <li>Название раздела о норме дома — выбрано «Всегда дома».</li>
       </ol>
       <span>Замечания пишите по номеру макета. <a class="lnk" href="#changes">Что изменилось</a> — таблица с номерами.</span>
     </div>
@@ -564,8 +564,8 @@ p { margin: 0; }
 
   <div class="bar" role="group" aria-label="Тема макетов">
     <span class="lbl">Тема макетов:</span>
-    <span class="tsw"><button type="button" data-set="light" aria-pressed="true">Светлая · гжель</button><button type="button" data-set="dark:lak" aria-pressed="false">Тёмная · лак</button><button type="button" data-set="dark:grafit" aria-pressed="false">Тёмная · графит</button><button type="button" data-set="dark:zelen" aria-pressed="false">Тёмная · зелень</button></span>
-    <nav class="toc" aria-label="Разделы"><a href="#changes">Изменения</a><a href="#s-dark">Тёмная тема</a><a href="#s-stock">Запасы</a><a href="#s-add">Добавление</a><a href="#s-card">Карточка</a><a href="#s-att">Сроки и покупки</a><a href="#s-rev">Ревизия</a><a href="#s-set">Настройки</a><a href="#s-entry">Вход</a><a href="#s-states">Состояния</a><a href="#s-orn">Роспись</a></nav>
+    <span class="tsw"><button type="button" data-set="light" aria-pressed="true">Светлая · гжель</button><button type="button" data-set="dark:grafit" aria-pressed="false">Тёмная · графит</button></span>
+    <nav class="toc" aria-label="Разделы"><a href="#changes">Изменения</a><a href="#s-dark">Тёмная тема</a><a href="#s-stock">Запасы</a><a href="#s-add">Добавление</a><a href="#s-card">Карточка</a><a href="#s-att">Всегда дома и сроки</a><a href="#s-rev">Ревизия</a><a href="#s-set">Настройки</a><a href="#s-entry">Вход</a><a href="#s-states">Состояния</a><a href="#s-orn">Роспись</a></nav>
   </div>
 
   <section class="band" id="changes" aria-labelledby="h-changes">
@@ -578,9 +578,9 @@ p { margin: 0; }
 
   <section class="band" id="s-dark" aria-labelledby="h-dark">
     <div class="notes">
-      <h2 id="h-dark">Тёмная тема: три варианта</h2>
+      <h2 id="h-dark">Тёмная тема: выбран «Графит»</h2>
       <p>Во всех трёх — нейтральные подложки вместо коричневых, почти белый текст вместо кремового, золото на главном действии, киноварь на сроках и тревожных уровнях, зелень — в листьях росписи. Фон не чёрный. У шести уровней цвет — только у выбранного. Во всех вариантах контраст текста — от 7:1 и выше.</p>
-      <p class="rules"><b>Лак</b> — тёплый тёмно-серый, ближе всего к чёрному лаку хохломы. <b>Графит</b> — холодный серый, самый «технический». <b>Зелень</b> — глубокий зелёный фон, как у части хохломских изделий. Переключатель вверху показывает выбранный вариант на всех экранах страницы.</p>
+      <p class="rules"><b>Лак</b> — тёплый тёмно-серый, ближе всего к чёрному лаку хохломы. <b>Графит</b> — холодный серый, самый «технический». <b>Зелень</b> — глубокий зелёный фон, как у части хохломских изделий. Выбран «Графит» (оператор, 2026-10-26); он же на всех экранах страницы при переключателе «Тёмная · графит». «Лак» и «Зелень» оставлены для истории решения.</p>
     </div>
     <div class="variants" id="dark-variants"></div>
   </section>
@@ -613,8 +613,8 @@ p { margin: 0; }
 
   <section class="band" id="s-att" aria-labelledby="h-att">
     <div class="notes">
-      <h2 id="h-att">Сроки и покупки</h2>
-      <p>«Покупки» стали второй вкладкой, перед «Сроками»: это раздел о том, что всегда должно быть дома. Название — на ваш выбор (варианты в чате), на макетах пока «Покупки». В нём только продукты с нормой дома; у «Почти нет» и «Мало» — подсказка в мерах. «Сроки» — как в круге 1.</p>
+      <h2 id="h-att">Всегда дома и сроки</h2>
+      <p>«Всегда дома» (бывшие «Покупки») — вторая вкладка, перед «Сроками»: раздел о том, что всегда должно быть дома и чего не хватает. В нём только продукты с нормой дома; у «Почти нет» и «Мало» — подсказка в мерах. «Сроки» — как в круге 1.</p>
     </div>
     <div class="shots" id="shots-att"></div>
   </section>
@@ -704,7 +704,7 @@ p { margin: 0; }
       { n: "Огурцы солёные", q: "3 банки", lv: 3, d: "30.09.2027" },
     ]},
   ];
-  // Products with a home norm that ran out: not on the shelves, only in «Покупки».
+  // Products with a home norm that ran out: not on the shelves, only in «Всегда дома».
   const OUT = [{ n: "Хлеб бородинский" }, { n: "Соль" }];
   const all = PLACES.flatMap(p => p.items.map(i => ({ ...i, place: p.name })));
   const expired = all.filter(i => i.exp === "expired");
@@ -735,7 +735,7 @@ p { margin: 0; }
   const head = (extra = "") => `<div class="ahead"><span class="wm">Закрома</span><button class="house" type="button">Квартира${icon("i-down")}</button>${extra}<button class="ibtn" type="button" aria-label="Поиск">${icon("i-search")}</button></div>`;
   const backhead = (back, title = "", more = false) => `<div class="backhead"><button class="back" type="button">${icon("i-left")}${back}</button>${title ? `<span class="ttl">${title}</span>` : ""}${more ? `<button class="ibtn" type="button" aria-label="Ещё">${icon("i-more")}</button>` : ""}</div>`;
   const nav = (active) => `<nav class="anav" aria-label="Меню">${[
-    ["stock", "Запасы", "i-stock"], ["shop", "Покупки", "i-bag", toBuy], ["add"], ["expiry", "Сроки", "i-clock", deadlines], ["settings", "Настройки", "i-gear"],
+    ["stock", "Запасы", "i-stock"], ["shop", "Всегда дома", "i-bag", toBuy], ["add"], ["expiry", "Сроки", "i-clock", deadlines], ["settings", "Настройки", "i-gear"],
   ].map(([id, label, ic, badge]) => id === "add"
     ? `<span class="ni add"><span class="plus">${icon("i-plus")}</span>Добавить</span>`
     : `<span class="ni${id === active ? " on" : ""}">${badge ? `<span class="badge" aria-label="${badge} требуют внимания">${badge}</span>` : ""}${icon(ic)}${label}</span>`).join("")}</nav>`;
@@ -748,33 +748,33 @@ p { margin: 0; }
 
   // ---------- Changes table ----------
   const CHANGES = [
-    ["Тёмная тема: коричневые подложки, кремовый текст, «мешанина»", "Три варианта: нейтральные подложки, почти белый текст, золото, киноварь, зелень; цвет уровня — только у выбранного", "1–9"],
+    ["Тёмная тема: коричневые подложки, кремовый текст, «мешанина»", "Три варианта; выбран «Графит»: нейтральные подложки, почти белый текст, золото, киноварь, зелень; цвет уровня — только у выбранного", "1–9"],
     ["Точка у шести уровней лишняя", "Невыбранные уровни — нейтральные, без цвета и точки; у выбранного — цвет и галочка", "2, 5, 8, 11"],
     ["Действие на нескольких членов семьи", "«−4 пакетика на всех» — по числу людей в доме; число — в «Настройки → Дом»", "11, 25"],
     ["«Закончился» для чая, а не «Закончилось»", "Подписи по роду продукта: чай закончился, гречка закончилась, яйца закончились", "11, 23"],
     ["Добавление: «+ Добавить» → параметры → «Добавить молоко» → список; в конце подтверждение", "Так и сделано; вверху «Добавлено: 2 · Проверить»; экран подтверждения «что, сколько, куда»", "15–18"],
-    ["«Покупки» — о том, что всегда должно быть дома; поменять местами со «Сроками»", "Вторая вкладка меню; название — вопрос в чате", "все экраны"],
+    ["«Покупки» — о том, что всегда должно быть дома; поменять местами со «Сроками»", "«Всегда дома» — вторая вкладка меню", "все экраны"],
     ["Ревизия: помечать испортившееся", "«Испортилась» у сметаны в ревизии; идёт в учёт выброшенного", "23"],
   ];
   document.getElementById("changes-table").innerHTML = `<thead><tr><th scope="col">Замечание</th><th scope="col">Что сделано</th><th scope="col">Макеты</th></tr></thead><tbody>${CHANGES.map(([a, b, c]) => `<tr><td>${a}</td><td>${b}</td><td>${c}</td></tr>`).join("")}</tbody>`;
 
   const shortRow = (i, act) => `<div class="arow short"><div class="t"><b>${i.n}</b><span class="meta">${chip(i.lv ?? 0)}${i.hint ? `<span>${i.hint}</span>` : i.q ? `<span>${i.q}</span>` : ""}</span></div>${act || ""}</div>`;
   const boughtBtn = `<button class="pill" type="button">Купили</button>`;
-  const shopBody = `<div class="att"><div class="hd disp">Покупки</div><p>Что должно быть дома всегда</p></div>
+  const shopBody = `<div class="att"><div class="hd disp">Всегда дома</div><p>Чего не хватает до нормы</p></div>
     <div class="blk"><div class="hd">Закончилось <span>${OUT.length}</span></div>${OUT.map(i => shortRow(i, boughtBtn)).join("")}</div>
     <div class="blk"><div class="hd">Почти нет <span>${critical.length}</span></div>${critical.map(i => shortRow(i, boughtBtn)).join("")}</div>
     <div class="blk"><div class="hd">Мало <span>${low.length}</span></div>${low.map(i => shortRow(i, boughtBtn)).join("")}</div>
     <div class="blk"><div class="hd">Пока не покупать <span>${excess.length}</span></div>${excess.map(i => shortRow(i)).join("")}</div>`;
 
   // ---------- Тёмная тема: три варианта ----------
-  const DV = [["lak", "Лак", "тёплый тёмно-серый, как чёрный лак"], ["grafit", "Графит", "холодный серый"], ["zelen", "Зелень", "глубокий зелёный, как у части хохломских изделий"]];
+  const DV = [["grafit", "Графит", "холодный серый · выбран"], ["lak", "Лак", "тёплый тёмно-серый, как чёрный лак"], ["zelen", "Зелень", "глубокий зелёный, как у части хохломских изделий"]];
   const darkStock = () => stockScreen(`${greet}${tools()}${place(PLACES[0], { limit: 5 })}`);
   const darkPicker = () => stockScreen(`${tools()}${place(PLACES[2], { open: 1, acts: ["−1 пакетик", "−4 пакетика на всех", "Закончился", "Выбросить"] })}`);
   const darkShop = () => `${sbar}${head()}${KAYMA}<div class="abody">${shopBody}</div>${nav("shop")}`;
   document.getElementById("dark-variants").innerHTML = DV.map(([id, name, about]) => `<div class="variant"><h3>${name} — ${about}</h3><div class="shots">${
     phone(`${name}: запасы`, darkStock(), { pin: "dark", dv: id }) +
     phone(`${name}: уровни у чая`, darkPicker(), { pin: "dark", dv: id }) +
-    phone(`${name}: покупки`, darkShop(), { pin: "dark", dv: id })}</div></div>`).join("");
+    phone(`${name}: всегда дома`, darkShop(), { pin: "dark", dv: id })}</div></div>`).join("");
 
   // ---------- Запасы ----------
   const stockMain = `${greet}${tools()}${place(PLACES[0])}`;
@@ -811,7 +811,7 @@ p { margin: 0; }
         <div class="acts"><button class="pill" type="button"${off}>−1 стакан</button><button class="pill" type="button"${off}>−½ пакета</button><button class="pill" type="button"${off}>Закончилось</button><button class="pill sq" type="button" aria-label="Ещё: ${b.place}"${off}>${icon("i-more")}</button></div></div>`).join("")}
       ${menu}
       ${o.short ? "" : `<span class="sect">Норма дома</span>
-      <div class="sumcard"><div class="switch"><span class="txt"><span>Всегда держать дома</span><span>Когда станет меньше — появится в «Покупках»</span></span><button class="tog on" type="button" role="switch" aria-checked="true" aria-label="Всегда держать дома"${off}></button></div>
+      <div class="sumcard"><div class="switch"><span class="txt"><span>Всегда держать дома</span><span>Когда станет меньше — появится во «Всегда дома»</span></span><button class="tog on" type="button" role="switch" aria-checked="true" aria-label="Всегда держать дома"${off}></button></div>
         <div class="normline"><span>Не меньше</span><div class="stepper"><button class="pill sq" type="button" aria-label="Меньше"${off}>${icon("i-minus")}</button><span class="v"><b>1 пакета</b></span><button class="pill sq" type="button" aria-label="Больше"${off}>${icon("i-plus")}</button></div></div></div>
       <span class="sect">Как покупаем и как берём</span>
       <div class="sumcard"><div class="meas"><span>Покупаем</span><span>пакет, 930 мл</span><span></span><span>Берём</span><span>стакан, 200 мл</span><span></span></div><a class="lnk" href="#s-card">Изменить меры ›</a></div>
@@ -821,7 +821,7 @@ p { margin: 0; }
 
   const deskHtml = `<div class="desk-scale"><div class="app desk follow" data-ui data-t="light">
     <aside class="side"><span class="wm">Закрома</span><button class="house" type="button">Квартира${icon("i-down")}</button><button class="btn pri" type="button">${icon("i-plus")}Добавить</button>
-      <nav class="snav" aria-label="Меню"><a class="on">${icon("i-stock")}Запасы</a><a>${icon("i-bag")}Покупки<span class="c">${toBuy}</span></a><a>${icon("i-clock")}Сроки<span class="c">${deadlines}</span></a><a>${icon("i-gear")}Настройки</a></nav>
+      <nav class="snav" aria-label="Меню"><a class="on">${icon("i-stock")}Запасы</a><a>${icon("i-bag")}Всегда дома<span class="c">${toBuy}</span></a><a>${icon("i-clock")}Сроки<span class="c">${deadlines}</span></a><a>${icon("i-gear")}Настройки</a></nav>
       <div class="user"><span class="ava" style="background:var(--p1)">О</span>Ольга</div></aside>
     <div class="dmain">${KAYMA}
       <div class="dhead"><div><div class="hd disp">Добрый вечер</div><p>Понедельник, 26 октября. Сметану пора выбросить. <a class="lnk" href="#s-att">Ещё ${deadlines - 1} в «Сроках» ›</a></p></div></div>
@@ -872,14 +872,14 @@ p { margin: 0; }
     phone("Меню «⋯» у части в холодильнике", `${sbar}${backhead("Запасы", "", true)}<div class="abody">${milkCard({ menu: true, menuTop: 330 })}</div>${nav("stock")}`,
       { note: "Редкие действия — в меню. «Выбросить» отменяется тостом." });
 
-  // ---------- Сроки и Покупки ----------
+  // ---------- Всегда дома и Сроки ----------
   const arow = (i, acts, extra = "") => `<div class="arow"><div class="t"><b>${i.n}</b><span class="q">${i.q || ""}</span><span class="meta">${extra}${i.place ? `<span>${i.place}</span>` : ""}</span></div>${acts ? `<div class="acts">${acts}</div>` : ""}</div>`;
   const eatActs = `<button class="pill" type="button">Съели</button><button class="pill" type="button">Выбросить</button>`;
   const deadlinesBody = `<div class="att"><div class="hd disp">Сроки</div><p>Что съесть первым</p></div>
     <div class="blk"><div class="hd">Просрочено <span>${expired.length}</span></div>${expired.map(i => arow(i, eatActs, status(i))).join("")}</div>
     <div class="blk"><div class="hd">Скоро испортится <span>${expiring.length}</span></div>${expiring.map(i => arow(i, eatActs, status(i))).join("")}</div>`;
   document.getElementById("shots-att").innerHTML =
-    phone("Покупки — вторая вкладка", `${sbar}${head()}${KAYMA}<div class="abody">${shopBody}</div>${nav("shop")}`,
+    phone("Всегда дома — вторая вкладка", `${sbar}${head()}${KAYMA}<div class="abody">${shopBody}</div>${nav("shop")}`,
       { note: "Прокручивается внутри рамки. Только продукты с нормой дома." }) +
     phone("Сроки (как в круге 1)", `${sbar}${head()}${KAYMA}<div class="abody">${deadlinesBody}</div>${nav("expiry")}`);
 
@@ -895,7 +895,7 @@ p { margin: 0; }
   document.getElementById("shots-rev").innerHTML =
     phone("Ревизия: холодильник", `${sbar}${backhead("Отложить", "Сверим запасы")}<div class="abody">${checkBody}</div><div class="dock"><button class="btn pri" type="button">Остальное на месте</button></div>`,
       { note: "Кефир — «Закончился», сметана — «Испортилась» (идёт в выброшенное). Остальное — одной кнопкой." }) +
-    phone("Итог ревизии", `${sbar}${backhead("Запасы")}<div class="abody">${summary}</div><div class="dock"><button class="btn pri" type="button">Открыть «Покупки»</button><button class="btn quiet" type="button">Готово</button></div>`,
+    phone("Итог ревизии", `${sbar}${backhead("Запасы")}<div class="abody">${summary}</div><div class="dock"><button class="btn pri" type="button">Открыть «Всегда дома»</button><button class="btn quiet" type="button">Готово</button></div>`,
       { note: "Что закончилось и чего стало мало с прошлой ревизии." });
 
   // ---------- Настройки ----------
@@ -961,8 +961,8 @@ p { margin: 0; }
     document.querySelectorAll(".app.follow").forEach(el => { el.dataset.t = theme; el.dataset.dv = variant || ""; });
     document.querySelectorAll(".tsw button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.set === choice)));
   };
-  const valid = ["light", "dark:lak", "dark:grafit", "dark:zelen"];
-  apply(valid.includes(saved) ? saved : viewerDark ? "dark:lak" : "light");
+  const valid = ["light", "dark:grafit"];
+  apply(valid.includes(saved) ? saved : viewerDark ? "dark:grafit" : "light");
   document.querySelectorAll(".tsw button").forEach(b => b.addEventListener("click", () => {
     apply(b.dataset.set);
     try { localStorage.setItem("zk-mock-theme", b.dataset.set); } catch (e) { /* storage unavailable */ }

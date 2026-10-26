@@ -101,7 +101,7 @@
 | Метод | Путь | Параметры | Ответ | Требования |
 |---|---|---|---|---|
 | GET | `/households/{hid}/stock` | `?location=&category=&status=&q=&group=location\|category` | `200 [product_summary]` | FR-VIEW-01/02 |
-| GET | `/households/{hid}/attention` | — | `200 {expired:[item], expiring:[item], out:[summary], critical:[summary], low:[summary], excess:[summary]}` — уровни только у продуктов с нормой дома ([05 §6](05-domain-rules.md#6-сроки-и-покупки)) | FR-VIEW-03 |
+| GET | `/households/{hid}/attention` | — | `200 {expired:[item], expiring:[item], out:[summary], critical:[summary], low:[summary], excess:[summary]}` — уровни только у продуктов с нормой дома ([05 §6](05-domain-rules.md#6-всегда-дома-и-сроки)) | FR-VIEW-03 |
 | GET | `/households/{hid}/events` | `?product_id=&limit=&cursor=` | `200 {items:[event], next_cursor}` | FR-INV-10 |
 
 `product_summary` (`level_hint` — подсказка в мерах при уровнях `critical`/`low`, например `{"measure": "packet", "approx": 5}` или `{"measure": "glass", "less_than": true}`, [05 §1.2](05-domain-rules.md#12-подсказка-в-мерах)):
