@@ -9,12 +9,14 @@
   --color-surface: var(--zk-surface);
   --color-raised: var(--zk-raised);
   --color-line: var(--zk-border);
+  --color-line-control: var(--zk-border-control);
   --color-ink: var(--zk-text);
   --color-muted: var(--zk-muted);
   --color-accent: var(--zk-accent);
   --color-on-accent: var(--zk-on-accent);
   --color-ornament: var(--zk-ornament);
   --color-ornament-fill: var(--zk-ornament-fill);
+  --color-ornament-leaf: var(--zk-ornament-leaf);
   --color-negative: var(--zk-negative);
   --color-warning: var(--zk-warning);
 

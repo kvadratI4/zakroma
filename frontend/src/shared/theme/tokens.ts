@@ -1,6 +1,6 @@
 /**
  * Design tokens of the «Фарфор» style — the single source of colours (docs/10-design.md).
- * Light theme follows Gzhel (porcelain and cobalt), dark theme Khokhloma (lacquer, gold, vermilion).
+ * Light theme follows Gzhel (porcelain and cobalt), dark theme Khokhloma «Графит» (graphite, gold, cinnabar, green).
  */
 export type ThemeName = "light" | "dark";
 
@@ -9,12 +9,16 @@ export interface ThemeTokens {
   surface: string;
   raised: string;
   border: string;
+  /** Outline of buttons, chips and fields: one step stronger than panel borders (T-008a). */
+  borderControl: string;
   text: string;
   muted: string;
   accent: string;
   onAccent: string;
   ornament: string;
   ornamentFill: string;
+  /** Leaves of the ornament: Khokhloma green in the dark theme, the pale fill in Gzhel (T-008a). */
+  ornamentLeaf: string;
   negative: string;
   warning: string;
 }
@@ -25,28 +29,34 @@ export const THEMES: Record<ThemeName, ThemeTokens> = {
     surface: "#f0f3f9",
     raised: "#ffffff",
     border: "#dde3ee",
+    borderControl: "#8a96ae",
     text: "#111a30",
     muted: "#4b556e",
     accent: "#1d4ea6",
     onAccent: "#ffffff",
     ornament: "#1d4ea6",
     ornamentFill: "#c3d2ee",
+    ornamentLeaf: "#c3d2ee",
     negative: "#b3261e",
     warning: "#8f4a07",
   },
   dark: {
-    ground: "#110d0a",
-    surface: "#1b1510",
-    raised: "#241b15",
-    border: "#34291f",
-    text: "#f4ecdf",
-    muted: "#b9aa95",
-    accent: "#d9a441",
-    onAccent: "#1a120b",
-    ornament: "#d9a441",
-    ornamentFill: "#c8432b",
-    negative: "#ff8a78",
-    warning: "#f2b46a",
+    // «Графит» (operator, 2026-10-26, T-008a round 3): graphite, not black; Khokhloma gold,
+    // cinnabar and green in the ornament.
+    ground: "#1f2226",
+    surface: "#2a2e33",
+    raised: "#363b41",
+    border: "#4a5058",
+    borderControl: "#767d86",
+    text: "#f5f6f8",
+    muted: "#c0c6ce",
+    accent: "#f2b234",
+    onAccent: "#1b1405",
+    ornament: "#f2b234",
+    ornamentFill: "#e4432d",
+    ornamentLeaf: "#5fae69",
+    negative: "#ff8f7d",
+    warning: "#f6b452",
   },
 };
 
@@ -69,11 +79,12 @@ export const LEVEL_COLOURS: Record<ThemeName, Record<Level, LevelColour>> = {
     excess: { ink: "#6d2b6b", bg: "#f4e7f3" },
   },
   dark: {
-    out: { ink: "#b8afa3", bg: "#2a241e" },
-    critical: { ink: "#ff9283", bg: "#3b1a15" },
-    low: { ink: "#f2b46a", bg: "#3a2812" },
-    normal: { ink: "#86d4a6", bg: "#16301f" },
-    plenty: { ink: "#9ab9f3", bg: "#182644" },
-    excess: { ink: "#dfa9dd", bg: "#351b37" },
+    // 26 % of the level hue over `raised` (docs/10-design.md §2).
+    out: { ink: "#ddd8d1", bg: "#4c4e51" },
+    critical: { ink: "#ffaa9a", bg: "#633d3c" },
+    low: { ink: "#ffcd80", bg: "#625438" },
+    normal: { ink: "#93dc9e", bg: "#385445" },
+    plenty: { ink: "#a3c4ff", bg: "#384966" },
+    excess: { ink: "#ecb3e9", bg: "#523f59" },
   },
 };

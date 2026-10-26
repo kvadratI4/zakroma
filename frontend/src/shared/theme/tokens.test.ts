@@ -5,6 +5,8 @@ import { LEVEL_COLOURS, LEVELS, THEMES, type ThemeName, type ThemeTokens } from 
 
 const TEXT_MIN = 4.5; // WCAG AA, normal text
 const UI_MIN = 3; // WCAG AA, large text and control fills
+// Outlines of buttons, chips and fields; their text names the control (docs/10-design.md §2, T-008b).
+const CONTROL_BORDER_MIN = 2.5;
 
 type Role = keyof ThemeTokens;
 // Text roles and every surface they are drawn on in the app (docs/10-design.md §2).
@@ -35,6 +37,17 @@ describe.each(themes)("theme %s", (theme) => {
 
   it("the add button stands out from the ground (3:1)", () => {
     expect(contrastRatio(t.accent, t.ground)).toBeGreaterThanOrEqual(UI_MIN);
+  });
+
+  it.each(["surface", "raised"] as const)("control outlines stand out on %s (2.5:1)", (bg) => {
+    expect(contrastRatio(t.borderControl, t[bg])).toBeGreaterThanOrEqual(CONTROL_BORDER_MIN);
+  });
+
+  it("ornament strokes and leaves stand out from the ground in the dark theme (3:1)", () => {
+    expect(contrastRatio(t.ornament, t.ground)).toBeGreaterThanOrEqual(UI_MIN);
+    if (theme === "dark") {
+      expect(contrastRatio(t.ornamentLeaf, t.ground)).toBeGreaterThanOrEqual(UI_MIN);
+    }
   });
 
   it.each(LEVELS)("level %s chip text reaches 4.5:1 on its tint", (level) => {
