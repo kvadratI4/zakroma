@@ -90,6 +90,15 @@ def test_deep_link_serves_the_spa_without_caching(client: httpx.Client) -> None:
     assert response.headers["cache-control"] == "no-cache"  # a new release is picked up at once
 
 
+def test_dev_showcase_is_not_shipped(client: httpx.Client) -> None:
+    """The component showcase /dev/ui exists only in the dev build (T-008b, AC-5)."""
+    scripts = re.findall(r'src="(/assets/[^"]+\.js)"', client.get("/dev/ui").text)
+    assert scripts
+
+    for src in scripts:
+        assert "zakroma-dev-showcase" not in client.get(src).text
+
+
 def test_hashed_assets_are_cached_and_compressed(client: httpx.Client) -> None:
     script = re.search(r'src="(/assets/[^"]+\.js)"', client.get("/").text)
     assert script is not None
