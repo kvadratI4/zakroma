@@ -22,7 +22,9 @@
 | — | пороги | `critical_below, low_below, plenty_from, excess_from` |
 | Всегда держать дома: не меньше N | норма дома | `keep_in_stock` + `low_below` |
 | (уровень-кнопка в строке) | отметка наличия | `mark`, event `level_set` |
-| Закончилось | отметка «нет» | `mark(level=out)`, event `consumed` |
+| Закончился / Закончилась / Закончилось / Закончились (по роду продукта) | отметка «нет» | `mark(level=out)`, event `consumed`; род — `name_gender` |
+| −3 пакетика (на всех) | списание на всех живущих | `people_count` × мера use |
+| Сколько человек живёт | число людей в доме | `households.people_count` |
 | Годен до | срок годности | `expires_on` |
 | ≈ до… (обычно неделя) | расчётный срок | `expiry_source = estimated` |
 | — | эффективный срок | `effective_expiry` |

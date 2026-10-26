@@ -77,6 +77,7 @@ CREATE TABLE households (
     name            text NOT NULL CHECK (length(btrim(name)) BETWEEN 1 AND 60),
     timezone        text NOT NULL DEFAULT 'Europe/Moscow',
     expiring_days   smallint NOT NULL DEFAULT 3 CHECK (expiring_days BETWEEN 0 AND 60),
+    people_count    smallint CHECK (people_count BETWEEN 1 AND 20),   -- NULL = число участников дома (05 §5.2)
     archived_at     timestamptz,
     created_at      timestamptz NOT NULL DEFAULT now(),
     updated_at      timestamptz NOT NULL DEFAULT now(),
@@ -158,6 +159,7 @@ CREATE TABLE catalog_products (
     shelf_life_opened_days  integer CHECK (shelf_life_opened_days > 0),
     shelf_life_frozen_days  integer CHECK (shelf_life_frozen_days > 0),
     keep_in_stock           boolean NOT NULL DEFAULT false,   -- норма дома по умолчанию (05 §3.7)
+    name_gender             text NOT NULL CHECK (name_gender IN ('m', 'f', 'n', 'pl')),  -- «Закончился / -ась / -ось / -ись» (05 §5.2)
     search_text             text GENERATED ALWAYS AS (zk_search_fold(name_ru || ' ' || aliases)) STORED,
     CONSTRAINT catalog_thresholds_ordered CHECK (
         coalesce(critical_below, 0) <= coalesce(low_below, critical_below, 0)
@@ -219,6 +221,7 @@ CREATE TABLE products (
     shelf_life_opened_days  integer CHECK (shelf_life_opened_days > 0),
     shelf_life_frozen_days  integer CHECK (shelf_life_frozen_days > 0),
     keep_in_stock           boolean NOT NULL DEFAULT false,   -- норма дома = keep_in_stock + low_below
+    name_gender             text NOT NULL DEFAULT 'n' CHECK (name_gender IN ('m', 'f', 'n', 'pl')),
     last_added_quantity     numeric(12,3) CHECK (last_added_quantity > 0),  -- «как в прошлый раз»
     archived_at             timestamptz,
     search_text             text GENERATED ALWAYS AS (zk_search_fold(name || ' ' || aliases)) STORED,

@@ -49,7 +49,7 @@
 | GET | `/households` | — | `200 [household]` | FR-HH-06 |
 | POST | `/households` | `{name}` | `201 household` (с местами по умолчанию) | FR-HH-07 |
 | GET | `/households/{hid}` | — | `200 household` | — |
-| PATCH | `/households/{hid}` | `{name?, expiring_days?, timezone?, version}` | `200 household` | FR-HH-05, FR-VIEW-04 |
+| PATCH | `/households/{hid}` | `{name?, expiring_days?, timezone?, people_count?, version}` | `200 household` (`people_count` — сколько человек едят дома; `null` = число участников) | FR-HH-05, FR-VIEW-04, FR-INV-05 |
 | GET | `/households/{hid}/members` | — | `200 [member]` | — |
 | DELETE | `/households/{hid}/members/me` | — | `204` (покинуть дом) | FR-HH-05 |
 | POST | `/households/{hid}/members/{uid}/password-reset` | — | `201 {url, expires_at}` | FR-AUTH-05 |
@@ -92,7 +92,7 @@
   "expires_on": "2026-11-17", "expiry_source": "estimated" }
 ```
 
-`product` содержит `measures: [{role: "buy"|"use", measure, amount}]`, пороги `critical_below, low_below, plenty_from, excess_from`, `keep_in_stock` (норма дома — вместе с `low_below`), `default_location_id`, `last_added_quantity`, сроки хранения, `version`.
+`product` содержит `name_gender` (`m|f|n|pl` — для «Закончился / Закончилась…»), `measures: [{role: "buy"|"use", measure, amount}]`, пороги `critical_below, low_below, plenty_from, excess_from`, `keep_in_stock` (норма дома — вместе с `low_below`), `default_location_id`, `last_added_quantity`, сроки хранения, `version`.
 
 ## Запасы
 
@@ -141,7 +141,7 @@
 - `measure: "bag", count: 2` при добавлении = `quantity = 2 × amount` меры продукта; мера должна быть у продукта, `count` — кратно ½ и только у мер с `halves`, для штучных — целый результат, иначе `422 invalid_quantity`.
 - Без `location_id`, количества и срока сервер подставляет значения «как в прошлый раз» ([05 §8](05-domain-rules.md#8-значения-по-умолчанию-при-добавлении-как-в-прошлый-раз)) и обновляет `default_location_id`, `last_added_quantity` продукта.
 - `input_unit` (`kg`, `l` …) — сервер переводит в базовую; несовместимая единица → `422 unit_mismatch`.
-- «−½ пачки» = `measure: "pack", count: 0.5`; «−1 стакан» = `measure: "glass", count: 1`.
+- «−½ пачки» = `measure: "pack", count: 0.5`; «−1 стакан» = `measure: "glass", count: 1`; «−3 пакетика» на всех = `measure: "packet", count: 3`.
 - `mark` с `quantity`, когда в месте больше одной партии, → `422 quantity_needs_single_item`.
 - Изменяющие запросы запасов принимают необязательное `source: "check"` — отметка сделана при проверке места или ревизии (05 §9.3).
 - Перемещение части партии создаёт новую партию в целевом месте с теми же датами.

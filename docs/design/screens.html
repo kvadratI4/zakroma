@@ -70,18 +70,25 @@ p { margin: 0; }
   --lv-0: #5c5c5c; --lv-0-bg: #ececec; --lv-1: #a3241a; --lv-1-bg: #fde9e6; --lv-2: #8f4a07; --lv-2-bg: #fdefdc;
   --lv-3: #23704a; --lv-3-bg: #e2f3e9; --lv-4: #1d4ea6; --lv-4-bg: #e6edfb; --lv-5: #6d2b6b; --lv-5-bg: #f4e7f3;
   --p1: #f3dccd; --p2: #d3e2f5; --p3: #dcefdc; --p4: #f1e2f0;
+  --o3: var(--o2);
   font-family: var(--font-text); font-size: 16px; line-height: 1.4; color: var(--t); background: var(--g);
   font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; color-scheme: light;
 }
+/* Round 3: three dark variants in the Khokhloma spirit (black lacquer, gold, cinnabar, green leaves).
+   Neutral panels and near-white text instead of brown and cream; level tints are mixed from the row colour. */
 .app[data-t="dark"] {
-  /* Round 2: visible steps between lacquer, panels and rows; brighter gold and vermilion (docs/10-design.md §2). */
-  --g: #0e0a07; --s: #271d14; --r: #3a2d21; --b: #4f3f2e; --bc: #7a6249; --t: #f6eee2; --m: #d2c3ad; --a: #ecb84d; --a-ink: #1a120b;
-  --o1: #f4c040; --o2: #e8492c; --neg: #ffa594; --warn: #f8c27c;
-  --lv-0: #c4bbaf; --lv-0-bg: #4a4036; --lv-1: #ffa092; --lv-1-bg: #5c2219; --lv-2: #f6bf78; --lv-2-bg: #563a17;
-  --lv-3: #90dcaf; --lv-3-bg: #1f4a2c; --lv-4: #a6c2f6; --lv-4-bg: #243b68; --lv-5: #e6b4e4; --lv-5-bg: #522a55;
-  --p1: #4a3326; --p2: #263648; --p3: #273f2c; --p4: #432a44;
+  --g: #1c1a18; --s: #272522; --r: #34312d; --b: #46423d; --bc: #736d65; --t: #f5f3ef; --m: #c4bfb7;
+  --a: #f2b234; --a-ink: #1b1405; --o1: #f2b234; --o2: #e4432d; --o3: #5fae69; --neg: #ff8f7d; --warn: #f6b452;
+  --lv-0: #ddd8d1; --lv-1: #ffaa9a; --lv-2: #ffcd80; --lv-3: #93dc9e; --lv-4: #a3c4ff; --lv-5: #ecb3e9;
+  --lv-0-bg: color-mix(in srgb, #8a8580 26%, var(--r)); --lv-1-bg: color-mix(in srgb, #e4432d 26%, var(--r));
+  --lv-2-bg: color-mix(in srgb, #e09a1f 26%, var(--r)); --lv-3-bg: color-mix(in srgb, #3f9a4f 26%, var(--r));
+  --lv-4-bg: color-mix(in srgb, #3f6fd0 26%, var(--r)); --lv-5-bg: color-mix(in srgb, #a04a9d 26%, var(--r));
+  --p1: #4e3b2e; --p2: #2e3d52; --p3: #2f4a35; --p4: #4a3349;
   color-scheme: dark;
 }
+.app[data-t="dark"][data-dv="grafit"] { --g: #1f2226; --s: #2a2e33; --r: #363b41; --b: #4a5058; --bc: #767d86; --t: #f5f6f8; --m: #c0c6ce; }
+.app[data-t="dark"][data-dv="zelen"] { --g: #13241c; --s: #1b3127; --r: #254034; --b: #375646; --bc: #66897a; --t: #f3f7f4; --m: #bccfc4;
+  --o2: #ea4a31; --o3: #7cc488; --neg: #ffa08f; --warn: #f7b957; }
 .app button { font: inherit; color: inherit; cursor: pointer; }
 .app :focus-visible { outline: 3px solid var(--a); outline-offset: 2px; }
 .disp { font-family: var(--font-disp); font-weight: 400; }
@@ -101,7 +108,7 @@ p { margin: 0; }
 .kayma { height: 12px; flex: none; background: var(--o1);
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='18' viewBox='0 0 56 18'%3E%3Cellipse cx='12' cy='5' rx='2.2' ry='3.6'/%3E%3Cellipse cx='12' cy='13' rx='2.2' ry='3.6'/%3E%3Cellipse cx='8' cy='9' rx='3.6' ry='2.2'/%3E%3Cellipse cx='16' cy='9' rx='3.6' ry='2.2'/%3E%3Cpath d='M26 15C28 7 35 4 40 6C36 8 31 11 26 15Z'/%3E%3Ccircle cx='46' cy='11' r='2.6'/%3E%3Ccircle cx='50.5' cy='7.5' r='1.8'/%3E%3C/svg%3E") repeat-x left center / auto 100%;
           mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='18' viewBox='0 0 56 18'%3E%3Cellipse cx='12' cy='5' rx='2.2' ry='3.6'/%3E%3Cellipse cx='12' cy='13' rx='2.2' ry='3.6'/%3E%3Cellipse cx='8' cy='9' rx='3.6' ry='2.2'/%3E%3Cellipse cx='16' cy='9' rx='3.6' ry='2.2'/%3E%3Cpath d='M26 15C28 7 35 4 40 6C36 8 31 11 26 15Z'/%3E%3Ccircle cx='46' cy='11' r='2.6'/%3E%3Ccircle cx='50.5' cy='7.5' r='1.8'/%3E%3C/svg%3E") repeat-x left center / auto 100%; }
-.abody { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; grid-template-columns: minmax(0, 1fr); padding: 14px 16px 16px; display: grid; gap: 14px; align-content: start; position: relative; }
+.abody { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; grid-template-columns: minmax(0, 1fr); grid-auto-rows: max-content; padding: 14px 16px 16px; display: grid; gap: 14px; align-content: start; position: relative; }
 
 .greet .hd { font-size: 36px; line-height: 1.02; }
 .greet p { margin-top: 8px; font-size: 16px; line-height: 1.4; }
@@ -213,6 +220,8 @@ p { margin: 0; }
 .lvb { min-height: 52px; border-radius: 14px; border: 2px solid transparent; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 15px; font-weight: 500; }
 .lvb i { width: 8px; height: 8px; border-radius: 99px; background: currentColor; }
 .lvb.on { border-color: currentColor; font-weight: 600; }
+/* Round 2 feedback: unselected levels are neutral, only the chosen one carries its colour. */
+.lvpick .lvb:not(.on) { background: var(--s); color: var(--t); border: 1px solid var(--bc); }
 .lvb .ic { width: 18px; height: 18px; }
 .sel { min-height: 52px; border-radius: 14px; border: 1.5px solid var(--bc); background: var(--r); display: flex; align-items: center; gap: 10px; padding: 0 12px; font-size: 17px; }
 .sel .emb { width: 28px; height: 28px; }
@@ -383,8 +392,8 @@ p { margin: 0; }
 .freq { display: grid; }
 .freq .fi { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 2px 10px; min-height: 60px; padding: 6px 4px 6px 14px; border-top: 1px solid var(--b); background: var(--r); }
 .freq .fi:first-child { border-top: 0; }
-.freq .fi b { font-weight: 500; font-size: 16px; }
-.freq .fi span { font-size: 14px; color: var(--m); grid-column: 1; }
+.freq .fi > b { font-weight: 500; font-size: 16px; }
+.freq .fi > span { font-size: 14px; color: var(--m); grid-column: 1; }
 .freq .fi .pill { grid-row: 1 / span 2; grid-column: 2; }
 .radios { display: grid; }
 .radios .ri { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 4px 14px; border-top: 1px solid var(--b); background: var(--r); font-size: 16px; }
@@ -404,6 +413,21 @@ p { margin: 0; }
 .tbl { width: 100%; border-collapse: collapse; font-size: 15px; }
 .tbl th, .tbl td { text-align: left; vertical-align: top; padding: 10px 12px 10px 0; border-top: 1px solid var(--line); }
 .tbl th { font-weight: 600; color: var(--muted); font-size: 14px; }
+.added { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 4px 6px 4px 14px; border-radius: 14px; background: var(--s); font-size: 16px; }
+.added b { font-weight: 600; }
+.added .btn { width: auto; min-height: 44px; margin-left: auto; font-size: 16px; }
+.fi.open { grid-template-columns: minmax(0, 1fr); background: var(--r); }
+.fi .edit { display: grid; gap: 12px; padding: 4px 10px 12px 0; }
+.conf { display: grid; gap: 8px; }
+.conf .ci { background: var(--r); border: 1px solid var(--b); border-radius: 14px; padding: 10px 6px 10px 12px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 2px 10px; align-items: center; }
+.conf .ci .emb { width: 28px; height: 28px; grid-row: 1 / span 2; }
+.conf .ci b { font-weight: 600; }
+.conf .ci span { font-size: 14px; color: var(--m); grid-column: 2; }
+.conf .ci .ibtn { grid-row: 1 / span 2; grid-column: 3; }
+.variants { display: grid; gap: 28px; }
+.variant { display: grid; gap: 16px; }
+.variant h3 { font-size: 21px; font-weight: 600; }
+.tsw { flex-wrap: wrap; }
 .tblwrap { overflow-x: auto; background: var(--paper); border-radius: 16px; padding: 4px 16px 8px; }
 .tbl td:last-child, .tbl th:last-child { white-space: nowrap; text-align: right; }
 
@@ -442,7 +466,7 @@ p { margin: 0; }
     </symbol>
     <symbol id="e-berry" viewBox="0 0 64 64">
       <path d="M14 50C22 40 30 30 46 18" stroke-width="2.4" fill="none" stroke-linecap="round" style="stroke:var(--o1)"/>
-      <path d="M46 18C50 10 58 8 60 6C58 14 54 20 46 18Z" stroke-width="2" style="fill:var(--o2);stroke:var(--o1)"/>
+      <path d="M46 18C50 10 58 8 60 6C58 14 54 20 46 18Z" stroke-width="2" style="fill:var(--o3);stroke:var(--o1)"/>
       <g stroke-width="2" style="fill:var(--o2);stroke:var(--o1)"><circle cx="22" cy="44" r="7"/><circle cx="33" cy="42" r="6"/><circle cx="26" cy="33" r="6"/><circle cx="14" cy="34" r="5"/></g>
       <g style="fill:var(--o1)"><circle cx="22" cy="44" r="1.6"/><circle cx="33" cy="42" r="1.4"/><circle cx="26" cy="33" r="1.4"/></g>
     </symbol>
@@ -453,9 +477,11 @@ p { margin: 0; }
         <path d="M120 222C102 222 92 214 92 204C92 196 100 194 104 200"/>
         <path d="M120 222C138 222 148 214 148 204C148 196 140 194 136 200"/>
       </g>
-      <g style="fill:var(--o2);stroke:var(--o1)" stroke-width="2.6" stroke-linejoin="round">
+      <g style="fill:var(--o3);stroke:var(--o1)" stroke-width="2.6" stroke-linejoin="round">
         <path d="M120 172C100 160 74 162 60 180C76 190 100 188 120 172Z"/>
         <path d="M120 172C140 160 166 162 180 180C164 190 140 188 120 172Z"/>
+      </g>
+      <g style="fill:var(--o2);stroke:var(--o1)" stroke-width="2.6" stroke-linejoin="round">
         <circle cx="52" cy="196" r="8"/><circle cx="66" cy="206" r="6"/><circle cx="188" cy="196" r="8"/><circle cx="174" cy="206" r="6"/>
       </g>
       <use href="#e-flower" x="64" y="20" width="112" height="112"/>
@@ -523,32 +549,40 @@ p { margin: 0; }
 
 <div class="wrap">
   <header class="doc-head">
-    <h1>Закрома: ключевые экраны, круг 2</h1>
-    <p>Тот же вечер той же семьи: понедельник, 26 октября, 19:40, дом «Квартира». Экраны перестроены под учёт наличия (ADR-0013): главное — что есть, чего нет и что купить. Количество — в бытовых мерах, значения при добавлении подставлены заранее, у «Почти нет» и «Мало» есть подсказка, сколько это. Все цифры посчитаны из одного набора данных: значки меню, приветствие и разделы сходятся.</p>
-    <p>Приняты в круге 1 и не менялись: строка продукта в две строки, вход, регистрация по приглашению, «Сроки», загрузка, ошибки и пустые экраны. Тёмная тема — новые цвета: поверхности и границы заметнее, роспись ярче.</p>
+    <h1>Закрома: ключевые экраны, круг 3</h1>
+    <p>Тот же вечер той же семьи: понедельник, 26 октября, 19:40, дом «Квартира». Учёт наличия, бытовые меры, все цифры посчитаны из одного набора данных.</p>
+    <p>Круг 3 — по замечаниям круга 2: новый порядок добавления, уровни без точек, «на всех», «Закончился» по роду продукта, «Покупки» второй вкладкой, «Испортилась» в ревизии и три варианта тёмной темы. Остальные экраны приняты и не менялись.</p>
     <div class="ask">
-      <strong>Что посмотреть и выбрать:</strong>
+      <strong>Что выбрать:</strong>
       <ol>
-        <li><a class="lnk" href="#changes">Что изменилось по замечаниям круга 1</a> — таблица с номерами макетов.</li>
-        <li><a class="lnk" href="#d-edit">Один вопрос</a>: как править продукт при добавлении — в раскрытой строке списка или на отдельном экране «Сколько?».</li>
-        <li>Тёмная тема: переключатель «Тёмная · хохлома» ниже — достаточно ли теперь контраста.</li>
+        <li><a class="lnk" href="#s-dark">Тёмная тема</a> — один из трёх вариантов: «Лак», «Графит» или «Зелень».</li>
+        <li>Название раздела «Покупки» — о том, что всегда должно быть дома; варианты — в чате.</li>
       </ol>
-      <span>Замечания пишите по номеру макета, например «7: убрать +30».</span>
+      <span>Замечания пишите по номеру макета. <a class="lnk" href="#changes">Что изменилось</a> — таблица с номерами.</span>
     </div>
   </header>
 
   <div class="bar" role="group" aria-label="Тема макетов">
     <span class="lbl">Тема макетов:</span>
-    <span class="tsw"><button type="button" data-set="light" aria-pressed="true">Светлая · гжель</button><button type="button" data-set="dark" aria-pressed="false">Тёмная · хохлома</button></span>
-    <nav class="toc" aria-label="Разделы"><a href="#changes">Изменения</a><a href="#s-stock">Запасы</a><a href="#s-add">Добавление</a><a href="#s-card">Карточка</a><a href="#s-att">Сроки и покупки</a><a href="#s-rev">Ревизия</a><a href="#s-set">Настройки</a><a href="#s-entry">Вход</a><a href="#s-states">Состояния</a><a href="#s-orn">Роспись</a></nav>
+    <span class="tsw"><button type="button" data-set="light" aria-pressed="true">Светлая · гжель</button><button type="button" data-set="dark:lak" aria-pressed="false">Тёмная · лак</button><button type="button" data-set="dark:grafit" aria-pressed="false">Тёмная · графит</button><button type="button" data-set="dark:zelen" aria-pressed="false">Тёмная · зелень</button></span>
+    <nav class="toc" aria-label="Разделы"><a href="#changes">Изменения</a><a href="#s-dark">Тёмная тема</a><a href="#s-stock">Запасы</a><a href="#s-add">Добавление</a><a href="#s-card">Карточка</a><a href="#s-att">Сроки и покупки</a><a href="#s-rev">Ревизия</a><a href="#s-set">Настройки</a><a href="#s-entry">Вход</a><a href="#s-states">Состояния</a><a href="#s-orn">Роспись</a></nav>
   </div>
 
   <section class="band" id="changes" aria-labelledby="h-changes">
     <div class="notes">
-      <h2 id="h-changes">Что изменилось по замечаниям круга 1</h2>
+      <h2 id="h-changes">Что изменилось по замечаниям круга 2</h2>
       <p>Номера в правой колонке — макеты на этой странице.</p>
     </div>
     <div class="tblwrap"><table class="tbl" id="changes-table"></table></div>
+  </section>
+
+  <section class="band" id="s-dark" aria-labelledby="h-dark">
+    <div class="notes">
+      <h2 id="h-dark">Тёмная тема: три варианта</h2>
+      <p>Во всех трёх — нейтральные подложки вместо коричневых, почти белый текст вместо кремового, золото на главном действии, киноварь на сроках и тревожных уровнях, зелень — в листьях росписи. Фон не чёрный. У шести уровней цвет — только у выбранного. Во всех вариантах контраст текста — от 7:1 и выше.</p>
+      <p class="rules"><b>Лак</b> — тёплый тёмно-серый, ближе всего к чёрному лаку хохломы. <b>Графит</b> — холодный серый, самый «технический». <b>Зелень</b> — глубокий зелёный фон, как у части хохломских изделий. Переключатель вверху показывает выбранный вариант на всех экранах страницы.</p>
+    </div>
+    <div class="variants" id="dark-variants"></div>
   </section>
 
   <section class="band" id="s-stock" aria-labelledby="h-stock">
@@ -564,18 +598,9 @@ p { margin: 0; }
   <section class="band" id="s-add" aria-labelledby="h-add">
     <div class="notes">
       <h2 id="h-add">Добавление</h2>
-      <p>Один экран и для одного продукта, и для всего, что принесли из магазина. Выбранный продукт сразу встаёт в список «Добавляем» со значениями как в прошлый раз: место, сколько в мерах, срок «≈» по справочнику. Последний выбранный раскрыт — всё видно и правится на месте. В S2 сюда же попадут позиции чека.</p>
+      <p>Порядок — ваш, из круга 2: у продукта «+ Добавить» → параметры раскрываются прямо под ним → «Добавить молоко» → панель сворачивается, снова виден список, что можно добавить; вверху растёт «Добавлено: 2 · Проверить». Когда добавили всё — экран подтверждения: что, сколько и куда, с правкой и «Сохранить». До «Сохранить» всё хранится на телефоне.</p>
     </div>
     <div class="shots" id="shots-add"></div>
-
-    <div class="decision" id="d-edit">
-      <div class="notes">
-        <h3>Вопрос. Где править продукт при добавлении</h3>
-        <p><b>А. В раскрытой строке списка</b> (макеты 8 и 10): весь процесс на одном экране — видно и остальные продукты, и кнопку «Добавить». <span class="rec">Рекомендую А:</span> вы писали, что всё добавление должно быть на одном экране, а 20 позиций из чека так проверяются без переходов.</p>
-        <p><b>Б. Отдельный экран «Сколько?»</b> (макет 11) — вариант, выбранный в круге 1: крупнее и свободнее, но на каждый продукт — переход туда и обратно.</p>
-      </div>
-      <div class="shots" id="shots-edit"></div>
-    </div>
   </section>
 
   <section class="band" id="s-card" aria-labelledby="h-card">
@@ -589,7 +614,7 @@ p { margin: 0; }
   <section class="band" id="s-att" aria-labelledby="h-att">
     <div class="notes">
       <h2 id="h-att">Сроки и покупки</h2>
-      <p>«Сроки» — как в круге 1. В «Покупках» — только продукты с нормой дома; у «Почти нет» и «Мало» — подсказка в мерах («≈ 5 пакетиков»). Кнопка «Купили» открывает добавление с этим продуктом.</p>
+      <p>«Покупки» стали второй вкладкой, перед «Сроками»: это раздел о том, что всегда должно быть дома. Название — на ваш выбор (варианты в чате), на макетах пока «Покупки». В нём только продукты с нормой дома; у «Почти нет» и «Мало» — подсказка в мерах. «Сроки» — как в круге 1.</p>
     </div>
     <div class="shots" id="shots-att"></div>
   </section>
@@ -597,7 +622,7 @@ p { margin: 0; }
   <section class="band" id="s-rev" aria-labelledby="h-rev">
     <div class="notes">
       <h2 id="h-rev">Проверка места и ревизия</h2>
-      <p>Раз в три недели (период настраивается или выключается) в начале «Запасов» появляется карточка «Сверим запасы?» — макет 5. «Не сейчас» убирает её до следующего периода. Ревизия — места по очереди: отмечаете только то, что изменилось, остальное — одной кнопкой. В конце — что закончилось и чего стало мало с прошлого раза.</p>
+      <p>Ревизия — места по очереди: отмечаете только то, что изменилось, — «Закончился», «Мало» или «Испортилась» (подпись — по роду продукта), остальное — одной кнопкой. Испорченное идёт в учёт выброшенного. В конце — что закончилось и чего стало мало с прошлого раза.</p>
     </div>
     <div class="shots" id="shots-rev"></div>
   </section>
@@ -605,7 +630,7 @@ p { margin: 0; }
   <section class="band" id="s-set" aria-labelledby="h-set">
     <div class="notes">
       <h2 id="h-set">Настройки</h2>
-      <p>Бывшая «Семья». Кто живёт в доме и «Пригласить», места хранения, настройки дома и мои настройки: оформление и как часто предлагать сверить запасы.</p>
+      <p>Бывшая «Семья». Кто живёт в доме и «Пригласить», места хранения, настройки дома — в том числе «Сколько человек живёт» для кнопки «на всех» — и мои настройки: оформление и как часто предлагать сверить запасы.</p>
     </div>
     <div class="shots" id="shots-set"></div>
   </section>
@@ -700,7 +725,7 @@ p { margin: 0; }
     : i.exp === "soon" ? `<span class="st warn">${icon("i-time")}Ещё ${i.left} ${days(i.left)}</span>`
     : i.d ? `<span>${i.est ? "≈ " : ""}до ${i.d}</span>` : "";
   const lvbtn = (i, open) => `<button class="lvbtn" type="button" aria-expanded="${open ? "true" : "false"}" aria-label="Уровень: ${LV[i.lv]}. Изменить"><span class="lv${i.lv}">${LV[i.lv]}${icon("i-down")}</span></button>`;
-  const picker = (i, acts) => `<div class="picker"><div class="lvpick" role="radiogroup" aria-label="Сколько осталось: ${i.n}">${LV.map((l, k) => `<button class="lvb lv${k}${k === i.lv ? " on" : ""}" type="button" role="radio" aria-checked="${k === i.lv}">${k === i.lv ? icon("i-check") : "<i></i>"}${l}</button>`).join("")}</div>${i.hint ? `<span class="hintline">Сейчас: ${LV[i.lv].toLowerCase()}, ${i.hint}</span>` : ""}<div class="acts">${acts.map(a => `<button class="pill" type="button">${a}</button>`).join("")}</div></div>`;
+  const picker = (i, acts) => `<div class="picker"><div class="lvpick" role="radiogroup" aria-label="Сколько осталось: ${i.n}">${LV.map((l, k) => `<button class="lvb lv${k}${k === i.lv ? " on" : ""}" type="button" role="radio" aria-checked="${k === i.lv}">${k === i.lv ? icon("i-check") : ""}${l}</button>`).join("")}</div>${i.hint ? `<span class="hintline">Сейчас: ${LV[i.lv].toLowerCase()}, ${i.hint}</span>` : ""}<div class="acts">${acts.map(a => `<button class="pill" type="button">${a}</button>`).join("")}</div></div>`;
   const prow = (i, o = {}) => `<div><div class="prow"><button class="hit" type="button" aria-label="Открыть карточку: ${i.n}"></button><span class="txt"><span class="nm">${i.n}</span><span class="meta">${status(i)}${i.hint && !o.open ? `<span>${i.hint}</span>` : ""}</span></span><span class="pside">${i.q ? `<span class="qty">${i.q}</span>` : ""}${lvbtn(i, o.open)}</span><span class="chev">${icon("i-right")}</span></div>${o.open ? picker(i, o.acts || ["Закончилось"]) : ""}</div>`;
   const place = (p, o = {}) => `<section class="place"><div class="ph">${emb(p.emb)}<span class="hd disp">${p.name}</span>${o.checked === false ? "" : `<span class="chk">${p.checked}</span>`}<span class="cnt">${p.items.length}</span></div><div class="rows">${
     p.items.slice(0, o.limit ?? 99).map((i, k) => prow(i, o.open === k ? { open: true, acts: o.acts } : {})).join("")}</div>${o.check ? `<button class="checkbtn" type="button">Проверить ${o.check}</button>` : ""}</section>`;
@@ -710,12 +735,12 @@ p { margin: 0; }
   const head = (extra = "") => `<div class="ahead"><span class="wm">Закрома</span><button class="house" type="button">Квартира${icon("i-down")}</button>${extra}<button class="ibtn" type="button" aria-label="Поиск">${icon("i-search")}</button></div>`;
   const backhead = (back, title = "", more = false) => `<div class="backhead"><button class="back" type="button">${icon("i-left")}${back}</button>${title ? `<span class="ttl">${title}</span>` : ""}${more ? `<button class="ibtn" type="button" aria-label="Ещё">${icon("i-more")}</button>` : ""}</div>`;
   const nav = (active) => `<nav class="anav" aria-label="Меню">${[
-    ["stock", "Запасы", "i-stock"], ["expiry", "Сроки", "i-clock", deadlines], ["add"], ["shop", "Покупки", "i-bag", toBuy], ["settings", "Настройки", "i-gear"],
+    ["stock", "Запасы", "i-stock"], ["shop", "Покупки", "i-bag", toBuy], ["add"], ["expiry", "Сроки", "i-clock", deadlines], ["settings", "Настройки", "i-gear"],
   ].map(([id, label, ic, badge]) => id === "add"
     ? `<span class="ni add"><span class="plus">${icon("i-plus")}</span>Добавить</span>`
     : `<span class="ni${id === active ? " on" : ""}">${badge ? `<span class="badge" aria-label="${badge} требуют внимания">${badge}</span>` : ""}${icon(ic)}${label}</span>`).join("")}</nav>`;
   let num = 0;
-  const phone = (caption, inner, o = {}) => `<figure class="shot"><div class="app phone${o.pin ? "" : " follow"}" data-ui data-t="${o.pin || "light"}">${inner}</div><figcaption><b>${++num}. ${caption}</b>${o.note ? `<br>${o.note}` : ""}</figcaption></figure>`;
+  const phone = (caption, inner, o = {}) => `<figure class="shot"><div class="app phone${o.pin ? "" : " follow"}" data-ui data-t="${o.pin || "light"}"${o.dv ? ` data-dv="${o.dv}"` : ""}>${inner}</div><figcaption><b>${++num}. ${caption}</b>${o.note ? `<br>${o.note}` : ""}</figcaption></figure>`;
 
   const greet = `<div class="greet"><div class="hd disp">Добрый вечер</div><p>Сметану пора выбросить. <a href="#s-att">Ещё ${deadlines - 1} в «Сроках» ›</a></p></div>`;
   const tools = (byKind = false) => `<div class="tools"><div class="seg"><span${byKind ? "" : ` class="on"`}>По местам</span><span${byKind ? ` class="on"` : ""}>По видам</span></div><button class="ibtn" type="button" aria-label="Фильтр">${icon("i-filter")}</button></div>`;
@@ -723,27 +748,33 @@ p { margin: 0; }
 
   // ---------- Changes table ----------
   const CHANGES = [
-    ["Приветствие, если срочного много", "Одно самое важное и «ещё N в „Сроках“» ссылкой", "1, 2"],
-    ["Непонятно «По категориям»", "«По видам»: молочное, хлеб, сыры — по всем местам", "4"],
-    ["Кнопки «−порция» и «Закончилось» разные и крупные; нужны бытовые меры", "Меры продукта, подписи одного вида: «−1 стакан», «−½ пакета», «−1 пакетик», «Закончилось»; кнопки — в панели уровня и в карточке", "3, 12"],
-    ["Тёмная тема: слабый контраст, хохлому ярче", "Поверхности и границы заметнее, золото и киноварь ярче (переключатель вверху)", "2, роспись"],
-    ["«Крит. мало» у чая — непонятно сколько", "«Почти нет · ≈ 5 пакетиков»", "3, 15"],
-    ["Чай, хлеб: после чашки чая никто не отмечает", "Отмечать съеденное не нужно: «Закончилось», уровень, ревизия", "3, 16, 17"],
-    ["«Держать дома» → «должно быть всегда и сколько»", "«Всегда держать дома: не меньше 1 пакета»", "12"],
-    ["Подставленных места, количества, срока не видно", "Видны в списке «Добавляем», правятся на месте; срок — «≈ до 02.11, обычно неделя»", "7, 8"],
-    ["Как указать 2 упаковки, положить крупу на балкон", "Счётчик «2 пакета», «Куда» — выбор места", "8"],
-    ["Непонятно «После магазина» и корзина", "Режима нет: экран всегда список «Добавляем», внизу «Добавить 3 продукта»", "8"],
-    ["Не видно быстрых сроков и календаря", "+3, +7, +14, +30 и «Дата» под сроком", "8, 9"],
-    ["«Сколько стало», «≈ сколько, если хотите» — непонятно", "Спрашиваем только «сколько купили»; уровень считает приложение", "9"],
-    ["«Обычно хранится 14 дней», а срок «не указан»", "Срок сразу «≈ до 25.12 · обычно 2 месяца»", "9"],
-    ["20 позиций чека — не 20 экранов", "Один список; позиции чека (S2) встанут туда же", "8"],
-    ["Чем экран 9 отличался от 11", "Был продукт «по уровню» и «по количеству»; теперь один вид строки", "8, 9"],
-    ["Как попасть в карточку", "Нажатие на строку, стрелка «›» справа", "1, 6, 12"],
-    ["История: никто не отчитывается", "История свёрнута; в карточке главное — наличие", "12"],
-    ["Название «Семья»", "«Настройки»", "18, 19"],
-    ["Ревизия раз в 2–3 недели, без давления", "Карточка «Сверим запасы?», «Не сейчас», период в настройках", "5, 16, 17, 19"],
+    ["Тёмная тема: коричневые подложки, кремовый текст, «мешанина»", "Три варианта: нейтральные подложки, почти белый текст, золото, киноварь, зелень; цвет уровня — только у выбранного", "1–9"],
+    ["Точка у шести уровней лишняя", "Невыбранные уровни — нейтральные, без цвета и точки; у выбранного — цвет и галочка", "2, 5, 8, 11"],
+    ["Действие на нескольких членов семьи", "«−4 пакетика на всех» — по числу людей в доме; число — в «Настройки → Дом»", "11, 25"],
+    ["«Закончился» для чая, а не «Закончилось»", "Подписи по роду продукта: чай закончился, гречка закончилась, яйца закончились", "11, 23"],
+    ["Добавление: «+ Добавить» → параметры → «Добавить молоко» → список; в конце подтверждение", "Так и сделано; вверху «Добавлено: 2 · Проверить»; экран подтверждения «что, сколько, куда»", "15–18"],
+    ["«Покупки» — о том, что всегда должно быть дома; поменять местами со «Сроками»", "Вторая вкладка меню; название — вопрос в чате", "все экраны"],
+    ["Ревизия: помечать испортившееся", "«Испортилась» у сметаны в ревизии; идёт в учёт выброшенного", "23"],
   ];
   document.getElementById("changes-table").innerHTML = `<thead><tr><th scope="col">Замечание</th><th scope="col">Что сделано</th><th scope="col">Макеты</th></tr></thead><tbody>${CHANGES.map(([a, b, c]) => `<tr><td>${a}</td><td>${b}</td><td>${c}</td></tr>`).join("")}</tbody>`;
+
+  const shortRow = (i, act) => `<div class="arow short"><div class="t"><b>${i.n}</b><span class="meta">${chip(i.lv ?? 0)}${i.hint ? `<span>${i.hint}</span>` : i.q ? `<span>${i.q}</span>` : ""}</span></div>${act || ""}</div>`;
+  const boughtBtn = `<button class="pill" type="button">Купили</button>`;
+  const shopBody = `<div class="att"><div class="hd disp">Покупки</div><p>Что должно быть дома всегда</p></div>
+    <div class="blk"><div class="hd">Закончилось <span>${OUT.length}</span></div>${OUT.map(i => shortRow(i, boughtBtn)).join("")}</div>
+    <div class="blk"><div class="hd">Почти нет <span>${critical.length}</span></div>${critical.map(i => shortRow(i, boughtBtn)).join("")}</div>
+    <div class="blk"><div class="hd">Мало <span>${low.length}</span></div>${low.map(i => shortRow(i, boughtBtn)).join("")}</div>
+    <div class="blk"><div class="hd">Пока не покупать <span>${excess.length}</span></div>${excess.map(i => shortRow(i)).join("")}</div>`;
+
+  // ---------- Тёмная тема: три варианта ----------
+  const DV = [["lak", "Лак", "тёплый тёмно-серый, как чёрный лак"], ["grafit", "Графит", "холодный серый"], ["zelen", "Зелень", "глубокий зелёный, как у части хохломских изделий"]];
+  const darkStock = () => stockScreen(`${greet}${tools()}${place(PLACES[0], { limit: 5 })}`);
+  const darkPicker = () => stockScreen(`${tools()}${place(PLACES[2], { open: 1, acts: ["−1 пакетик", "−4 пакетика на всех", "Закончился", "Выбросить"] })}`);
+  const darkShop = () => `${sbar}${head()}${KAYMA}<div class="abody">${shopBody}</div>${nav("shop")}`;
+  document.getElementById("dark-variants").innerHTML = DV.map(([id, name, about]) => `<div class="variant"><h3>${name} — ${about}</h3><div class="shots">${
+    phone(`${name}: запасы`, darkStock(), { pin: "dark", dv: id }) +
+    phone(`${name}: уровни у чая`, darkPicker(), { pin: "dark", dv: id }) +
+    phone(`${name}: покупки`, darkShop(), { pin: "dark", dv: id })}</div></div>`).join("");
 
   // ---------- Запасы ----------
   const stockMain = `${greet}${tools()}${place(PLACES[0])}`;
@@ -758,10 +789,9 @@ p { margin: 0; }
   const revCard = `<div class="revcard"><span class="hd">Сверим запасы?</span><span>Последний раз — 3 недели назад. Пройдём по местам, займёт минут пять.</span><div class="row-btns"><button class="btn pri" type="button">Начать</button><button class="btn sec" type="button">Не сейчас</button></div><a class="lnk" href="#s-set">Как часто предлагать ›</a></div>`;
 
   document.getElementById("shots-stock").innerHTML =
-    phone("Запасы, светлая тема", stockScreen(stockMain), { pin: "light" }) +
-    phone("Запасы, тёмная тема (новые цвета)", stockScreen(stockMain), { pin: "dark" }) +
-    phone("Кнопка уровня у чая раскрыта", stockScreen(`${tools()}${place(PLACES[2], { open: 1, acts: ["−1 пакетик", "Закончилось", "Выбросить"] })}`),
-      { note: "Шесть уровней, подсказка «≈ 5 пакетиков» и действия этого продукта. Отметка — вторым нажатием." }) +
+    phone("Запасы", stockScreen(stockMain)) +
+    phone("Кнопка уровня у чая раскрыта", stockScreen(`${tools()}${place(PLACES[2], { open: 1, acts: ["−1 пакетик", "−4 пакетика на всех", "Закончился", "Выбросить"] })}`),
+      { note: "Цвет — только у выбранного уровня. «−4 пакетика на всех» — по числу людей в доме (4). «Закончился» — по роду: чай." }) +
     phone("По видам", stockScreen(kindBody), { note: "Продукт — сводкой по всем местам; под названием — где лежит." }) +
     phone("Предложение ревизии в начале «Запасов»", stockScreen(`${revCard}${greet}${tools()}${place(PLACES[0], { limit: 3 })}`),
       { note: "Появляется раз в период. «Не сейчас» убирает до следующего." });
@@ -791,7 +821,7 @@ p { margin: 0; }
 
   const deskHtml = `<div class="desk-scale"><div class="app desk follow" data-ui data-t="light">
     <aside class="side"><span class="wm">Закрома</span><button class="house" type="button">Квартира${icon("i-down")}</button><button class="btn pri" type="button">${icon("i-plus")}Добавить</button>
-      <nav class="snav" aria-label="Меню"><a class="on">${icon("i-stock")}Запасы</a><a>${icon("i-clock")}Сроки<span class="c">${deadlines}</span></a><a>${icon("i-bag")}Покупки<span class="c">${toBuy}</span></a><a>${icon("i-gear")}Настройки</a></nav>
+      <nav class="snav" aria-label="Меню"><a class="on">${icon("i-stock")}Запасы</a><a>${icon("i-bag")}Покупки<span class="c">${toBuy}</span></a><a>${icon("i-clock")}Сроки<span class="c">${deadlines}</span></a><a>${icon("i-gear")}Настройки</a></nav>
       <div class="user"><span class="ava" style="background:var(--p1)">О</span>Ольга</div></aside>
     <div class="dmain">${KAYMA}
       <div class="dhead"><div><div class="hd disp">Добрый вечер</div><p>Понедельник, 26 октября. Сметану пора выбросить. <a class="lnk" href="#s-att">Ещё ${deadlines - 1} в «Сроках» ›</a></p></div></div>
@@ -818,18 +848,23 @@ p { margin: 0; }
       <div class="field"><span class="lab">Куда</span><div class="sel">${emb("e-berry")}<span>Балкон</span>${icon("i-down")}</div></div>
       ${dateField("25.12", "Обычно хранится 2 месяца.")}`;
 
+  const addedBar = (n, names) => `<div class="added"><span><b>Добавлено: ${n}</b><br><span class="hint">${names}</span></span><button class="btn sec" type="button">Проверить</button></div>`;
+  const freqRow = ([n, s], open, body = "", btn = "") => open
+    ? `<div class="fi open"><b>${n}</b>${body}<button class="btn pri" type="button">${btn}</button></div>`
+    : `<div class="fi"><b>${n}</b><span>${s}</span><button class="pill" type="button">${icon("i-plus")}Добавить</button></div>`;
+  const milkEditBody = `<div class="edit">${milkEdit}</div>`;
+  const potatoEditBody = `<div class="edit">${potatoEdit}</div>`;
+  const FREQ2 = [["Хлеб бородинский", "1 буханка · Кухонный шкаф · ≈ до 31.10"], ["Яйца С1", "1 десяток · Холодильник · ≈ до 25.11"], ["Сыр российский", "1 кусок · Холодильник · ≈ до 16.11"], ["Гречка", "1 пачка · Кухонный шкаф · ≈ до 26.04.2028"]];
+  const conf = [["e-flower", "Молоко 3,2 %", "2 пакета · Холодильник · ≈ до 02.11"], ["e-grain", "Хлеб бородинский", "1 буханка · Кухонный шкаф · ≈ до 31.10"], ["e-berry", "Картофель", "3 кг · Балкон · ≈ до 25.12"]];
   document.getElementById("shots-add").innerHTML =
-    phone("Добавить: поиск и «Обычно покупаете»", `${sbar}${backhead("Отмена", "Что купили?")}<div class="abody">${searchField("")}${freq}</div>`,
-      { note: "Под каждым продуктом — что подставится: сколько, куда, до какого срока." }) +
-    phone("Список «Добавляем»: молоко раскрыто", `${sbar}${backhead("Отмена", "Что купили?")}<div class="abody">${listBody}</div>${addDock(3)}`,
-      { note: "2 пакета, холодильник, срок ≈ 02.11 с быстрыми сроками. Ниже — свёрнутые строки хлеба и гречки (прокрутка внутри рамки)." }) +
-    phone("Картофель с рынка, на вес", `${sbar}${backhead("Отмена", "Что купили?")}<div class="abody">${searchField("")}<span class="sub">Добавляем: 1</span><div class="addl">${addItem("Картофель", "как в прошлый раз", true, potatoEdit)}</div></div>${addDock(1)}`,
-      { note: "Килограммы или «сетка», место — как в прошлый раз, срок — типовой." });
-
-  document.getElementById("shots-edit").innerHTML =
-    phone("Вариант А: правка в списке · рекомендую", `${sbar}${backhead("Отмена", "Что купили?")}<div class="abody">${listBody}</div>${addDock(3)}`, { note: "Тот же экран, что макет 8." }) +
-    phone("Вариант Б: отдельный экран «Сколько?»", `${sbar}${backhead("К списку", "Сколько?")}<div class="abody"><div class="prod"><div class="hd">Молоко 3,2 %</div><span class="sub">Дома уже 1,5 л</span></div>${milkEdit}</div><div class="dock"><button class="btn pri" type="button">Готово</button></div>`,
-      { note: "«Готово» возвращает к списку «Добавляем»." });
+    phone("Добавить: что можно добавить", `${sbar}${backhead("Отмена", "Что купили?")}<div class="abody">${searchField("")}${freq}</div>`,
+      { note: "Под каждым продуктом — что подставится. «+ Добавить» раскрывает параметры." }) +
+    phone("У молока нажали «+ Добавить»", `${sbar}${backhead("Отмена", "Что купили?")}<div class="abody">${searchField("")}<span class="sub">Обычно покупаете</span><div class="freq group">${freqRow(FREQ[0], true, milkEditBody, "Добавить молоко")}${FREQ2.slice(0, 2).map(r => freqRow(r)).join("")}</div></div>`,
+      { note: "Параметры раскрыты прямо в списке; «Добавить молоко» сворачивает их и возвращает к списку." }) +
+    phone("Картофель с рынка: найден поиском", `${sbar}${backhead("Отмена", "Что купили?")}<div class="abody">${addedBar(1, "молоко")}${searchField("карт")}<div class="freq group">${freqRow(["Картофель", ""], true, potatoEditBody, "Добавить картофель")}</div></div>`,
+      { note: "Вверху — «Добавлено: 1». Килограммы или «сетка», место — как в прошлый раз, срок — типовой." }) +
+    phone("Подтверждение: что, сколько, куда", `${sbar}${backhead("К списку", "Проверьте")}<div class="abody"><div class="att"><div class="hd disp">Добавляем 3</div><p>Нажмите на продукт, чтобы поправить</p></div><div class="conf">${conf.map(([e, n, s]) => `<div class="ci">${emb(e)}<b>${n}</b><span>${s}</span><button class="ibtn" type="button" aria-label="Изменить: ${n}">${icon("i-right")}</button></div>`).join("")}</div></div><div class="dock"><button class="btn pri" type="button">Сохранить 3 продукта</button><button class="btn quiet" type="button">Добавить ещё</button></div>`,
+      { note: "Последний шаг: всё видно разом, «Сохранить» записывает. Так же будет выглядеть проверка чека в S2." });
 
   // ---------- Карточка ----------
   document.getElementById("shots-card").innerHTML =
@@ -843,29 +878,23 @@ p { margin: 0; }
   const deadlinesBody = `<div class="att"><div class="hd disp">Сроки</div><p>Что съесть первым</p></div>
     <div class="blk"><div class="hd">Просрочено <span>${expired.length}</span></div>${expired.map(i => arow(i, eatActs, status(i))).join("")}</div>
     <div class="blk"><div class="hd">Скоро испортится <span>${expiring.length}</span></div>${expiring.map(i => arow(i, eatActs, status(i))).join("")}</div>`;
-  const bought = `<button class="pill" type="button">Купили</button>`;
-  const short = (i, act) => `<div class="arow short"><div class="t"><b>${i.n}</b><span class="meta">${chip(i.lv ?? 0)}${i.hint ? `<span>${i.hint}</span>` : i.q ? `<span>${i.q}</span>` : ""}</span></div>${act || ""}</div>`;
-  const shopBody = `<div class="att"><div class="hd disp">Покупки</div><p>Что купить</p></div>
-    <div class="blk"><div class="hd">Закончилось <span>${OUT.length}</span></div>${OUT.map(i => short(i, bought)).join("")}</div>
-    <div class="blk"><div class="hd">Почти нет <span>${critical.length}</span></div>${critical.map(i => short(i, bought)).join("")}</div>
-    <div class="blk"><div class="hd">Мало <span>${low.length}</span></div>${low.map(i => short(i, bought)).join("")}</div>
-    <div class="blk"><div class="hd">Пока не покупать <span>${excess.length}</span></div>${excess.map(i => short(i)).join("")}</div>`;
   document.getElementById("shots-att").innerHTML =
-    phone("Сроки (как в круге 1)", `${sbar}${head()}${KAYMA}<div class="abody">${deadlinesBody}</div>${nav("expiry")}`) +
-    phone("Покупки", `${sbar}${head()}${KAYMA}<div class="abody">${shopBody}</div>${nav("shop")}`,
-      { note: "Прокручивается внутри рамки. Только продукты с нормой дома." });
+    phone("Покупки — вторая вкладка", `${sbar}${head()}${KAYMA}<div class="abody">${shopBody}</div>${nav("shop")}`,
+      { note: "Прокручивается внутри рамки. Только продукты с нормой дома." }) +
+    phone("Сроки (как в круге 1)", `${sbar}${head()}${KAYMA}<div class="abody">${deadlinesBody}</div>${nav("expiry")}`);
 
   // ---------- Ревизия ----------
   const crow = (n, meta, lv, changed) => `<div class="crow${changed ? " changed" : ""}"><span><span class="nm">${n}</span><br><span class="meta">${meta}</span></span>${lvbtn({ lv })}</div>`;
   const checkBody = `<div class="progress">Холодильник · 1 из 4<span class="bar"><i style="width:25%"></i></span></div>
     <p>Отметьте только то, что изменилось.</p>
-    <div class="rows">${crow("Творог 5 %", "½ пачки", 1)}${crow("Кефир 1 %", "отмечено: закончился", 0, true)}${crow("Сметана 20 %", "1 банка · просрочено", 3)}${crow("Молоко 3,2 %", "0,5 л", 3)}${crow("Яйца С1", "6 шт", 3)}${crow("Сыр российский", "250 г", 3)}${crow("Морковь", "", 2)}</div>`;
+    <div class="rows">${crow("Творог 5 %", "½ пачки", 1)}${crow("Кефир 1 %", "отмечено: закончился", 0, true)}${crow("Сметана 20 %", "отмечено: испортилась", 0, true)}${crow("Молоко 3,2 %", "0,5 л", 3)}${crow("Яйца С1", "6 шт", 3)}${crow("Сыр российский", "250 г", 3)}${crow("Морковь", "", 2)}</div>`;
   const summary = `<div class="att"><div class="hd disp">Сверили</div><p>4 места из 4 · прошлый раз — 3 недели назад</p></div>
     <span class="sect">С прошлого раза закончились</span><div class="sumlist"><div class="li"><b>Кефир 1 %</b><span>Холодильник</span></div><div class="li"><b>Хлеб бородинский</b><span>Кухонный шкаф</span></div></div>
+    <span class="sect">Испортилось</span><div class="sumlist"><div class="li"><b>Сметана 20 %</b><span>Холодильник · 1 банка</span></div></div>
     <span class="sect">Стало мало</span><div class="sumlist"><div class="li"><b>Гречка</b><span>≈ 1 стакан</span></div><div class="li"><b>Макароны</b><span>≈ ½ пачки</span></div></div>`;
   document.getElementById("shots-rev").innerHTML =
     phone("Ревизия: холодильник", `${sbar}${backhead("Отложить", "Сверим запасы")}<div class="abody">${checkBody}</div><div class="dock"><button class="btn pri" type="button">Остальное на месте</button></div>`,
-      { note: "У кефира отмечено «Закончилось»; остальное подтверждается одной кнопкой." }) +
+      { note: "Кефир — «Закончился», сметана — «Испортилась» (идёт в выброшенное). Остальное — одной кнопкой." }) +
     phone("Итог ревизии", `${sbar}${backhead("Запасы")}<div class="abody">${summary}</div><div class="dock"><button class="btn pri" type="button">Открыть «Покупки»</button><button class="btn quiet" type="button">Готово</button></div>`,
       { note: "Что закончилось и чего стало мало с прошлой ревизии." });
 
@@ -877,6 +906,7 @@ p { margin: 0; }
     <button class="btn pri" type="button">${icon("i-invite")}Пригласить</button>
     <span class="sect">Дом</span><div class="group">
     <div class="listrow">Места хранения<span class="v">4</span>${icon("i-right")}</div>
+    <div class="listrow">Сколько человек живёт<span class="v">4</span>${icon("i-right")}</div>
     <div class="listrow">Предупреждать о сроке<span class="v">за 3 дня</span>${icon("i-right")}</div>
     <div class="listrow">Часовой пояс<span class="v">Москва</span>${icon("i-right")}</div></div>`;
   const PERIODS = ["Раз в неделю", "Раз в 2 недели", "Раз в 3 недели", "Раз в месяц", "Не предлагать"];
@@ -926,11 +956,13 @@ p { margin: 0; }
   const viewerDark = root.dataset.theme === "dark" || (!root.dataset.theme && matchMedia("(prefers-color-scheme: dark)").matches);
   let saved = null;
   try { saved = localStorage.getItem("zk-mock-theme"); } catch (e) { /* storage unavailable */ }
-  const apply = (t) => {
-    document.querySelectorAll(".app.follow").forEach(el => { el.dataset.t = t; });
-    document.querySelectorAll(".tsw button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.set === t)));
+  const apply = (choice) => {
+    const [theme, variant] = choice.split(":");
+    document.querySelectorAll(".app.follow").forEach(el => { el.dataset.t = theme; el.dataset.dv = variant || ""; });
+    document.querySelectorAll(".tsw button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.set === choice)));
   };
-  apply(saved === "light" || saved === "dark" ? saved : viewerDark ? "dark" : "light");
+  const valid = ["light", "dark:lak", "dark:grafit", "dark:zelen"];
+  apply(valid.includes(saved) ? saved : viewerDark ? "dark:lak" : "light");
   document.querySelectorAll(".tsw button").forEach(b => b.addEventListener("click", () => {
     apply(b.dataset.set);
     try { localStorage.setItem("zk-mock-theme", b.dataset.set); } catch (e) { /* storage unavailable */ }
