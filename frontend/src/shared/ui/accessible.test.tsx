@@ -8,6 +8,9 @@ import { Button } from "./Button";
 import { ChoiceChips } from "./ChoiceChips";
 import { DateField } from "./DateField";
 import { IconButton } from "./IconButton";
+import { LevelButton } from "./LevelButton";
+import { LevelChip } from "./LevelChip";
+import { LevelPicker } from "./LevelPicker";
 import { RadioList } from "./RadioList";
 import { SearchField } from "./SearchField";
 import { SegmentedControl } from "./SegmentedControl";
@@ -132,6 +135,23 @@ const SAMPLES: [string, ReactElement][] = [
   [
     "Switch off disabled",
     <Switch key="sw2" label="Всегда держать дома" checked={false} onChange={noop} disabled />,
+  ],
+  ["LevelChip", <LevelChip key="lc" level="critical" />],
+  [
+    "LevelButton with its picker",
+    <div key="lb">
+      <LevelButton level="critical" expanded controls="tea-levels" onClick={noop} />
+      <LevelPicker
+        id="tea-levels"
+        label="Сколько осталось: Чай"
+        value="critical"
+        onChange={noop}
+        hint="≈ 5 пакетиков"
+      >
+        <ActionPill label="−1 пакетик" />
+        <ActionPill label="Закончился" />
+      </LevelPicker>
+    </div>,
   ],
 ];
 
