@@ -7,6 +7,7 @@
 | Настройки (раздел меню, бывш. «Семья») | настройки дома и пользователя | `settings` |
 | Место (Холодильник…) | место хранения | `storage_location`, `location`, `kind` |
 | Проверить холодильник, Остальное на месте | проверка места | `storage_locations.checked_at`, `POST …/locations/{id}/checked` |
+| Сверим запасы?, Не сейчас, Предлагать сверить запасы | предложение ревизии | `revision`, `users.revision_reminder_days`, `revision_snoozed_until`, `stock_events.source = check` |
 | — | справочник, позиция справочника | `catalog`, `catalog_product`, `slug` |
 | Продукт | продукт дома | `product` |
 | (строка в месте) | партия | `inventory_item`, `item` |

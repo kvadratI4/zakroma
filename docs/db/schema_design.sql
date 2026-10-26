@@ -39,6 +39,9 @@ CREATE TABLE users (
     display_name        text NOT NULL CHECK (length(btrim(display_name)) BETWEEN 1 AND 60),
     password_hash       text NOT NULL,                       -- Argon2id
     last_household_id   uuid,                                -- FK добавлен ниже (цикл)
+    -- Предложение ревизии (05 §9.2): период в днях, NULL — выключено; «Не сейчас» откладывает.
+    revision_reminder_days  smallint DEFAULT 21 CHECK (revision_reminder_days IN (7, 14, 21, 28)),
+    revision_snoozed_until  timestamptz,
     created_at          timestamptz NOT NULL DEFAULT now(),
     updated_at          timestamptz NOT NULL DEFAULT now()
 );
@@ -301,6 +304,7 @@ CREATE TABLE stock_events (
     actor_user_id       uuid REFERENCES users (id) ON DELETE SET NULL,
     occurred_at         timestamptz NOT NULL DEFAULT now(),
     note                text,
+    source              text NOT NULL DEFAULT 'action' CHECK (source IN ('action', 'check')),  -- check: проверка места / ревизия (05 §9)
     FOREIGN KEY (household_id, item_id)    REFERENCES inventory_items (household_id, id),
     FOREIGN KEY (household_id, product_id) REFERENCES products (household_id, id),
     CONSTRAINT events_consume_negative CHECK (

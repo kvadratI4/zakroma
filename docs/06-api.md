@@ -35,7 +35,7 @@
 | POST | `/auth/login` | `{email, password}` | `200 {user, households}` + cookie | FR-AUTH-02, FR-AUTH-06 |
 | POST | `/auth/logout` | — | `204` | FR-AUTH-03 |
 | GET | `/auth/me` | — | `200 {user, households, last_household_id}` | — |
-| PATCH | `/auth/me` | `{display_name?, last_household_id?}` | `200 {user}` | FR-AUTH-04 |
+| PATCH | `/auth/me` | `{display_name?, last_household_id?, revision_reminder_days?}` (`7\|14\|21\|28\|null`) | `200 {user}` | FR-AUTH-04, FR-INV-13 |
 | POST | `/auth/me/password` | `{current_password, new_password}` | `204` | FR-AUTH-04 |
 | GET | `/auth/password-reset/{token}` | — | `200 {email, display_name}` / `404` | FR-AUTH-05 |
 | POST | `/auth/password-reset/{token}` | `{new_password}` | `204` (все сессии завершены) | FR-AUTH-05 |
@@ -67,6 +67,8 @@
 | POST | `/households/{hid}/locations` | `{name, kind, sort_order?}` | `201 location` | FR-LOC-01 |
 | PATCH | `/households/{hid}/locations/{id}` | `{name?, kind?, sort_order?, version}` | `200 location` | FR-LOC-01/02 |
 | POST | `/households/{hid}/locations/{id}/checked` | — | `200 location` (`checked_at = now`; «Остальное на месте») | FR-INV-12 |
+| GET | `/households/{hid}/revision` | — | `200 {suggest, last_revision_on, period_days, places:[{location_id, checked_at}], since_last:{out:[product], low:[product]}}` ([05 §9.2](05-domain-rules.md#92-предложение-ревизии)) | FR-INV-13 |
+| POST | `/households/{hid}/revision/snooze` | — | `204` («Не сейчас»: `revision_snoozed_until = now + период` пользователя) | FR-INV-13 |
 | DELETE | `/households/{hid}/locations/{id}` | — | `204` / `409 location_not_empty` | FR-LOC-03 |
 
 ## Справочник и продукты дома
@@ -141,6 +143,7 @@
 - `input_unit` (`kg`, `l` …) — сервер переводит в базовую; несовместимая единица → `422 unit_mismatch`.
 - «½ пачки» = `measure: "pack", count: 0.5`; «−стакан» = `measure: "glass", count: 1`.
 - `mark` с `quantity`, когда в месте больше одной партии, → `422 quantity_needs_single_item`.
+- Изменяющие запросы запасов принимают необязательное `source: "check"` — отметка сделана при проверке места или ревизии (05 §9.3).
 - Перемещение части партии создаёт новую партию в целевом месте с теми же датами.
 
 ## Служебное
