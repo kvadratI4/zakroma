@@ -5,6 +5,9 @@
 BEGIN;
 
 INSERT INTO categories (slug, name_ru) VALUES ('pasta', 'Макароны');
+INSERT INTO measures (slug, name_one, name_few, name_many, name_gen, halves) VALUES
+    ('pack', 'пачка', 'пачки', 'пачек', 'пачки', true),
+    ('glass', 'стакан', 'стакана', 'стаканов', 'стакана', false);
 INSERT INTO users (id, email, display_name, password_hash)
     VALUES ('00000000-0000-0000-0000-0000000000a1', 'a@example.ru', 'Аня', 'x'),
            ('00000000-0000-0000-0000-0000000000b1', 'b@example.ru', 'Борис', 'x');
@@ -14,7 +17,7 @@ INSERT INTO households (id, name) VALUES
 INSERT INTO storage_locations (id, household_id, name, kind) VALUES
     ('00000000-0000-0000-0000-0000000001aa', '00000000-0000-0000-0000-00000000000a', 'Шкаф', 'pantry'),
     ('00000000-0000-0000-0000-0000000001bb', '00000000-0000-0000-0000-00000000000b', 'Шкаф', 'pantry');
-INSERT INTO products (id, household_id, name, category_slug, unit, tracking_mode, portion, low_below, plenty_from, excess_from)
+INSERT INTO products (id, household_id, name, category_slug, unit, tracking_mode, critical_below, low_below, plenty_from, excess_from)
     VALUES ('00000000-0000-0000-0000-0000000002aa', '00000000-0000-0000-0000-00000000000a',
             'Макароны', 'pasta', 'g', 'exact', 80, 400, 1500, 4000);
 
@@ -39,7 +42,7 @@ BEGIN
 
     -- 2. Пороги не по порядку
     BEGIN
-        INSERT INTO products (household_id, name, category_slug, unit, tracking_mode, portion, plenty_from)
+        INSERT INTO products (household_id, name, category_slug, unit, tracking_mode, critical_below, plenty_from)
         VALUES ('00000000-0000-0000-0000-00000000000a', 'Плохие пороги', 'pasta', 'g', 'exact', 500, 100);
         RAISE EXCEPTION 'FAIL: unordered thresholds accepted';
     EXCEPTION WHEN check_violation THEN RAISE NOTICE 'ok 2: unordered thresholds rejected';
@@ -87,6 +90,32 @@ BEGIN
                 '00000000-0000-0000-0000-0000000002aa', 'consumed', 100);
         RAISE EXCEPTION 'FAIL: positive consume delta accepted';
     EXCEPTION WHEN check_violation THEN RAISE NOTICE 'ok 7: consume delta must be <= 0';
+    END;
+
+    -- 9. Две меры покупки (buy) у одного продукта
+    INSERT INTO product_measures (household_id, product_id, role, measure_slug, amount)
+    VALUES ('00000000-0000-0000-0000-00000000000a', '00000000-0000-0000-0000-0000000002aa', 'buy', 'pack', 450);
+    BEGIN
+        INSERT INTO product_measures (household_id, product_id, role, measure_slug, amount)
+        VALUES ('00000000-0000-0000-0000-00000000000a', '00000000-0000-0000-0000-0000000002aa', 'buy', 'glass', 180);
+        RAISE EXCEPTION 'FAIL: second buy measure accepted';
+    EXCEPTION WHEN unique_violation THEN RAISE NOTICE 'ok 9: one buy measure per product';
+    END;
+
+    -- 10. Мера для продукта чужого дома
+    BEGIN
+        INSERT INTO product_measures (household_id, product_id, role, measure_slug, amount)
+        VALUES ('00000000-0000-0000-0000-00000000000b', '00000000-0000-0000-0000-0000000002aa', 'use', 'glass', 180);
+        RAISE EXCEPTION 'FAIL: cross-household product measure accepted';
+    EXCEPTION WHEN foreign_key_violation THEN RAISE NOTICE 'ok 10: product measure cross-household FK rejected';
+    END;
+
+    -- 11. Мера с нулевым количеством
+    BEGIN
+        INSERT INTO product_measures (household_id, product_id, role, measure_slug, amount)
+        VALUES ('00000000-0000-0000-0000-00000000000a', '00000000-0000-0000-0000-0000000002aa', 'use', 'glass', 0);
+        RAISE EXCEPTION 'FAIL: zero measure amount accepted';
+    EXCEPTION WHEN check_violation THEN RAISE NOTICE 'ok 11: measure amount > 0';
     END;
 END $$;
 

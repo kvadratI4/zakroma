@@ -17,12 +17,16 @@ SLUG_RE = re.compile(r"^[a-z][a-z0-9_]*$")
 UNITS = {"g", "ml", "pcs"}
 MODES = {"exact", "level"}
 LOCATION_KINDS = {"fridge", "freezer", "pantry", "cellar", "balcony", "other"}
-THRESHOLDS = ("portion", "low_below", "plenty_from", "excess_from")
+THRESHOLDS = ("critical_below", "low_below", "plenty_from", "excess_from")
 DAYS = ("shelf_life_days", "shelf_life_opened_days", "shelf_life_frozen_days")
 PRODUCT_COLUMNS = [
     "slug", "name_ru", "aliases", "category", "unit", "tracking_mode", "default_location_kind",
-    "package_size", *THRESHOLDS, *DAYS, "keep_in_stock",
+    *THRESHOLDS, *DAYS, "keep_in_stock",
 ]
+MEASURE_COLUMNS = ["slug", "one", "few", "many", "gen", "halves", "sort_order"]
+PRODUCT_MEASURE_COLUMNS = ["product", "role", "measure", "amount", "sort_order"]
+# Household measures per product (05-domain-rules §1.1): how it is bought and how it is taken.
+ROLE_LIMITS = {"buy": 1, "use": 2}
 
 
 def norm(text: str) -> str:
@@ -33,6 +37,15 @@ def dec(value: str) -> Decimal | None:
     if value == "":
         return None
     return Decimal(value)
+
+
+def read(path: Path, columns: list[str], errors: list[str]) -> list[dict[str, str]] | None:
+    with open(path, encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        if reader.fieldnames != columns:
+            errors.append(f"{path.name}: header must be {columns}, got {reader.fieldnames}")
+            return None
+        return list(reader)
 
 
 def validate(catalog_dir: Path) -> list[str]:
@@ -50,14 +63,12 @@ def validate(catalog_dir: Path) -> list[str]:
         if not c["name_ru"].strip():
             errors.append(f"categories.csv:{i}: empty name_ru")
 
-    with open(catalog_dir / "products.csv", encoding="utf-8", newline="") as f:
-        reader = csv.DictReader(f)
-        if reader.fieldnames != PRODUCT_COLUMNS:
-            errors.append(f"products.csv: header must be {PRODUCT_COLUMNS}, got {reader.fieldnames}")
-            return errors
-        products = list(reader)
+    products = read(catalog_dir / "products.csv", PRODUCT_COLUMNS, errors)
+    if products is None:
+        return errors
 
     slugs: set[str] = set()
+    units: dict[str, str] = {}
     names: dict[str, str] = {}
     for i, p in enumerate(products, start=2):
         where = f"products.csv:{i} ({p['slug']})"
@@ -66,6 +77,7 @@ def validate(catalog_dir: Path) -> list[str]:
         if p["slug"] in slugs:
             errors.append(f"{where}: duplicate slug")
         slugs.add(p["slug"])
+        units[p["slug"]] = p["unit"]
 
         name = p["name_ru"].strip()
         if not name or len(name) > 80:
@@ -88,17 +100,14 @@ def validate(catalog_dir: Path) -> list[str]:
             errors.append(f"{where}: aliases are separated by '|', not ','")
 
         try:
-            pkg = dec(p["package_size"])
             th = [dec(p[k]) for k in THRESHOLDS]
             days = [dec(p[k]) for k in DAYS]
         except InvalidOperation:
             errors.append(f"{where}: non-numeric value in numeric column")
             continue
 
-        if pkg is not None and pkg <= 0:
-            errors.append(f"{where}: package_size must be > 0")
         if th[0] is not None and th[0] <= 0:
-            errors.append(f"{where}: portion must be > 0")
+            errors.append(f"{where}: critical_below must be > 0")
         for k, v in zip(THRESHOLDS[1:], th[1:]):
             if v is not None and v < 0:
                 errors.append(f"{where}: {k} must be >= 0")
@@ -111,11 +120,66 @@ def validate(catalog_dir: Path) -> list[str]:
                 errors.append(f"{where}: {k} must be a positive integer")
         if p["default_location_kind"] == "freezer" and days[2] is None:
             errors.append(f"{where}: freezer products need shelf_life_frozen_days")
-        if p["unit"] == "pcs" and pkg is not None and pkg != pkg.to_integral_value():
-            errors.append(f"{where}: package_size in pcs must be integer")
+        if p["keep_in_stock"] == "true" and th[1] is None:
+            errors.append(f"{where}: keep_in_stock (норма дома) needs low_below")
 
     if len(products) < 250:
         errors.append(f"products.csv: expected ~300 items, got {len(products)}")
+
+    errors += validate_measures(catalog_dir, units)
+    return errors
+
+
+def validate_measures(catalog_dir: Path, units: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    measures = read(catalog_dir / "measures.csv", MEASURE_COLUMNS, errors)
+    product_measures = read(catalog_dir / "product_measures.csv", PRODUCT_MEASURE_COLUMNS, errors)
+    if measures is None or product_measures is None:
+        return errors
+
+    measure_slugs: set[str] = set()
+    for i, m in enumerate(measures, start=2):
+        where = f"measures.csv:{i} ({m['slug']})"
+        if not SLUG_RE.match(m["slug"]):
+            errors.append(f"{where}: bad slug")
+        if m["slug"] in measure_slugs:
+            errors.append(f"{where}: duplicate slug")
+        measure_slugs.add(m["slug"])
+        for k in ("one", "few", "many", "gen"):
+            if not m[k].strip():
+                errors.append(f"{where}: empty {k}")
+        if m["halves"] not in ("true", "false"):
+            errors.append(f"{where}: halves must be true/false")
+
+    seen: set[tuple[str, str, str]] = set()
+    per_role: dict[tuple[str, str], int] = {}
+    for i, pm in enumerate(product_measures, start=2):
+        where = f"product_measures.csv:{i} ({pm['product']}, {pm['measure']})"
+        if pm["product"] not in units:
+            errors.append(f"{where}: unknown product")
+            continue
+        if pm["measure"] not in measure_slugs:
+            errors.append(f"{where}: unknown measure")
+        if pm["role"] not in ROLE_LIMITS:
+            errors.append(f"{where}: role must be one of {sorted(ROLE_LIMITS)}")
+            continue
+        key = (pm["product"], pm["role"], pm["measure"])
+        if key in seen:
+            errors.append(f"{where}: duplicate measure for this role")
+        seen.add(key)
+        count_key = (pm["product"], pm["role"])
+        per_role[count_key] = per_role.get(count_key, 0) + 1
+        if per_role[count_key] > ROLE_LIMITS[pm["role"]]:
+            errors.append(f"{where}: at most {ROLE_LIMITS[pm['role']]} '{pm['role']}' measure(s) per product")
+        try:
+            amount = Decimal(pm["amount"])
+        except InvalidOperation:
+            errors.append(f"{where}: amount must be a number")
+            continue
+        if amount <= 0:
+            errors.append(f"{where}: amount must be > 0")
+        if units[pm["product"]] == "pcs" and amount != amount.to_integral_value():
+            errors.append(f"{where}: amount in pcs must be integer")
     return errors
 
 
@@ -129,7 +193,9 @@ def main() -> int:
         return 1
     with open(catalog_dir / "products.csv", encoding="utf-8") as f:
         n = sum(1 for _ in f) - 1
-    print(f"OK: {n} products")
+    with open(catalog_dir / "product_measures.csv", encoding="utf-8") as f:
+        m = sum(1 for _ in f) - 1
+    print(f"OK: {n} products, {m} product measures")
     return 0
 
 
