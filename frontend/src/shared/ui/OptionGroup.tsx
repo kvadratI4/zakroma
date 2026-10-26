@@ -21,7 +21,7 @@ type Look = "chips" | "segments" | "rows";
 
 const GROUP: Record<Look, string> = {
   chips: "flex flex-wrap gap-2",
-  segments: "inline-flex gap-1 rounded-full bg-surface p-[3px]",
+  segments: "inline-flex w-max max-w-full gap-1 rounded-full bg-surface p-[3px]",
   rows: "grid overflow-hidden rounded-2xl border border-line bg-raised",
 };
 

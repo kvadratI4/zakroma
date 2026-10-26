@@ -40,7 +40,7 @@ const PLACES: PlaceKind[] = ["fridge", "freezer", "pantry", "balcony", "cellar",
 
 function Group({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="grid gap-4 rounded-[20px] bg-surface p-5">
+    <section className="grid grid-cols-[minmax(0,1fr)] gap-4 rounded-[20px] bg-surface p-5">
       <h2 className="text-xl font-semibold text-ink">{title}</h2>
       {children}
     </section>
@@ -77,7 +77,10 @@ export function ShowcaseScreen() {
   };
 
   return (
-    <main id={MARKER} className="mx-auto grid max-w-5xl gap-6 bg-ground px-4 py-8 text-ink lg:px-8">
+    <main
+      id={MARKER}
+      className="mx-auto grid max-w-5xl grid-cols-[minmax(0,1fr)] gap-6 bg-ground px-4 py-8 text-ink lg:px-8"
+    >
       <header className="grid gap-3">
         <h1 className="font-display text-[36px] leading-none">{t("dev.title")}</h1>
         <p>{t("dev.intro")}</p>
