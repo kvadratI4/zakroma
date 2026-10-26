@@ -5,13 +5,22 @@ import { describe, it } from "vitest";
 import { expectAccessible } from "../../test/a11y";
 import { ActionPill } from "./ActionPill";
 import { Button } from "./Button";
+import { ChoiceChips } from "./ChoiceChips";
 import { DateField } from "./DateField";
 import { IconButton } from "./IconButton";
+import { RadioList } from "./RadioList";
 import { SearchField } from "./SearchField";
+import { SegmentedControl } from "./SegmentedControl";
 import { Select } from "./Select";
+import { Stepper } from "./Stepper";
+import { Switch } from "./Switch";
 import { TextField } from "./TextField";
 
 const noop = () => undefined;
+const OPTIONS = [
+  { value: "a", label: "По местам" },
+  { value: "b", label: "По видам" },
+] as const;
 
 /**
  * Every shared component in all its variants passes axe-core (T-008b, AC-4). Structure only:
@@ -74,6 +83,55 @@ const SAMPLES: [string, ReactElement][] = [
   [
     "DateField",
     <DateField key="d1" label="Годен до" value="2026-11-02" onChange={noop} estimated />,
+  ],
+  [
+    "Stepper",
+    <Stepper
+      key="st"
+      label="Сколько"
+      value={2}
+      onChange={noop}
+      min={1}
+      valueText={(n) => `${String(n)} пакета`}
+      unitText="по 930 мл"
+    />,
+  ],
+  [
+    "ChoiceChips",
+    <ChoiceChips key="cc" label="Годен до" options={OPTIONS} value="a" onChange={noop} />,
+  ],
+  [
+    "ChoiceChips empty",
+    <ChoiceChips key="ce" label="Годен до" options={OPTIONS} value={null} onChange={noop} />,
+  ],
+  [
+    "SegmentedControl",
+    <SegmentedControl
+      key="sc"
+      label="Показать"
+      hideLabel
+      options={OPTIONS}
+      value="b"
+      onChange={noop}
+    />,
+  ],
+  [
+    "RadioList",
+    <RadioList key="rl" label="Предлагать" options={OPTIONS} value="a" onChange={noop} />,
+  ],
+  [
+    "Switch on",
+    <Switch
+      key="sw1"
+      label="Всегда держать дома"
+      description="Появится во «Всегда дома»"
+      checked
+      onChange={noop}
+    />,
+  ],
+  [
+    "Switch off disabled",
+    <Switch key="sw2" label="Всегда держать дома" checked={false} onChange={noop} disabled />,
   ],
 ];
 

@@ -6,3 +6,7 @@ export const FOCUS_RING =
 
 /** Outline of chips, small buttons and fields: one step stronger than panel borders. */
 export const CONTROL_BORDER = "border border-line-control";
+
+/** The same ring for a label that wraps a visually hidden input (chips, segments, rows). */
+export const FOCUS_RING_WITHIN =
+  "has-[:focus-visible]:outline has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent";
