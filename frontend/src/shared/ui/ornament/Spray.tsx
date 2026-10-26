@@ -24,10 +24,13 @@ export function Spray({ className }: { className?: string }) {
         fill="none"
         strokeLinecap="round"
       />
-      <g className="fill-ornament-fill stroke-ornament" strokeWidth={2.6} strokeLinejoin="round">
+      {/* Leaves: Khokhloma green in the dark theme, the pale fill in Gzhel (T-008b). */}
+      <g className="fill-ornament-leaf stroke-ornament" strokeWidth={2.6} strokeLinejoin="round">
         {LEAVES.map((d) => (
           <path key={d} d={d} />
         ))}
+      </g>
+      <g className="fill-ornament-fill stroke-ornament" strokeWidth={2.6}>
         {BERRIES.map(([cx, cy, r]) => (
           <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={r} />
         ))}

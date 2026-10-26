@@ -4,6 +4,8 @@ import { describe, it } from "vitest";
 
 import { expectAccessible } from "../../test/a11y";
 import { ActionPill } from "./ActionPill";
+import { Avatar } from "./Avatar";
+import { Badge } from "./Badge";
 import { Button } from "./Button";
 import { ChoiceChips } from "./ChoiceChips";
 import { DateField } from "./DateField";
@@ -11,10 +13,15 @@ import { IconButton } from "./IconButton";
 import { LevelButton } from "./LevelButton";
 import { LevelChip } from "./LevelChip";
 import { LevelPicker } from "./LevelPicker";
+import { Emblem } from "./ornament/Emblem";
+import { Izba } from "./ornament/Izba";
+import { Window } from "./ornament/Window";
+import { ProgressBar } from "./ProgressBar";
 import { RadioList } from "./RadioList";
 import { SearchField } from "./SearchField";
 import { SegmentedControl } from "./SegmentedControl";
 import { Select } from "./Select";
+import { Skeleton } from "./Skeleton";
 import { Stepper } from "./Stepper";
 import { Switch } from "./Switch";
 import { TextField } from "./TextField";
@@ -151,6 +158,37 @@ const SAMPLES: [string, ReactElement][] = [
         <ActionPill label="−1 пакетик" />
         <ActionPill label="Закончился" />
       </LevelPicker>
+    </div>,
+  ],
+  [
+    "Badge",
+    <a key="bd" href="/expiry">
+      Сроки
+      <Badge count={3} label="3 требуют внимания" />
+    </a>,
+  ],
+  [
+    "Avatar with the name next to it",
+    <span key="av">
+      <Avatar name="Ольга" /> Ольга
+    </span>,
+  ],
+  [
+    "Skeleton in a busy block",
+    <div key="sk" aria-busy="true">
+      <Skeleton />
+    </div>,
+  ],
+  [
+    "ProgressBar",
+    <ProgressBar key="pb" label="Ревизия" value={1} max={4} valueText="Холодильник, 1 из 4" />,
+  ],
+  [
+    "Emblems, window and izba",
+    <div key="or">
+      <Emblem kind="freezer" />
+      <Window />
+      <Izba />
     </div>,
   ],
 ];
