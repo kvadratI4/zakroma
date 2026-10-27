@@ -125,7 +125,9 @@
 | **Skeleton** — заглушка загрузки | загрузка «Запасов» (30) | серые полосы реального размера, без мерцания | контейнер `aria-busy` | `common.loading` |
 | **ProgressBar** — прогресс | «Холодильник · 1 из 4» (23) | полоса accent на `border` | `role="progressbar"` с `aria-valuetext` | `revision.progress` |
 
-### 7.2. Составные (T-008c)
+### 7.2. Составные (T-008c и задачи экранов)
+
+Распределение (сводка 02, решение оператора 2026-10-28): в **T-008c** — оболочка и общие компоненты (AppHeader, BottomNav / SideNav, Menu, Toast, Notice, BlockError, EmptyState, Dock, CollapsedRow, ListRow / MemberRow, ConfirmDialog, скелеты); компоненты учёта строятся вместе с экранами, когда их свойства определит API: Greeting, PlacePanel, ProductRow, CheckRow — **T-035**; AddCandidateRow, AddItemForm, AddedBar, ConfirmList — **T-036**; ProductSummary, BatchCard, NormControl, MeasuresBlock — **T-037**; AttentionBlock, AttentionRow — **T-038**; RevisionCard, RevisionSummary — **T-039**. Порядок и названия пунктов `NAV_ITEMS` приводятся к §6 в **T-009**.
 
 | Компонент | Где (макеты) | Из чего и как ведёт себя | Доступность | Ключи i18n |
 |---|---|---|---|---|
