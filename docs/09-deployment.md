@@ -51,7 +51,7 @@ SPA собирается в образе `caddy` (multi-stage: `node` → `dist`
 - **Caddy** ([`Caddyfile`](../deploy/Caddyfile)):
   - HTTPS: Let's Encrypt для домена, внутренний CA для `127.0.0.1`; HTTP перенаправляется на HTTPS.
   - `X-Request-ID` ставит Caddy, значение клиента заменяется.
-  - Заголовки: HSTS, `nosniff`, `Referrer-Policy: same-origin`, `Permissions-Policy` и CSP без `unsafe-inline`. Токены темы — конструируемая таблица стилей (`src/main.tsx`): элемент `<style>` строгий CSP блокирует.
+  - Заголовки: HSTS, `nosniff`, `Referrer-Policy: same-origin`, `Permissions-Policy` и CSP без `unsafe-inline`. Токены темы — таблица стилей, собранная из `tokens.ts`, выбранная тема — скрипт `/assets/theme-boot-<хеш>.js` первым в `<head>` (T-009, 10-design §2): встроенные `<style>` и `<script>` строгий CSP блокирует. Smoke проверяет, что скрипт темы на месте и отдаётся из `/assets/`.
   - Тело запроса к `/api` ≥ 1 000 000 байт → `413 payload_too_large`.
   - Access-лог выключен: в путях бывают токены приглашений; строку доступа пишет api, где путь заменён шаблоном маршрута.
   - `/assets/*` кэшируются на год, остальное — `no-cache`: новая версия доходит до семьи сразу.

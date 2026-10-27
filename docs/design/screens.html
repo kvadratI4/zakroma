@@ -1,0 +1,978 @@
+<title>Экраны Закромов</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Triodion&display=swap" rel="stylesheet">
+<style>
+/* Layout: a document page. Each section has its notes on top and full-size phone mockups (390 x 844) below;
+   the mockups are the app itself in the «Фарфор» tokens (frontend/src/shared/theme/tokens.ts). */
+:root {
+  --page: #f5f5f3; --paper: #ffffff; --ink: #1b1b19; --muted: #5a5954; --line: #e2e1dc; --accent: #1d4ea6; --bezel: #1f1f1f;
+  --font-text: "Golos Text", "Segoe UI", system-ui, sans-serif;
+  --font-disp: "Triodion", "Old Standard TT", Georgia, serif;
+  --pz: 1;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --page: #121110; --paper: #1c1b19; --ink: #ebebea; --muted: #aeaca8; --line: #2f2d2a; --accent: #9dbbf2; --bezel: #3a3835; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --page: #121110; --paper: #1c1b19; --ink: #ebebea; --muted: #aeaca8; --line: #2f2d2a; --accent: #9dbbf2; --bezel: #3a3835; color-scheme: dark; }
+@media (max-width: 860px) { :root { --pz: .86; } }
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font: 16px/1.55 var(--font-text); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--page); }
+.wrap { max-width: 1320px; margin: 0 auto; padding-block: 40px 96px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.doc-head { display: grid; gap: 16px; max-width: 780px; }
+.doc-head h1 { font-size: clamp(30px, 4vw, 44px); line-height: 1.08; font-weight: 600; letter-spacing: -0.015em; }
+.ask { background: var(--paper); border-radius: 14px; padding: 16px 20px; display: grid; gap: 8px; }
+.ask ol { margin: 0; padding-left: 22px; display: grid; gap: 4px; }
+
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--page); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding-block: 12px; margin-top: 28px; }
+.bar .lbl { font-size: 15px; color: var(--muted); }
+.tsw { display: inline-flex; background: var(--paper); border-radius: 999px; padding: 4px; gap: 4px; }
+.tsw button { font: 500 15px/1 var(--font-text); min-height: 40px; padding: 0 16px; border-radius: 999px; border: 0; background: transparent; color: var(--ink); cursor: pointer; }
+.tsw button[aria-pressed="true"] { background: var(--ink); color: var(--page); }
+.tsw button:focus-visible, .toc a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.toc { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 15px; }
+.toc a { color: var(--ink); text-decoration-color: var(--line); text-underline-offset: 3px; }
+
+.band { padding-block: 64px 8px; display: grid; gap: 28px; }
+.band + .band { border-top: 1px solid var(--line); margin-top: 48px; }
+.notes { display: grid; gap: 12px; max-width: 780px; }
+.notes h2 { font-size: 30px; line-height: 1.12; font-weight: 600; letter-spacing: -0.01em; }
+.notes h3 { font-size: 21px; line-height: 1.2; font-weight: 600; }
+.notes ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+.notes .muted, .muted { color: var(--muted); font-size: 15px; }
+.rules { font-size: 15px; color: var(--muted); }
+.rules b { color: var(--ink); font-weight: 600; }
+.decision { background: var(--paper); border-radius: 18px; padding: 24px; display: grid; gap: 24px; }
+.decision .notes h3 { font-size: 23px; }
+.rec { color: var(--accent); font-weight: 600; }
+
+.shots { display: flex; flex-wrap: wrap; gap: 44px 28px; align-items: flex-start; }
+.shot { margin: 0; display: grid; gap: 14px; width: min-content; }
+.shot figcaption { font-size: 15px; line-height: 1.4; color: var(--muted); max-width: calc(390px * var(--pz)); }
+.shot figcaption b { color: var(--ink); font-weight: 600; }
+.desk-box { margin: 0; display: grid; gap: 12px; }
+.desk-box figcaption { font-size: 15px; color: var(--muted); }
+.motifs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+@media (max-width: 900px) { .motifs { grid-template-columns: minmax(0, 1fr); } }
+.credits { color: var(--muted); font-size: 14px; }
+.final { display: grid; gap: 14px; max-width: 780px; }
+.final ol { margin: 0; padding-left: 22px; display: grid; gap: 8px; }
+
+/* ===================== The app: «Фарфор» tokens ===================== */
+.app {
+  --g: #ffffff; --s: #f0f3f9; --r: #ffffff; --b: #dde3ee; --t: #111a30; --m: #4b556e; --a: #1d4ea6; --a-ink: #ffffff;
+  --o1: #1d4ea6; --o2: #c3d2ee; --neg: #b3261e; --warn: #8f4a07; --bc: #c5cfe0;
+  --lv-0: #5c5c5c; --lv-0-bg: #ececec; --lv-1: #a3241a; --lv-1-bg: #fde9e6; --lv-2: #8f4a07; --lv-2-bg: #fdefdc;
+  --lv-3: #23704a; --lv-3-bg: #e2f3e9; --lv-4: #1d4ea6; --lv-4-bg: #e6edfb; --lv-5: #6d2b6b; --lv-5-bg: #f4e7f3;
+  --p1: #f3dccd; --p2: #d3e2f5; --p3: #dcefdc; --p4: #f1e2f0;
+  --o3: var(--o2);
+  font-family: var(--font-text); font-size: 16px; line-height: 1.4; color: var(--t); background: var(--g);
+  font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; color-scheme: light;
+}
+/* Round 3: three dark variants in the Khokhloma spirit (black lacquer, gold, cinnabar, green leaves).
+   Neutral panels and near-white text instead of brown and cream; level tints are mixed from the row colour. */
+.app[data-t="dark"] {
+  --g: #1c1a18; --s: #272522; --r: #34312d; --b: #46423d; --bc: #736d65; --t: #f5f3ef; --m: #c4bfb7;
+  --a: #f2b234; --a-ink: #1b1405; --o1: #f2b234; --o2: #e4432d; --o3: #5fae69; --neg: #ff8f7d; --warn: #f6b452;
+  --lv-0: #ddd8d1; --lv-1: #ffaa9a; --lv-2: #ffcd80; --lv-3: #93dc9e; --lv-4: #a3c4ff; --lv-5: #ecb3e9;
+  --lv-0-bg: color-mix(in srgb, #8a8580 26%, var(--r)); --lv-1-bg: color-mix(in srgb, #e4432d 26%, var(--r));
+  --lv-2-bg: color-mix(in srgb, #e09a1f 26%, var(--r)); --lv-3-bg: color-mix(in srgb, #3f9a4f 26%, var(--r));
+  --lv-4-bg: color-mix(in srgb, #3f6fd0 26%, var(--r)); --lv-5-bg: color-mix(in srgb, #a04a9d 26%, var(--r));
+  --p1: #4e3b2e; --p2: #2e3d52; --p3: #2f4a35; --p4: #4a3349;
+  color-scheme: dark;
+}
+.app[data-t="dark"][data-dv="grafit"] { --g: #1f2226; --s: #2a2e33; --r: #363b41; --b: #4a5058; --bc: #767d86; --t: #f5f6f8; --m: #c0c6ce; }
+.app[data-t="dark"][data-dv="zelen"] { --g: #13241c; --s: #1b3127; --r: #254034; --b: #375646; --bc: #66897a; --t: #f3f7f4; --m: #bccfc4;
+  --o2: #ea4a31; --o3: #7cc488; --neg: #ffa08f; --warn: #f7b957; }
+.app button { font: inherit; color: inherit; cursor: pointer; }
+.app :focus-visible { outline: 3px solid var(--a); outline-offset: 2px; }
+.disp { font-family: var(--font-disp); font-weight: 400; }
+.ic { width: 22px; height: 22px; flex: none; }
+
+.phone { width: 390px; height: 844px; zoom: var(--pz); border-radius: 44px; overflow: hidden; border: 8px solid var(--bezel); box-sizing: content-box; display: flex; flex-direction: column; position: relative; }
+.sbar { height: 44px; flex: none; display: flex; justify-content: space-between; align-items: center; padding: 0 30px; font-size: 15px; font-weight: 600; }
+.ahead { display: flex; align-items: center; gap: 6px; padding: 4px 12px 10px 18px; flex: none; position: relative; }
+.wm { font-family: var(--font-disp); font-size: 26px; line-height: 1; }
+.house { margin-left: auto; display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 0 12px 0 16px; border-radius: 999px; background: var(--s); border: 0; font-weight: 500; font-size: 16px; }
+.house .ic { width: 20px; height: 20px; }
+.ibtn { width: 44px; height: 44px; border-radius: 999px; display: grid; place-items: center; background: transparent; border: 0; flex: none; }
+.backhead { display: flex; align-items: center; gap: 4px; padding: 4px 12px 8px 6px; flex: none; min-height: 52px; }
+.backhead .back { display: inline-flex; align-items: center; gap: 2px; min-height: 44px; padding: 0 10px 0 4px; border: 0; background: transparent; color: var(--a); font-size: 17px; font-weight: 500; }
+.backhead .ttl { font-size: 17px; font-weight: 600; margin-left: 4px; }
+.backhead .ibtn { margin-left: auto; }
+.kayma { height: 12px; flex: none; background: var(--o1);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='18' viewBox='0 0 56 18'%3E%3Cellipse cx='12' cy='5' rx='2.2' ry='3.6'/%3E%3Cellipse cx='12' cy='13' rx='2.2' ry='3.6'/%3E%3Cellipse cx='8' cy='9' rx='3.6' ry='2.2'/%3E%3Cellipse cx='16' cy='9' rx='3.6' ry='2.2'/%3E%3Cpath d='M26 15C28 7 35 4 40 6C36 8 31 11 26 15Z'/%3E%3Ccircle cx='46' cy='11' r='2.6'/%3E%3Ccircle cx='50.5' cy='7.5' r='1.8'/%3E%3C/svg%3E") repeat-x left center / auto 100%;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='18' viewBox='0 0 56 18'%3E%3Cellipse cx='12' cy='5' rx='2.2' ry='3.6'/%3E%3Cellipse cx='12' cy='13' rx='2.2' ry='3.6'/%3E%3Cellipse cx='8' cy='9' rx='3.6' ry='2.2'/%3E%3Cellipse cx='16' cy='9' rx='3.6' ry='2.2'/%3E%3Cpath d='M26 15C28 7 35 4 40 6C36 8 31 11 26 15Z'/%3E%3Ccircle cx='46' cy='11' r='2.6'/%3E%3Ccircle cx='50.5' cy='7.5' r='1.8'/%3E%3C/svg%3E") repeat-x left center / auto 100%; }
+.abody { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; grid-template-columns: minmax(0, 1fr); grid-auto-rows: max-content; padding: 14px 16px 16px; display: grid; gap: 14px; align-content: start; position: relative; }
+
+.greet .hd { font-size: 36px; line-height: 1.02; }
+.greet p { margin-top: 8px; font-size: 16px; line-height: 1.4; }
+.greet a, .lnk { color: var(--a); font-weight: 600; text-decoration: none; }
+.tools { display: flex; align-items: center; gap: 6px; }
+.seg { display: flex; gap: 4px; background: var(--s); border-radius: 999px; padding: 3px; }
+.seg span, .seg button { min-height: 38px; padding: 0 14px; border-radius: 999px; display: inline-flex; align-items: center; font-size: 15px; color: var(--m); border: 0; background: transparent; }
+.seg .on { background: var(--t); color: var(--g); font-weight: 500; }
+.tools .ibtn { margin-left: auto; border: 1px solid var(--b); }
+.tools .ibtn + .ibtn { margin-left: 0; }
+
+.place { background: var(--s); border-radius: 20px; padding: 14px 10px 10px; display: grid; gap: 10px; }
+.ph { display: flex; align-items: center; gap: 10px; padding: 0 6px; }
+.emb { width: 34px; height: 34px; flex: none; }
+.ph .hd { font-size: 24px; line-height: 1; }
+.ph .cnt { margin-left: auto; font-size: 15px; color: var(--m); }
+.rows { display: grid; gap: 6px; }
+.row { background: var(--r); border-radius: 12px; display: grid; grid-template-columns: minmax(0, 1fr) 40px; align-items: center; }
+.row .main { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; align-items: center; padding: 10px 4px 10px 12px; min-height: 60px; text-align: left; background: transparent; border: 0; border-radius: 12px; }
+.row .nm { font-size: 16px; font-weight: 500; line-height: 1.25; }
+.row .qty { font-size: 16px; text-align: right; grid-row: 1 / span 2; grid-column: 2; white-space: nowrap; }
+.row .meta { font-size: 14px; color: var(--m); line-height: 1.3; display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
+.neg { color: var(--neg); font-weight: 500; }
+.warn { color: var(--warn); font-weight: 500; }
+.row .exp { width: 40px; height: 44px; display: grid; place-items: center; border: 0; background: transparent; color: var(--m); border-radius: 10px; }
+.row .exp .ic { width: 20px; height: 20px; transition: transform .2s; }
+.row.open .exp .ic { transform: rotate(180deg); }
+.row .quick { grid-column: 1 / -1; display: flex; gap: 8px; padding: 0 12px 12px; }
+/* Variant A: one line per product. */
+.row.one .main { grid-template-columns: minmax(0, 1fr) auto auto; min-height: 50px; padding-block: 6px; }
+.row.one .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row.one .meta { grid-column: 2; grid-row: 1; font-size: 14px; white-space: nowrap; }
+.row.one .qty { grid-row: 1; grid-column: 3; min-width: 56px; }
+.st { display: inline-flex; align-items: center; gap: 4px; }
+.st .ic { width: 16px; height: 16px; }
+
+.chip { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 999px; font-size: 14px; font-weight: 500; width: max-content; }
+.chip i { width: 8px; height: 8px; border-radius: 99px; background: currentColor; }
+.lv0 { color: var(--lv-0); background: var(--lv-0-bg); } .lv1 { color: var(--lv-1); background: var(--lv-1-bg); }
+.lv2 { color: var(--lv-2); background: var(--lv-2-bg); } .lv3 { color: var(--lv-3); background: var(--lv-3-bg); }
+.lv4 { color: var(--lv-4); background: var(--lv-4-bg); } .lv5 { color: var(--lv-5); background: var(--lv-5-bg); }
+
+.pill { min-height: 44px; padding: 0 16px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: var(--s); border: 1px solid var(--bc); font-size: 16px; font-weight: 500; white-space: nowrap; }
+.pill.sq { width: 44px; padding: 0; background: transparent; }
+.pill[disabled] { color: var(--m); opacity: .55; cursor: not-allowed; }
+.btn { min-height: 54px; padding: 0 22px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 17px; border: 0; width: 100%; }
+.btn.pri { background: var(--a); color: var(--a-ink); }
+.btn.sec { background: var(--s); color: var(--t); }
+.btn.quiet { background: transparent; color: var(--a); min-height: 48px; }
+.btn.danger { background: transparent; color: var(--neg); min-height: 48px; justify-content: flex-start; padding: 0 4px; }
+.btns { display: grid; gap: 10px; }
+.dock { flex: none; padding: 12px 16px 30px; background: var(--g); border-top: 1px solid var(--b); display: grid; gap: 8px; }
+
+.anav { flex: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: end; padding: 8px 6px 26px; background: var(--g); border-top: 1px solid var(--b); margin-top: auto; }
+.ni { display: grid; justify-items: center; gap: 4px; min-height: 52px; align-content: end; font-size: 12px; color: var(--m); position: relative; }
+.ni .ic { width: 24px; height: 24px; }
+.ni.on { color: var(--t); font-weight: 600; }
+.ni.on::after { content: ""; width: 18px; height: 3px; border-radius: 3px; background: var(--t); position: absolute; top: -8px; }
+.badge { position: absolute; top: -4px; left: calc(50% + 6px); min-width: 20px; height: 20px; padding: 0 6px; border-radius: 99px; background: var(--neg); color: var(--g); font-size: 12px; font-weight: 600; display: grid; place-items: center; }
+.ni.add { color: var(--t); font-weight: 600; }
+.ni.add .plus { width: 58px; height: 58px; border-radius: 999px; background: var(--a); color: var(--a-ink); display: grid; place-items: center; margin-top: -26px; box-shadow: 0 0 0 6px var(--g); }
+.ni.add .plus .ic { width: 28px; height: 28px; }
+
+.field { display: grid; gap: 6px; }
+.field label, .field .lab { font-size: 15px; font-weight: 500; }
+.inp { min-height: 52px; border-radius: 14px; border: 1.5px solid var(--bc); background: var(--r); display: flex; align-items: center; gap: 8px; padding: 0 6px 0 14px; font-size: 17px; }
+.inp .val { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.inp .ph-t { color: var(--m); }
+.inp.focus { border-color: var(--a); box-shadow: 0 0 0 3px color-mix(in srgb, var(--a) 28%, transparent); }
+.inp.err { border-color: var(--neg); }
+.inp .tbtn { min-height: 44px; padding: 0 10px; border: 0; background: transparent; color: var(--a); font-size: 15px; font-weight: 600; }
+.hint { font-size: 14px; color: var(--m); }
+.errmsg { font-size: 14px; color: var(--neg); font-weight: 500; display: flex; gap: 6px; align-items: flex-start; }
+.errmsg .ic { width: 18px; height: 18px; margin-top: 1px; }
+.caret { display: inline-block; width: 2px; height: 22px; background: var(--a); vertical-align: middle; margin-left: 1px; }
+
+.res { display: grid; background: var(--r); border-radius: 16px; border: 1px solid var(--b); }
+.res .it { display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 6px 14px; border-top: 1px solid var(--b); font-size: 16px; }
+.res .it:first-child { border-top: 0; }
+.res .it b { font-weight: 600; }
+.res .it .m { margin-left: auto; font-size: 14px; color: var(--m); }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.tile { min-height: 56px; border-radius: 14px; background: var(--s); border: 0; font-size: 16px; font-weight: 500; display: grid; place-items: center; }
+.sub { font-size: 15px; color: var(--m); font-weight: 500; }
+.switch { display: flex; align-items: center; gap: 12px; min-height: 52px; }
+.switch .txt { flex: 1; display: grid; }
+.switch .txt span:last-child { font-size: 14px; color: var(--m); }
+.tog { width: 52px; height: 32px; border-radius: 99px; background: var(--b); position: relative; flex: none; border: 0; }
+.tog::after { content: ""; position: absolute; width: 26px; height: 26px; border-radius: 99px; background: var(--g); top: 3px; left: 3px; }
+.tog.on { background: var(--a); }
+.tog.on::after { left: auto; right: 3px; background: var(--a-ink); }
+.cart { flex: none; display: flex; align-items: center; gap: 12px; padding: 12px 16px 30px; background: var(--s); }
+.cart .txt { flex: 1; min-width: 0; display: grid; }
+.cart .txt b { font-size: 17px; }
+.cart .txt span { font-size: 14px; color: var(--m); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cart .btn { width: auto; min-height: 48px; }
+
+.prod { display: grid; gap: 4px; }
+.prod .hd { font-size: 26px; font-weight: 600; line-height: 1.15; }
+.stepper { display: flex; align-items: center; gap: 12px; }
+.stepper .pill.sq { width: 52px; min-height: 52px; font-size: 24px; }
+.stepper .v { flex: 1; text-align: center; display: grid; }
+.stepper .v b { font-size: 22px; font-weight: 600; }
+.stepper .v span { font-size: 14px; color: var(--m); }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt { min-height: 44px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--bc); background: var(--r); font-size: 16px; display: inline-flex; align-items: center; gap: 6px; }
+.opt.on { background: var(--t); color: var(--g); border-color: var(--t); font-weight: 500; }
+.lvpick { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.lvb { min-height: 52px; border-radius: 14px; border: 2px solid transparent; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 15px; font-weight: 500; }
+.lvb i { width: 8px; height: 8px; border-radius: 99px; background: currentColor; }
+.lvb.on { border-color: currentColor; font-weight: 600; }
+/* Round 2 feedback: unselected levels are neutral, only the chosen one carries its colour. */
+.lvpick .lvb:not(.on) { background: var(--s); color: var(--t); border: 1px solid var(--bc); }
+.lvb .ic { width: 18px; height: 18px; }
+.sel { min-height: 52px; border-radius: 14px; border: 1.5px solid var(--bc); background: var(--r); display: flex; align-items: center; gap: 10px; padding: 0 12px; font-size: 17px; }
+.sel .emb { width: 28px; height: 28px; }
+.sel .ic:last-child { margin-left: auto; color: var(--m); }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) 96px; gap: 8px; }
+
+.scrim { position: absolute; inset: 0; background: rgba(8, 10, 18, .45); z-index: 3; }
+.sheet { position: absolute; left: 0; right: 0; bottom: 0; z-index: 4; background: var(--g); border-radius: 24px 24px 0 0; padding: 8px 16px 30px; display: grid; gap: 14px; box-shadow: 0 -8px 30px rgba(0, 0, 0, .18); }
+.sheet .grab { width: 40px; height: 5px; border-radius: 9px; background: var(--b); justify-self: center; }
+.sheet .shead { display: flex; align-items: center; gap: 8px; }
+.sheet .shead .hd { font-size: 22px; font-weight: 600; }
+.sheet .shead .ibtn { margin-left: auto; border: 1px solid var(--b); }
+
+.sumcard { display: grid; gap: 12px; background: var(--s); border-radius: 20px; padding: 16px; }
+.sumcard .big { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.sumcard .big b { font-size: 34px; font-weight: 500; line-height: 1; }
+.sumcard .line { font-size: 15px; color: var(--m); }
+.sumcard .line b { color: var(--t); font-weight: 500; }
+.sect { font-size: 15px; font-weight: 600; color: var(--m); padding: 4px 4px 0; }
+.batch { background: var(--r); border: 1px solid var(--b); border-radius: 16px; padding: 12px; display: grid; gap: 12px; }
+.batch .top { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+.batch .emb { width: 30px; height: 30px; }
+.batch .where { display: grid; }
+.batch .where b { font-weight: 500; }
+.batch .where span { font-size: 14px; color: var(--m); }
+.batch .q { font-size: 18px; font-weight: 500; }
+.batch .acts { display: flex; flex-wrap: wrap; gap: 6px; }
+.batch .acts .pill { padding: 0 13px; }
+.batch .acts .pill.sq { margin-left: auto; }
+.hist { display: grid; }
+.hist .h { display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 10px; align-items: center; min-height: 52px; border-top: 1px solid var(--b); }
+.hist .h:first-child { border-top: 0; }
+.hist .who { display: grid; font-size: 15px; line-height: 1.3; }
+.hist .who span { color: var(--m); font-size: 14px; }
+.hist .d { font-size: 15px; text-align: right; }
+.ava { width: 36px; height: 36px; border-radius: 99px; display: grid; place-items: center; font-size: 15px; font-weight: 600; color: var(--t); flex: none; }
+.listrow { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 6px 4px 6px 14px; background: var(--r); border-top: 1px solid var(--b); font-size: 16px; }
+.listrow:first-child { border-top: 0; }
+.listrow .v { margin-left: auto; color: var(--m); font-size: 15px; }
+.listrow .ic { color: var(--m); }
+.group { border-radius: 16px; overflow: hidden; border: 1px solid var(--b); }
+.listrow .who { display: grid; line-height: 1.3; flex: 1; min-width: 0; }
+.listrow .who span { font-size: 14px; color: var(--m); }
+
+.att .hd { font-size: 36px; line-height: 1.02; }
+.att p { margin-top: 6px; color: var(--m); }
+.blk { display: grid; gap: 8px; }
+.blk .hd { font-size: 17px; font-weight: 600; display: flex; gap: 8px; align-items: baseline; }
+.blk .hd span { color: var(--m); font-weight: 500; }
+.arow { background: var(--r); border: 1px solid var(--b); border-radius: 16px; padding: 12px; display: grid; gap: 10px; }
+.arow .t { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; }
+.arow .t b { font-weight: 500; }
+.arow .t .q { grid-row: 1 / span 2; grid-column: 2; align-self: center; }
+.arow .t .meta { font-size: 14px; color: var(--m); display: flex; gap: 4px 8px; flex-wrap: wrap; align-items: center; }
+.arow .acts { display: flex; gap: 8px; }
+.arow.short { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+.arow.short .t { grid-template-columns: minmax(0, 1fr); }
+
+.menu { position: absolute; z-index: 6; background: var(--r); border: 1px solid var(--b); border-radius: 16px; padding: 6px; display: grid; min-width: 230px; box-shadow: 0 10px 30px rgba(0, 0, 0, .16); }
+.menu .mi { min-height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border-radius: 10px; font-size: 16px; border: 0; background: transparent; text-align: left; }
+.menu .mi.on { background: var(--s); font-weight: 600; }
+.menu .mi.neg { color: var(--neg); }
+.menu .mt { font-size: 14px; color: var(--m); padding: 8px 12px 4px; }
+.menu .mi .ic:last-child { margin-left: auto; }
+
+.toast { position: absolute; left: 12px; right: 12px; bottom: 112px; z-index: 6; background: var(--t); color: var(--g); border-radius: 16px; padding: 8px 8px 8px 16px; display: flex; align-items: center; gap: 10px; font-size: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, .2); }
+.toast span { flex: 1; }
+.toast button { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1.5px solid currentColor; background: transparent; color: inherit; font-weight: 600; }
+.sk { display: block; background: var(--b); border-radius: 6px; }
+.notice { display: flex; gap: 10px; align-items: flex-start; background: var(--r); border: 1px solid var(--b); border-radius: 14px; padding: 12px 14px; font-size: 15px; line-height: 1.4; }
+.notice .ic { color: var(--warn); margin-top: 1px; }
+.blkerr { border: 1px dashed var(--b); border-radius: 16px; padding: 16px; display: grid; gap: 10px; font-size: 16px; }
+.blkerr .btn { width: auto; justify-self: start; padding: 0 4px; }
+.empty { display: grid; justify-items: center; text-align: center; gap: 12px; padding: 12px 8px 0; }
+.empty .art { width: 200px; height: 220px; }
+.empty .hd { font-size: 32px; line-height: 1.05; }
+.empty p { color: var(--t); max-width: 320px; }
+.entry { flex: 1; display: grid; align-content: start; gap: 20px; padding: 8px 24px 32px; }
+.entry .art { width: 220px; height: 184px; justify-self: center; }
+.entry .hd { font-size: 60px; line-height: .95; text-align: center; }
+.entry .lead { font-size: 17px; text-align: center; }
+.small { font-size: 15px; color: var(--m); text-align: center; }
+
+/* Desktop: drawn at 1440 x 900 and scaled to the column. */
+.desk-scale { width: 100%; aspect-ratio: 1440 / 900; position: relative; overflow: hidden; border-radius: 18px; border: 8px solid var(--bezel); }
+.desk { width: 1440px; height: 900px; transform-origin: 0 0; transform: scale(var(--ds, .5)); position: absolute; inset: 0 auto auto 0; display: grid; grid-template-columns: 248px minmax(0, 1fr); }
+.side { padding: 28px 16px; display: grid; grid-template-rows: auto auto auto 1fr auto; gap: 18px; border-right: 1px solid var(--b); }
+.side .wm { font-size: 32px; padding: 0 10px; }
+.side .house { margin: 0; justify-content: space-between; width: 100%; }
+.side .btn { min-height: 48px; font-size: 16px; }
+.snav { display: grid; gap: 2px; align-content: start; }
+.snav a { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border-radius: 10px; color: var(--m); font-size: 16px; text-decoration: none; }
+.snav a.on { background: var(--s); color: var(--t); font-weight: 600; }
+.snav a .c { margin-left: auto; min-width: 24px; height: 22px; padding: 0 7px; border-radius: 99px; background: var(--neg); color: var(--g); font-size: 13px; font-weight: 600; display: grid; place-items: center; }
+.user { display: flex; align-items: center; gap: 10px; padding: 0 10px; font-size: 16px; }
+.dmain { display: grid; grid-template-rows: auto auto auto minmax(0, 1fr); overflow: hidden; }
+.dhead { padding: 28px 40px 18px; display: flex; align-items: flex-end; gap: 24px; }
+.dhead .hd { font-size: 48px; line-height: 1; }
+.dhead p { margin-top: 10px; font-size: 17px; }
+.dtools { padding: 0 40px 18px; display: flex; gap: 10px; align-items: center; }
+.dtools .inp { width: 340px; min-height: 44px; }
+.dcols { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; padding: 0 40px; overflow: hidden; }
+.dlist { grid-column: span 7; display: grid; gap: 14px; align-content: start; }
+.dcard { grid-column: span 5; background: var(--r); border: 1px solid var(--b); border-radius: 20px; padding: 20px; display: grid; gap: 14px; align-content: start; position: relative; }
+.row.sel-on { box-shadow: inset 0 0 0 2px var(--a); }
+
+/* Ornament sheet */
+.orn { border-radius: 20px; padding: 24px; display: grid; gap: 20px; }
+.orn .hd { font-size: 20px; font-weight: 600; }
+.orn .set { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.orn .set figure { margin: 0; display: grid; justify-items: center; gap: 6px; font-size: 14px; color: var(--m); text-align: center; }
+.orn .set .emb { width: 56px; height: 56px; }
+.orn .big { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: end; }
+.orn .big figure { margin: 0; display: grid; justify-items: center; gap: 6px; font-size: 14px; color: var(--m); text-align: center; }
+.orn .big svg { width: 100%; max-width: 150px; height: 150px; }
+.orn .kayma { width: 100%; }
+
+/* ---------- Round 2 (presence model, ADR-0013) ---------- */
+.prow { position: relative; background: var(--r); border-radius: 12px; display: grid; grid-template-columns: minmax(0, 1fr) auto 18px; align-items: center; gap: 0 8px; padding: 9px 10px 9px 12px; min-height: 64px; }
+.prow > .hit { position: absolute; inset: 0; border: 0; background: transparent; border-radius: 12px; }
+.prow .txt { display: grid; gap: 3px; pointer-events: none; min-width: 0; }
+.prow .nm { font-size: 16px; font-weight: 500; line-height: 1.25; }
+.prow .meta { font-size: 14px; color: var(--m); line-height: 1.3; display: flex; flex-wrap: wrap; gap: 2px 8px; align-items: center; }
+.prow .pside { display: grid; justify-items: end; gap: 2px; position: relative; z-index: 1; }
+.prow .qty { font-size: 16px; white-space: nowrap; pointer-events: none; }
+.prow .chev { color: var(--m); pointer-events: none; }
+.prow .chev .ic { width: 18px; height: 18px; }
+.lvbtn { min-height: 44px; min-width: 44px; padding: 0; border: 0; background: transparent; display: inline-flex; align-items: center; justify-content: flex-end; margin: -8px 0 -10px; }
+.lvbtn > span { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 6px 0 10px; border-radius: 999px; font-size: 14px; font-weight: 500; }
+.lvbtn > span .ic { width: 16px; height: 16px; }
+.lvbtn[aria-expanded="true"] > span { box-shadow: 0 0 0 2px currentColor; }
+.picker { background: var(--r); border-radius: 0 0 12px 12px; margin-top: -10px; padding: 8px 12px 12px; display: grid; gap: 10px; }
+.picker .lvpick .lvb { min-height: 48px; }
+.picker .hintline { font-size: 14px; color: var(--m); }
+.picker .acts { display: flex; flex-wrap: wrap; gap: 8px; }
+.ph .chk { font-size: 14px; color: var(--m); margin-left: auto; }
+.ph .chk + .cnt { margin-left: 8px; }
+.checkbtn { min-height: 48px; border-radius: 12px; border: 1px dashed var(--b); background: transparent; color: var(--a); font-size: 16px; font-weight: 600; }
+.cat { display: grid; gap: 8px; }
+.cat .ch { display: flex; align-items: baseline; gap: 8px; padding: 0 4px; }
+.cat .ch .hd { font-size: 18px; font-weight: 600; }
+.cat .ch span { color: var(--m); font-size: 14px; }
+.revcard { background: var(--r); border: 1px solid var(--b); border-radius: 20px; padding: 16px; display: grid; gap: 10px; }
+.revcard .hd { font-size: 20px; font-weight: 600; line-height: 1.2; }
+.revcard .row-btns { display: flex; gap: 8px; }
+.revcard .row-btns .btn { width: auto; min-height: 48px; flex: 1; }
+.revcard .lnk { font-size: 15px; }
+.progress { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--m); }
+.progress .bar { flex: 1; height: 6px; border-radius: 9px; background: var(--b); overflow: hidden; }
+.progress .bar i { display: block; height: 100%; background: var(--a); border-radius: 9px; }
+.crow { background: var(--r); border-radius: 12px; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 8px 8px 8px 12px; min-height: 60px; }
+.crow .nm { font-size: 16px; font-weight: 500; }
+.crow .meta { font-size: 14px; color: var(--m); }
+.crow.changed { box-shadow: inset 0 0 0 2px var(--a); }
+.sumlist { display: grid; gap: 6px; }
+.sumlist .li { background: var(--r); border-radius: 12px; padding: 12px 14px; display: grid; gap: 2px; }
+.sumlist .li b { font-weight: 600; }
+.sumlist .li span { color: var(--m); font-size: 15px; }
+.addl { display: grid; gap: 8px; }
+.ai { background: var(--r); border: 1px solid var(--b); border-radius: 16px; padding: 12px; display: grid; gap: 12px; }
+.ai .top { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 8px; align-items: center; }
+.ai .top b { font-size: 17px; font-weight: 600; }
+.ai .top .sum { font-size: 14px; color: var(--m); grid-column: 1; }
+.ai .top .ibtn { grid-row: 1 / span 2; grid-column: 2; width: 40px; height: 44px; }
+.ai.open { border-color: var(--a); }
+.ai .opts { gap: 6px; }
+.ai .opt { padding: 0 11px; }
+.freq { display: grid; }
+.freq .fi { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 2px 10px; min-height: 60px; padding: 6px 4px 6px 14px; border-top: 1px solid var(--b); background: var(--r); }
+.freq .fi:first-child { border-top: 0; }
+.freq .fi > b { font-weight: 500; font-size: 16px; }
+.freq .fi > span { font-size: 14px; color: var(--m); grid-column: 1; }
+.freq .fi .pill { grid-row: 1 / span 2; grid-column: 2; }
+.radios { display: grid; }
+.radios .ri { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 4px 14px; border-top: 1px solid var(--b); background: var(--r); font-size: 16px; }
+.radios .ri:first-child { border-top: 0; }
+.radios .ri i { width: 22px; height: 22px; border-radius: 99px; border: 2px solid var(--b); flex: none; }
+.radios .ri.on i { border: 7px solid var(--a); }
+.normline { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.normline .stepper { gap: 8px; }
+.normline .stepper .pill.sq { width: 44px; min-height: 44px; font-size: 20px; }
+.normline .stepper .v b { font-size: 17px; }
+.meas { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 4px 12px; font-size: 15px; align-items: center; }
+.meas span:nth-child(3n+1) { color: var(--m); }
+.collapsed { display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 12px 0 14px; border-radius: 14px; background: var(--r); border: 1px solid var(--b); font-size: 16px; }
+.collapsed .v { margin-left: auto; color: var(--m); font-size: 15px; }
+.chg { display: grid; gap: 4px; }
+.chg-t { font-size: 15px; font-weight: 600; }
+.tbl { width: 100%; border-collapse: collapse; font-size: 15px; }
+.tbl th, .tbl td { text-align: left; vertical-align: top; padding: 10px 12px 10px 0; border-top: 1px solid var(--line); }
+.tbl th { font-weight: 600; color: var(--muted); font-size: 14px; }
+.added { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 4px 6px 4px 14px; border-radius: 14px; background: var(--s); font-size: 16px; }
+.added b { font-weight: 600; }
+.added .btn { width: auto; min-height: 44px; margin-left: auto; font-size: 16px; }
+.fi.open { grid-template-columns: minmax(0, 1fr); background: var(--r); }
+.fi .edit { display: grid; gap: 12px; padding: 4px 10px 12px 0; }
+.conf { display: grid; gap: 8px; }
+.conf .ci { background: var(--r); border: 1px solid var(--b); border-radius: 14px; padding: 10px 6px 10px 12px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 2px 10px; align-items: center; }
+.conf .ci .emb { width: 28px; height: 28px; grid-row: 1 / span 2; }
+.conf .ci b { font-weight: 600; }
+.conf .ci span { font-size: 14px; color: var(--m); grid-column: 2; }
+.conf .ci .ibtn { grid-row: 1 / span 2; grid-column: 3; }
+.variants { display: grid; gap: 28px; }
+.variant { display: grid; gap: 16px; }
+.variant h3 { font-size: 21px; font-weight: 600; }
+.tsw { flex-wrap: wrap; }
+.tblwrap { overflow-x: auto; background: var(--paper); border-radius: 16px; padding: 4px 16px 8px; }
+.tbl td:last-child, .tbl th:last-child { white-space: nowrap; text-align: right; }
+
+@media (prefers-reduced-motion: reduce) { .row .exp .ic { transition: none; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- Ornament: drawn for «Закрома» from simple shapes (petal, drop, dot, curl); copies no painting or product. -->
+    <symbol id="e-flower" viewBox="0 0 64 64">
+      <g stroke-width="2.2" stroke-linejoin="round" style="fill:var(--o2);stroke:var(--o1)">
+        <path d="M32 30C22 22 22 8 32 4C42 8 42 22 32 30Z"/>
+        <path d="M32 30C22 22 22 8 32 4C42 8 42 22 32 30Z" transform="rotate(72 32 32)"/>
+        <path d="M32 30C22 22 22 8 32 4C42 8 42 22 32 30Z" transform="rotate(144 32 32)"/>
+        <path d="M32 30C22 22 22 8 32 4C42 8 42 22 32 30Z" transform="rotate(216 32 32)"/>
+        <path d="M32 30C22 22 22 8 32 4C42 8 42 22 32 30Z" transform="rotate(288 32 32)"/>
+      </g>
+      <circle cx="32" cy="32" r="5" style="fill:var(--o1)"/>
+    </symbol>
+    <symbol id="e-snow" viewBox="0 0 64 64">
+      <g stroke-width="2.4" stroke-linecap="round" fill="none" style="stroke:var(--o1)">
+        <path d="M32 6V58M9.5 19L54.5 45M9.5 45L54.5 19"/>
+        <path d="M32 14l-5-5M32 14l5-5M32 50l-5 5M32 50l5 5"/>
+      </g>
+      <circle cx="32" cy="32" r="7" stroke-width="2" style="fill:var(--o2);stroke:var(--o1)"/>
+      <g style="fill:var(--o1)"><circle cx="16" cy="23" r="2.4"/><circle cx="48" cy="23" r="2.4"/><circle cx="16" cy="41" r="2.4"/><circle cx="48" cy="41" r="2.4"/></g>
+    </symbol>
+    <symbol id="e-grain" viewBox="0 0 64 64">
+      <path d="M32 60V14" stroke-width="2.4" stroke-linecap="round" style="stroke:var(--o1)"/>
+      <g stroke-width="2" style="fill:var(--o2);stroke:var(--o1)">
+        <ellipse cx="32" cy="10" rx="4.5" ry="7"/>
+        <ellipse cx="25" cy="22" rx="4.5" ry="7.5" transform="rotate(-30 25 22)"/><ellipse cx="39" cy="22" rx="4.5" ry="7.5" transform="rotate(30 39 22)"/>
+        <ellipse cx="25" cy="34" rx="4.5" ry="7.5" transform="rotate(-30 25 34)"/><ellipse cx="39" cy="34" rx="4.5" ry="7.5" transform="rotate(30 39 34)"/>
+        <ellipse cx="25" cy="46" rx="4.5" ry="7.5" transform="rotate(-30 25 46)"/><ellipse cx="39" cy="46" rx="4.5" ry="7.5" transform="rotate(30 39 46)"/>
+      </g>
+    </symbol>
+    <symbol id="e-berry" viewBox="0 0 64 64">
+      <path d="M14 50C22 40 30 30 46 18" stroke-width="2.4" fill="none" stroke-linecap="round" style="stroke:var(--o1)"/>
+      <path d="M46 18C50 10 58 8 60 6C58 14 54 20 46 18Z" stroke-width="2" style="fill:var(--o3);stroke:var(--o1)"/>
+      <g stroke-width="2" style="fill:var(--o2);stroke:var(--o1)"><circle cx="22" cy="44" r="7"/><circle cx="33" cy="42" r="6"/><circle cx="26" cy="33" r="6"/><circle cx="14" cy="34" r="5"/></g>
+      <g style="fill:var(--o1)"><circle cx="22" cy="44" r="1.6"/><circle cx="33" cy="42" r="1.4"/><circle cx="26" cy="33" r="1.4"/></g>
+    </symbol>
+    <!-- Spray: flower on a stem with leaves, berries and two grass curls -->
+    <symbol id="e-big" viewBox="0 0 240 240">
+      <path d="M120 140C118 172 122 200 120 232" style="stroke:var(--o1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <g style="fill:none;stroke:var(--o1)" stroke-width="2.4" stroke-linecap="round">
+        <path d="M120 222C102 222 92 214 92 204C92 196 100 194 104 200"/>
+        <path d="M120 222C138 222 148 214 148 204C148 196 140 194 136 200"/>
+      </g>
+      <g style="fill:var(--o3);stroke:var(--o1)" stroke-width="2.6" stroke-linejoin="round">
+        <path d="M120 172C100 160 74 162 60 180C76 190 100 188 120 172Z"/>
+        <path d="M120 172C140 160 166 162 180 180C164 190 140 188 120 172Z"/>
+      </g>
+      <g style="fill:var(--o2);stroke:var(--o1)" stroke-width="2.6" stroke-linejoin="round">
+        <circle cx="52" cy="196" r="8"/><circle cx="66" cy="206" r="6"/><circle cx="188" cy="196" r="8"/><circle cx="174" cy="206" r="6"/>
+      </g>
+      <use href="#e-flower" x="64" y="20" width="112" height="112"/>
+    </symbol>
+    <!-- Izba window: a carved frame (kokoshnik with scallops, side boards, sill and a hanging towel board) -->
+    <symbol id="e-window" viewBox="0 0 200 240">
+      <g stroke-width="2.4" stroke-linejoin="round" style="fill:var(--o2);stroke:var(--o1)">
+        <path d="M24 74C24 44 70 36 100 14C130 36 176 44 176 74Z" style="fill:none"/>
+        <path d="M24 74a9.5 9.5 0 0 0 19 0a9.5 9.5 0 0 0 19 0a9.5 9.5 0 0 0 19 0a9.5 9.5 0 0 0 19 0a9.5 9.5 0 0 0 19 0a9.5 9.5 0 0 0 19 0a9.5 9.5 0 0 0 19 0a9.5 9.5 0 0 0 19 0Z"/>
+        <rect x="30" y="86" width="14" height="112"/><rect x="156" y="86" width="14" height="112"/>
+        <rect x="20" y="198" width="160" height="10"/>
+        <path d="M74 208H126V222L117.3 232L108.7 222L100 232L91.3 222L82.7 232L74 222Z"/>
+      </g>
+      <g style="fill:var(--o1)"><circle cx="100" cy="8" r="4"/><circle cx="100" cy="52" r="5"/><circle cx="74" cy="60" r="3"/><circle cx="126" cy="60" r="3"/></g>
+      <rect x="48" y="86" width="104" height="108" rx="3" stroke-width="2.4" style="fill:var(--g);stroke:var(--o1)"/>
+      <use href="#e-flower" x="64" y="104" width="72" height="72"/>
+    </symbol>
+    <!-- Izba facade: roof boards with a ridge curl and a towel, log ends, one carved window -->
+    <symbol id="e-izba" viewBox="0 0 240 200">
+      <g stroke-width="2.4" stroke-linejoin="round" style="fill:var(--o2);stroke:var(--o1)">
+        <path d="M12 100L120 20L228 100L214 100L120 34L26 100Z"/>
+        <path d="M113 36H127V60L120 68L113 60Z"/>
+      </g>
+      <path d="M120 20C124 8 136 4 144 10C138 11 133 15 131 22C128 20 124 20 120 20Z" style="fill:var(--o1)"/>
+      <g style="fill:none;stroke:var(--o1)" stroke-width="2.2" stroke-linecap="round">
+        <path d="M44 112H196M44 128H196M44 144H196M44 160H196M44 176H196"/>
+        <path d="M24 192H216"/>
+      </g>
+      <g stroke-width="2" style="fill:var(--o2);stroke:var(--o1)">
+        <circle cx="38" cy="112" r="6"/><circle cx="38" cy="128" r="6"/><circle cx="38" cy="144" r="6"/><circle cx="38" cy="160" r="6"/><circle cx="38" cy="176" r="6"/>
+        <circle cx="202" cy="112" r="6"/><circle cx="202" cy="128" r="6"/><circle cx="202" cy="144" r="6"/><circle cx="202" cy="160" r="6"/><circle cx="202" cy="176" r="6"/>
+      </g>
+      <g stroke-width="2.2" stroke-linejoin="round" style="fill:var(--o2);stroke:var(--o1)">
+        <path d="M92 116C92 104 108 100 120 92C132 100 148 104 148 116Z"/>
+        <rect x="88" y="160" width="64" height="8"/>
+      </g>
+      <rect x="96" y="118" width="48" height="42" rx="2" stroke-width="2.2" style="fill:var(--g);stroke:var(--o1)"/>
+      <use href="#e-flower" x="106" y="125" width="28" height="28"/>
+      <g style="fill:var(--o1)"><circle cx="120" cy="106" r="3"/><circle cx="60" cy="86" r="2.6"/><circle cx="76" cy="74" r="2.6"/><circle cx="92" cy="62" r="2.6"/><circle cx="180" cy="86" r="2.6"/><circle cx="164" cy="74" r="2.6"/><circle cx="148" cy="62" r="2.6"/></g>
+    </symbol>
+    <!-- Icons: 24px outline, one set -->
+    <symbol id="i-stock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 10h16M4 15h16"/><path d="M8 7h2M8 12.5h3M8 17.5h2"/></g></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></g></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></g></symbol>
+    <symbol id="i-family" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9.5" r="2.3"/><path d="M3.5 19c.6-3.3 2.8-5 5.5-5s4.9 1.7 5.5 5"/><path d="M15 14.2c2.6-.4 4.6 1 5.2 4"/></g></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></g></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M10 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M14.5 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M7 12h10M10 17h4"/></g></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="5.5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="18.5" cy="12" r="1.8"/></g></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5.5"/><path d="M12 16.3v.2"/></g></symbol>
+    <symbol id="i-time" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></g></symbol>
+    <symbol id="i-theme" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/></g><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></symbol>
+    <symbol id="i-offline" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 9.5a13 13 0 0 1 18 0M6.5 13a8 8 0 0 1 11 0M10 16.5a3 3 0 0 1 4 0"/><path d="M4 4l16 16"/></g></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="4" y="5.5" width="16" height="14" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></g></symbol>
+    <symbol id="i-invite" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10" cy="8" r="3.2"/><path d="M4 19c.6-3.4 3-5.2 6-5.2s5.4 1.8 6 5.2"/><path d="M18.5 7v6M15.5 10h6"/></g></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3.5l1.6 2.2 2.7-.5.8 2.6 2.5 1.2-.8 2.6.8 2.6-2.5 1.2-.8 2.6-2.7-.5L12 20.5l-1.6-2.2-2.7.5-.8-2.6-2.5-1.2.8-2.6-.8-2.6 2.5-1.2.8-2.6 2.7.5z"/></g></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header class="doc-head">
+    <h1>Закрома: ключевые экраны, итог</h1>
+    <p>Тот же вечер той же семьи: понедельник, 26 октября, 19:40, дом «Квартира». Учёт наличия, бытовые меры, все цифры посчитаны из одного набора данных.</p>
+    <p>Круг 3 — по замечаниям круга 2: новый порядок добавления, уровни без точек, «на всех», «Закончился» по роду продукта, «Покупки» второй вкладкой, «Испортилась» в ревизии и три варианта тёмной темы. Остальные экраны приняты и не менялись.</p>
+    <div class="ask">
+      <strong>Решения круга 3 (оператор, 2026-10-26):</strong>
+      <ol>
+        <li><a class="lnk" href="#s-dark">Тёмная тема</a> — выбран «Графит» (из «Лака», «Графита» и «Зелени»).</li>
+        <li>Название раздела о норме дома — выбрано «Всегда дома».</li>
+      </ol>
+      <span>Замечания пишите по номеру макета. <a class="lnk" href="#changes">Что изменилось</a> — таблица с номерами.</span>
+    </div>
+  </header>
+
+  <div class="bar" role="group" aria-label="Тема макетов">
+    <span class="lbl">Тема макетов:</span>
+    <span class="tsw"><button type="button" data-set="light" aria-pressed="true">Светлая · гжель</button><button type="button" data-set="dark:grafit" aria-pressed="false">Тёмная · графит</button></span>
+    <nav class="toc" aria-label="Разделы"><a href="#changes">Изменения</a><a href="#s-dark">Тёмная тема</a><a href="#s-stock">Запасы</a><a href="#s-add">Добавление</a><a href="#s-card">Карточка</a><a href="#s-att">Всегда дома и сроки</a><a href="#s-rev">Ревизия</a><a href="#s-set">Настройки</a><a href="#s-entry">Вход</a><a href="#s-states">Состояния</a><a href="#s-orn">Роспись</a></nav>
+  </div>
+
+  <section class="band" id="changes" aria-labelledby="h-changes">
+    <div class="notes">
+      <h2 id="h-changes">Что изменилось по замечаниям круга 2</h2>
+      <p>Номера в правой колонке — макеты на этой странице.</p>
+    </div>
+    <div class="tblwrap"><table class="tbl" id="changes-table"></table></div>
+  </section>
+
+  <section class="band" id="s-dark" aria-labelledby="h-dark">
+    <div class="notes">
+      <h2 id="h-dark">Тёмная тема: выбран «Графит»</h2>
+      <p>Во всех трёх — нейтральные подложки вместо коричневых, почти белый текст вместо кремового, золото на главном действии, киноварь на сроках и тревожных уровнях, зелень — в листьях росписи. Фон не чёрный. У шести уровней цвет — только у выбранного. Во всех вариантах контраст текста — от 7:1 и выше.</p>
+      <p class="rules"><b>Лак</b> — тёплый тёмно-серый, ближе всего к чёрному лаку хохломы. <b>Графит</b> — холодный серый, самый «технический». <b>Зелень</b> — глубокий зелёный фон, как у части хохломских изделий. Выбран «Графит» (оператор, 2026-10-26); он же на всех экранах страницы при переключателе «Тёмная · графит». «Лак» и «Зелень» оставлены для истории решения.</p>
+    </div>
+    <div class="variants" id="dark-variants"></div>
+  </section>
+
+  <section class="band" id="s-stock" aria-labelledby="h-stock">
+    <div class="notes">
+      <h2 id="h-stock">Запасы</h2>
+      <p>Приветствие называет одно самое важное и сколько ещё ждёт в «Сроках». Строка продукта — в две строки: слева название и срок, справа количество в мерах и уровень. Нажатие на строку открывает карточку (стрелка «›» справа). Уровень — отдельная кнопка: она раскрывает шесть уровней и быстрые действия этого продукта прямо под строкой.</p>
+      <p class="rules"><b>По местам</b> — где что лежит. <b>По видам</b> — что есть из молочного, хлеба, сыров и колбас, по всем местам сразу: так видно, есть ли из чего сделать бутерброд.</p>
+    </div>
+    <div class="shots" id="shots-stock"></div>
+    <figure class="desk-box" id="desk-stock"></figure>
+  </section>
+
+  <section class="band" id="s-add" aria-labelledby="h-add">
+    <div class="notes">
+      <h2 id="h-add">Добавление</h2>
+      <p>Порядок — ваш, из круга 2: у продукта «+ Добавить» → параметры раскрываются прямо под ним → «Добавить молоко» → панель сворачивается, снова виден список, что можно добавить; вверху растёт «Добавлено: 2 · Проверить». Когда добавили всё — экран подтверждения: что, сколько и куда, с правкой и «Сохранить». До «Сохранить» всё хранится на телефоне.</p>
+    </div>
+    <div class="shots" id="shots-add"></div>
+  </section>
+
+  <section class="band" id="s-card" aria-labelledby="h-card">
+    <div class="notes">
+      <h2 id="h-card">Карточка продукта</h2>
+      <p>Сверху — сколько всего и уровень. Ниже — где лежит, у каждой части кнопки в мерах продукта: «−1 стакан», «−½ пакета», «Закончилось» и меню «⋯». Норма дома: «Всегда держать дома, не меньше 1 пакета». Меры «как покупаем» и «как берём» можно поменять. История и настройки свёрнуты.</p>
+    </div>
+    <div class="shots" id="shots-card"></div>
+  </section>
+
+  <section class="band" id="s-att" aria-labelledby="h-att">
+    <div class="notes">
+      <h2 id="h-att">Всегда дома и сроки</h2>
+      <p>«Всегда дома» (бывшие «Покупки») — вторая вкладка, перед «Сроками»: раздел о том, что всегда должно быть дома и чего не хватает. В нём только продукты с нормой дома; у «Почти нет» и «Мало» — подсказка в мерах. «Сроки» — как в круге 1.</p>
+    </div>
+    <div class="shots" id="shots-att"></div>
+  </section>
+
+  <section class="band" id="s-rev" aria-labelledby="h-rev">
+    <div class="notes">
+      <h2 id="h-rev">Проверка места и ревизия</h2>
+      <p>Ревизия — места по очереди: отмечаете только то, что изменилось, — «Закончился», «Мало» или «Испортилась» (подпись — по роду продукта), остальное — одной кнопкой. Испорченное идёт в учёт выброшенного. В конце — что закончилось и чего стало мало с прошлого раза.</p>
+    </div>
+    <div class="shots" id="shots-rev"></div>
+  </section>
+
+  <section class="band" id="s-set" aria-labelledby="h-set">
+    <div class="notes">
+      <h2 id="h-set">Настройки</h2>
+      <p>Бывшая «Семья». Кто живёт в доме и «Пригласить», места хранения, настройки дома — в том числе «Сколько человек живёт» для кнопки «на всех» — и мои настройки: оформление и как часто предлагать сверить запасы.</p>
+    </div>
+    <div class="shots" id="shots-set"></div>
+  </section>
+
+  <section class="band" id="s-entry" aria-labelledby="h-entry">
+    <div class="notes">
+      <h2 id="h-entry">Вход и регистрация</h2>
+      <p>Приняты в круге 1, без изменений.</p>
+    </div>
+    <div class="shots" id="shots-entry"></div>
+  </section>
+
+  <section class="band" id="s-states" aria-labelledby="h-states">
+    <div class="notes">
+      <h2 id="h-states">Общие состояния</h2>
+      <p>Приняты в круге 1. Изменился только текст тоста: «Молоко: закончилось · Отменить» — без слова «списано».</p>
+    </div>
+    <div class="shots" id="shots-states"></div>
+  </section>
+
+  <section class="band" id="s-orn" aria-labelledby="h-orn">
+    <div class="notes">
+      <h2 id="h-orn">Роспись и мотивы избы</h2>
+      <p>Формы те же, что в круге 1. В тёмной теме золото и киноварь стали ярче. Роспись нарисована из простых фигур и не повторяет изделия; изба — только на входе, окно с наличником — в пустых экранах.</p>
+    </div>
+    <div class="motifs" id="motifs"></div>
+  </section>
+
+  <section class="band" aria-labelledby="h-final">
+    <div class="final">
+      <h2 id="h-final" style="font-size:30px;font-weight:600">Что дальше</h2>
+      <ol>
+        <li>Вы отвечаете на вопрос о правке при добавлении и пишете замечания по номерам.</li>
+        <li>По согласованным экранам — перечень компонентов с состояниями и доступностью в docs/10-design.md §7, новые цвета тёмной темы и уточнённые критерии T-008b и T-008c.</li>
+      </ol>
+      <p class="credits">Шрифты: Triodion (А. Андреев) и Golos Text (А. Королькова, В. Кузьмин), оба под лицензией SIL Open Font License. Орнамент и мотивы избы нарисованы для «Закромов». Имена, продукты и даты — примерные.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+(() => {
+  // Sample data: household «Квартира», Monday 26 October 2026, 19:40; expiring_days = 3.
+  // Levels follow docs/05-domain-rules.md §3 for each product's thresholds; counts below are computed.
+  const LV = ["Нет", "Почти нет", "Мало", "Нормально", "Много", "Избыток"];
+  const PLACES = [
+    { id: "fridge", name: "Холодильник", emb: "e-flower", checked: "проверено 5 дней назад", items: [
+      { n: "Творог 5 %", q: "½ пачки", lv: 1, exp: "today", d: "26.10" },
+      { n: "Кефир 1 %", q: "1 пакет", lv: 3, exp: "soon", left: 1, d: "27.10" },
+      { n: "Сметана 20 %", q: "1 банка", lv: 3, exp: "expired", ago: 2, d: "24.10" },
+      { n: "Молоко 3,2 %", q: "0,5 л", lv: 3, d: "30.10", est: true, cat: "dairy" },
+      { n: "Яйца С1", q: "6 шт", lv: 3, d: "28.11" },
+      { n: "Сыр российский", q: "250 г", lv: 3, d: "16.11", est: true },
+      { n: "Морковь", lv: 2, d: "09.11", est: true, norm: true },
+    ]},
+    { id: "freezer", name: "Морозилка", emb: "e-snow", checked: "проверено 3 недели назад", items: [
+      { n: "Пельмени", q: "1 пачка", lv: 3, d: "15.03.2027" },
+      { n: "Курица, бёдра", q: "1 лоток", lv: 3, d: "20.01.2027", est: true },
+      { n: "Смородина", q: "≈ 500 г", lv: 3, d: "08.08.2027", est: true },
+    ]},
+    { id: "pantry", name: "Кухонный шкаф", emb: "e-grain", checked: "проверено 5 дней назад", items: [
+      { n: "Молоко 3,2 %", q: "1 л", lv: 3, d: "14.11" },
+      { n: "Чай в пакетиках", q: "5 пакетиков", lv: 1, hint: "≈ 5 пакетиков", norm: true },
+      { n: "Гречка", q: "250 г", lv: 2, hint: "≈ 1 стакан", norm: true },
+      { n: "Макароны", q: "300 г", lv: 2, hint: "≈ ½ пачки", norm: true },
+      { n: "Мука пшеничная", q: "2 кг", lv: 3 },
+    ]},
+    { id: "balcony", name: "Балкон", emb: "e-berry", checked: "проверено 3 недели назад", items: [
+      { n: "Картофель", q: "≈ 8 кг", lv: 4 },
+      { n: "Сахар", q: "≈ 20 кг", lv: 5, norm: true },
+      { n: "Огурцы солёные", q: "3 банки", lv: 3, d: "30.09.2027" },
+    ]},
+  ];
+  // Products with a home norm that ran out: not on the shelves, only in «Всегда дома».
+  const OUT = [{ n: "Хлеб бородинский" }, { n: "Соль" }];
+  const all = PLACES.flatMap(p => p.items.map(i => ({ ...i, place: p.name })));
+  const expired = all.filter(i => i.exp === "expired");
+  const expiring = all.filter(i => i.exp === "today" || i.exp === "soon");
+  const critical = all.filter(i => i.norm && i.lv === 1);
+  const low = all.filter(i => i.norm && i.lv === 2);
+  const excess = all.filter(i => i.norm && i.lv === 5);
+  const deadlines = expired.length + expiring.length;
+  const toBuy = OUT.length + critical.length + low.length;
+  console.assert(deadlines === 3 && toBuy === 6 && excess.length === 1, "sample counts");
+
+  const icon = (id, cls = "ic") => `<svg class="${cls}" aria-hidden="true"><use href="#${id}"/></svg>`;
+  const emb = (id, cls = "emb") => `<svg class="${cls}" aria-hidden="true"><use href="#${id}"/></svg>`;
+  const chip = (lv) => `<span class="chip lv${lv}"><i></i>${LV[lv]}</span>`;
+  const days = (n) => (n % 10 === 1 && n % 100 !== 11) ? "день" : (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) ? "дня" : "дней";
+  const status = (i) => i.exp === "expired" ? `<span class="st neg">${icon("i-alert")}Просрочено ${i.ago} дн.</span>`
+    : i.exp === "today" ? `<span class="st warn">${icon("i-time")}Сегодня последний день</span>`
+    : i.exp === "soon" ? `<span class="st warn">${icon("i-time")}Ещё ${i.left} ${days(i.left)}</span>`
+    : i.d ? `<span>${i.est ? "≈ " : ""}до ${i.d}</span>` : "";
+  const lvbtn = (i, open) => `<button class="lvbtn" type="button" aria-expanded="${open ? "true" : "false"}" aria-label="Уровень: ${LV[i.lv]}. Изменить"><span class="lv${i.lv}">${LV[i.lv]}${icon("i-down")}</span></button>`;
+  const picker = (i, acts) => `<div class="picker"><div class="lvpick" role="radiogroup" aria-label="Сколько осталось: ${i.n}">${LV.map((l, k) => `<button class="lvb lv${k}${k === i.lv ? " on" : ""}" type="button" role="radio" aria-checked="${k === i.lv}">${k === i.lv ? icon("i-check") : ""}${l}</button>`).join("")}</div>${i.hint ? `<span class="hintline">Сейчас: ${LV[i.lv].toLowerCase()}, ${i.hint}</span>` : ""}<div class="acts">${acts.map(a => `<button class="pill" type="button">${a}</button>`).join("")}</div></div>`;
+  const prow = (i, o = {}) => `<div><div class="prow"><button class="hit" type="button" aria-label="Открыть карточку: ${i.n}"></button><span class="txt"><span class="nm">${i.n}</span><span class="meta">${status(i)}${i.hint && !o.open ? `<span>${i.hint}</span>` : ""}</span></span><span class="pside">${i.q ? `<span class="qty">${i.q}</span>` : ""}${lvbtn(i, o.open)}</span><span class="chev">${icon("i-right")}</span></div>${o.open ? picker(i, o.acts || ["Закончилось"]) : ""}</div>`;
+  const place = (p, o = {}) => `<section class="place"><div class="ph">${emb(p.emb)}<span class="hd disp">${p.name}</span>${o.checked === false ? "" : `<span class="chk">${p.checked}</span>`}<span class="cnt">${p.items.length}</span></div><div class="rows">${
+    p.items.slice(0, o.limit ?? 99).map((i, k) => prow(i, o.open === k ? { open: true, acts: o.acts } : {})).join("")}</div>${o.check ? `<button class="checkbtn" type="button">Проверить ${o.check}</button>` : ""}</section>`;
+
+  const sbar = `<div class="sbar"><span>19:40</span><span>82 %</span></div>`;
+  const KAYMA = `<div class="kayma" aria-hidden="true"></div>`;
+  const head = (extra = "") => `<div class="ahead"><span class="wm">Закрома</span><button class="house" type="button">Квартира${icon("i-down")}</button>${extra}<button class="ibtn" type="button" aria-label="Поиск">${icon("i-search")}</button></div>`;
+  const backhead = (back, title = "", more = false) => `<div class="backhead"><button class="back" type="button">${icon("i-left")}${back}</button>${title ? `<span class="ttl">${title}</span>` : ""}${more ? `<button class="ibtn" type="button" aria-label="Ещё">${icon("i-more")}</button>` : ""}</div>`;
+  const nav = (active) => `<nav class="anav" aria-label="Меню">${[
+    ["stock", "Запасы", "i-stock"], ["shop", "Всегда дома", "i-bag", toBuy], ["add"], ["expiry", "Сроки", "i-clock", deadlines], ["settings", "Настройки", "i-gear"],
+  ].map(([id, label, ic, badge]) => id === "add"
+    ? `<span class="ni add"><span class="plus">${icon("i-plus")}</span>Добавить</span>`
+    : `<span class="ni${id === active ? " on" : ""}">${badge ? `<span class="badge" aria-label="${badge} требуют внимания">${badge}</span>` : ""}${icon(ic)}${label}</span>`).join("")}</nav>`;
+  let num = 0;
+  const phone = (caption, inner, o = {}) => `<figure class="shot"><div class="app phone${o.pin ? "" : " follow"}" data-ui data-t="${o.pin || "light"}"${o.dv ? ` data-dv="${o.dv}"` : ""}>${inner}</div><figcaption><b>${++num}. ${caption}</b>${o.note ? `<br>${o.note}` : ""}</figcaption></figure>`;
+
+  const greet = `<div class="greet"><div class="hd disp">Добрый вечер</div><p>Сметану пора выбросить. <a href="#s-att">Ещё ${deadlines - 1} в «Сроках» ›</a></p></div>`;
+  const tools = (byKind = false) => `<div class="tools"><div class="seg"><span${byKind ? "" : ` class="on"`}>По местам</span><span${byKind ? ` class="on"` : ""}>По видам</span></div><button class="ibtn" type="button" aria-label="Фильтр">${icon("i-filter")}</button></div>`;
+  const stockScreen = (body, over = "") => `${sbar}${head()}${KAYMA}<div class="abody">${body}</div>${nav("stock")}${over}`;
+
+  // ---------- Changes table ----------
+  const CHANGES = [
+    ["Тёмная тема: коричневые подложки, кремовый текст, «мешанина»", "Три варианта; выбран «Графит»: нейтральные подложки, почти белый текст, золото, киноварь, зелень; цвет уровня — только у выбранного", "1–9"],
+    ["Точка у шести уровней лишняя", "Невыбранные уровни — нейтральные, без цвета и точки; у выбранного — цвет и галочка", "2, 5, 8, 11"],
+    ["Действие на нескольких членов семьи", "«−4 пакетика на всех» — по числу людей в доме; число — в «Настройки → Дом»", "11, 25"],
+    ["«Закончился» для чая, а не «Закончилось»", "Подписи по роду продукта: чай закончился, гречка закончилась, яйца закончились", "11, 23"],
+    ["Добавление: «+ Добавить» → параметры → «Добавить молоко» → список; в конце подтверждение", "Так и сделано; вверху «Добавлено: 2 · Проверить»; экран подтверждения «что, сколько, куда»", "15–18"],
+    ["«Покупки» — о том, что всегда должно быть дома; поменять местами со «Сроками»", "«Всегда дома» — вторая вкладка меню", "все экраны"],
+    ["Ревизия: помечать испортившееся", "«Испортилась» у сметаны в ревизии; идёт в учёт выброшенного", "23"],
+  ];
+  document.getElementById("changes-table").innerHTML = `<thead><tr><th scope="col">Замечание</th><th scope="col">Что сделано</th><th scope="col">Макеты</th></tr></thead><tbody>${CHANGES.map(([a, b, c]) => `<tr><td>${a}</td><td>${b}</td><td>${c}</td></tr>`).join("")}</tbody>`;
+
+  const shortRow = (i, act) => `<div class="arow short"><div class="t"><b>${i.n}</b><span class="meta">${chip(i.lv ?? 0)}${i.hint ? `<span>${i.hint}</span>` : i.q ? `<span>${i.q}</span>` : ""}</span></div>${act || ""}</div>`;
+  const boughtBtn = `<button class="pill" type="button">Купили</button>`;
+  const shopBody = `<div class="att"><div class="hd disp">Всегда дома</div><p>Чего не хватает до нормы</p></div>
+    <div class="blk"><div class="hd">Закончилось <span>${OUT.length}</span></div>${OUT.map(i => shortRow(i, boughtBtn)).join("")}</div>
+    <div class="blk"><div class="hd">Почти нет <span>${critical.length}</span></div>${critical.map(i => shortRow(i, boughtBtn)).join("")}</div>
+    <div class="blk"><div class="hd">Мало <span>${low.length}</span></div>${low.map(i => shortRow(i, boughtBtn)).join("")}</div>
+    <div class="blk"><div class="hd">Пока не покупать <span>${excess.length}</span></div>${excess.map(i => shortRow(i)).join("")}</div>`;
+
+  // ---------- Тёмная тема: три варианта ----------
+  const DV = [["grafit", "Графит", "холодный серый · выбран"], ["lak", "Лак", "тёплый тёмно-серый, как чёрный лак"], ["zelen", "Зелень", "глубокий зелёный, как у части хохломских изделий"]];
+  const darkStock = () => stockScreen(`${greet}${tools()}${place(PLACES[0], { limit: 5 })}`);
+  const darkPicker = () => stockScreen(`${tools()}${place(PLACES[2], { open: 1, acts: ["−1 пакетик", "−4 пакетика на всех", "Закончился", "Выбросить"] })}`);
+  const darkShop = () => `${sbar}${head()}${KAYMA}<div class="abody">${shopBody}</div>${nav("shop")}`;
+  document.getElementById("dark-variants").innerHTML = DV.map(([id, name, about]) => `<div class="variant"><h3>${name} — ${about}</h3><div class="shots">${
+    phone(`${name}: запасы`, darkStock(), { pin: "dark", dv: id }) +
+    phone(`${name}: уровни у чая`, darkPicker(), { pin: "dark", dv: id }) +
+    phone(`${name}: всегда дома`, darkShop(), { pin: "dark", dv: id })}</div></div>`).join("");
+
+  // ---------- Запасы ----------
+  const stockMain = `${greet}${tools()}${place(PLACES[0])}`;
+  const byKind = [
+    { name: "Молочные продукты", rows: [{ n: "Молоко 3,2 %", q: "1,5 л", lv: 3, where: "Холодильник, шкаф" }, { n: "Кефир 1 %", q: "1 пакет", lv: 3, where: "Холодильник" }, { n: "Творог 5 %", q: "½ пачки", lv: 1, where: "Холодильник" }] },
+    { name: "Хлеб и выпечка", rows: [{ n: "Хлеб бородинский", lv: 0, where: "закончился" }] },
+    { name: "Сыры", rows: [{ n: "Сыр российский", q: "250 г", lv: 3, where: "Холодильник" }] },
+    { name: "Колбасы и деликатесы", rows: [{ n: "Колбаса докторская", q: "½ батона", lv: 3, where: "Холодильник" }] },
+  ];
+  const kindRow = (r) => `<div class="prow"><button class="hit" type="button" aria-label="Открыть карточку: ${r.n}"></button><span class="txt"><span class="nm">${r.n}</span><span class="meta"><span>${r.where}</span></span></span><span class="pside">${r.q ? `<span class="qty">${r.q}</span>` : ""}${lvbtn(r)}</span><span class="chev">${icon("i-right")}</span></div>`;
+  const kindBody = `${tools(true)}${byKind.map(c => `<section class="cat"><div class="ch"><span class="hd">${c.name}</span><span>${c.rows.length}</span></div><div class="rows">${c.rows.map(kindRow).join("")}</div></section>`).join("")}`;
+  const revCard = `<div class="revcard"><span class="hd">Сверим запасы?</span><span>Последний раз — 3 недели назад. Пройдём по местам, займёт минут пять.</span><div class="row-btns"><button class="btn pri" type="button">Начать</button><button class="btn sec" type="button">Не сейчас</button></div><a class="lnk" href="#s-set">Как часто предлагать ›</a></div>`;
+
+  document.getElementById("shots-stock").innerHTML =
+    phone("Запасы", stockScreen(stockMain)) +
+    phone("Кнопка уровня у чая раскрыта", stockScreen(`${tools()}${place(PLACES[2], { open: 1, acts: ["−1 пакетик", "−4 пакетика на всех", "Закончился", "Выбросить"] })}`),
+      { note: "Цвет — только у выбранного уровня. «−4 пакетика на всех» — по числу людей в доме (4). «Закончился» — по роду: чай." }) +
+    phone("По видам", stockScreen(kindBody), { note: "Продукт — сводкой по всем местам; под названием — где лежит." }) +
+    phone("Предложение ревизии в начале «Запасов»", stockScreen(`${revCard}${greet}${tools()}${place(PLACES[0], { limit: 3 })}`),
+      { note: "Появляется раз в период. «Не сейчас» убирает до следующего." });
+
+  // ---------- Карточка (shared with desktop) ----------
+  const milkCard = (o = {}) => {
+    const off = o.offline ? " disabled" : "";
+    const batches = [
+      { emb: "e-flower", place: "Холодильник", q: "0,5 л", meta: "вскрыто сегодня · ≈ до 30.10" },
+      { emb: "e-grain", place: "Кухонный шкаф", q: "1 л", meta: "закрыто · до 14.11" },
+    ];
+    const menu = o.menu ? `<div class="menu" style="right:20px;top:${o.menuTop || 300}px" role="menu" aria-label="Ещё действия"><button class="mi" type="button" role="menuitem">Вскрыто</button><button class="mi" type="button" role="menuitem">Переместить</button><button class="mi" type="button" role="menuitem">Исправить количество</button><button class="mi neg" type="button" role="menuitem">Выбросить</button></div>` : "";
+    return `<div class="prod"><div class="hd">Молоко 3,2 %</div><span class="sub">Молочные продукты</span></div>
+      <div class="sumcard"><div class="big"><b>1,5 л</b>${chip(3)}</div><span class="line">Ближайший срок <b>≈ до 30.10</b> · в холодильнике</span></div>
+      <span class="sect">Где лежит</span>
+      ${batches.map(b => `<div class="batch"><div class="top">${emb(b.emb)}<span class="where"><b>${b.place}</b><span>${b.meta}</span></span><span class="q">${b.q}</span></div>
+        <div class="acts"><button class="pill" type="button"${off}>−1 стакан</button><button class="pill" type="button"${off}>−½ пакета</button><button class="pill" type="button"${off}>Закончилось</button><button class="pill sq" type="button" aria-label="Ещё: ${b.place}"${off}>${icon("i-more")}</button></div></div>`).join("")}
+      ${menu}
+      ${o.short ? "" : `<span class="sect">Норма дома</span>
+      <div class="sumcard"><div class="switch"><span class="txt"><span>Всегда держать дома</span><span>Когда станет меньше — появится во «Всегда дома»</span></span><button class="tog on" type="button" role="switch" aria-checked="true" aria-label="Всегда держать дома"${off}></button></div>
+        <div class="normline"><span>Не меньше</span><div class="stepper"><button class="pill sq" type="button" aria-label="Меньше"${off}>${icon("i-minus")}</button><span class="v"><b>1 пакета</b></span><button class="pill sq" type="button" aria-label="Больше"${off}>${icon("i-plus")}</button></div></div></div>
+      <span class="sect">Как покупаем и как берём</span>
+      <div class="sumcard"><div class="meas"><span>Покупаем</span><span>пакет, 930 мл</span><span></span><span>Берём</span><span>стакан, 200 мл</span><span></span></div><a class="lnk" href="#s-card">Изменить меры ›</a></div>
+      <div class="collapsed">История<span class="v">12 записей · вчера закончилось</span>${icon("i-right")}</div>
+      <div class="collapsed">Настройки продукта<span class="v">сроки, пороги</span>${icon("i-right")}</div>`}`;
+  };
+
+  const deskHtml = `<div class="desk-scale"><div class="app desk follow" data-ui data-t="light">
+    <aside class="side"><span class="wm">Закрома</span><button class="house" type="button">Квартира${icon("i-down")}</button><button class="btn pri" type="button">${icon("i-plus")}Добавить</button>
+      <nav class="snav" aria-label="Меню"><a class="on">${icon("i-stock")}Запасы</a><a>${icon("i-bag")}Всегда дома<span class="c">${toBuy}</span></a><a>${icon("i-clock")}Сроки<span class="c">${deadlines}</span></a><a>${icon("i-gear")}Настройки</a></nav>
+      <div class="user"><span class="ava" style="background:var(--p1)">О</span>Ольга</div></aside>
+    <div class="dmain">${KAYMA}
+      <div class="dhead"><div><div class="hd disp">Добрый вечер</div><p>Понедельник, 26 октября. Сметану пора выбросить. <a class="lnk" href="#s-att">Ещё ${deadlines - 1} в «Сроках» ›</a></p></div></div>
+      <div class="dtools"><div class="seg"><span class="on">По местам</span><span>По видам</span></div><div class="inp">${icon("i-search")}<span class="val ph-t">Найти продукт</span></div><button class="pill" type="button">${icon("i-filter")}Все продукты</button></div>
+      <div class="dcols"><div class="dlist">${place(PLACES[0])}</div><div class="dcard">${milkCard({ short: true })}<span class="sect">Норма дома</span><div class="sumcard"><span>Всегда держать дома · не меньше 1 пакета</span></div><div class="collapsed">История<span class="v">12 записей</span>${icon("i-right")}</div></div></div>
+    </div></div></div>`;
+  document.getElementById("desk-stock").innerHTML = deskHtml + `<figcaption><b>${++num}. Компьютер, 1440 px:</b> список слева, карточка молока справа; «Добавить» — кнопкой над пунктами меню.</figcaption>`;
+
+  // ---------- Добавление ----------
+  const searchField = (q) => `<div class="inp focus">${icon("i-search")}<span class="val">${q ? `${q}<span class="caret"></span>` : `<span class="ph-t">Молоко, хлеб, гречка…</span>`}</span>${q ? `<button class="ibtn" type="button" aria-label="Очистить">${icon("i-close")}</button>` : ""}</div>`;
+  const FREQ = [["Молоко 3,2 %", "1 пакет · Холодильник · ≈ до 02.11"], ["Хлеб бородинский", "1 буханка · Кухонный шкаф · ≈ до 31.10"], ["Яйца С1", "1 десяток · Холодильник · ≈ до 25.11"], ["Сыр российский", "1 кусок · Холодильник · ≈ до 16.11"], ["Гречка", "1 пачка · Кухонный шкаф · ≈ до 26.04.2028"]];
+  const freq = `<span class="sub">Обычно покупаете</span><div class="freq group">${FREQ.map(([n, s]) => `<div class="fi"><b>${n}</b><span>${s}</span><button class="pill" type="button">${icon("i-plus")}Добавить</button></div>`).join("")}</div>`;
+  const dateField = (d, hint) => `<div class="field"><span class="lab">Годен до</span><div class="sel">${icon("i-cal")}<span>≈ ${d}</span>${icon("i-down")}</div><span class="hint">${hint}</span><div class="opts"><span class="opt">+3 дня</span><span class="opt">+7</span><span class="opt">+14</span><span class="opt">+30</span><span class="opt">${icon("i-cal")}Дата</span></div></div>`;
+  const milkEdit = `<div class="field"><span class="lab">Сколько</span><div class="stepper"><button class="pill sq" type="button" aria-label="Меньше">${icon("i-minus")}</button><span class="v"><b>2 пакета</b><span>по 930 мл</span></span><button class="pill sq" type="button" aria-label="Больше">${icon("i-plus")}</button></div></div>
+      <div class="field"><span class="lab">Куда</span><div class="sel">${emb("e-flower")}<span>Холодильник</span>${icon("i-down")}</div></div>
+      ${dateField("02.11", "Обычно хранится неделю.")}`;
+  const addItem = (name, sum, open, body = "") => `<div class="ai${open ? " open" : ""}"><div class="top"><b>${name}</b><span class="sum">${sum}</span><button class="ibtn" type="button" aria-label="${open ? "Свернуть" : "Изменить"}: ${name}">${icon(open ? "i-down" : "i-right")}</button></div>${open ? body : ""}</div>`;
+  const addDock = (n) => `<div class="dock"><button class="btn pri" type="button">Добавить ${n} ${n === 1 ? "продукт" : n < 5 ? "продукта" : "продуктов"}</button></div>`;
+  const listBody = `${searchField("")}<span class="sub">Добавляем: 3 · последний — сверху</span><div class="addl">
+      ${addItem("Молоко 3,2 %", "как в прошлый раз", true, milkEdit)}
+      ${addItem("Хлеб бородинский", "1 буханка · Кухонный шкаф · ≈ до 31.10", false)}
+      ${addItem("Гречка", "1 пачка · Кухонный шкаф · ≈ до 26.04.2028", false)}</div>`;
+  const potatoEdit = `<div class="field"><span class="lab">Сколько</span><div class="split"><div class="inp"><span class="val">3</span></div><div class="sel"><span>кг</span>${icon("i-down")}</div></div><div class="opts"><span class="opt">1 сетка</span><span class="opt on">3 кг</span><span class="opt">5 кг</span></div></div>
+      <div class="field"><span class="lab">Куда</span><div class="sel">${emb("e-berry")}<span>Балкон</span>${icon("i-down")}</div></div>
+      ${dateField("25.12", "Обычно хранится 2 месяца.")}`;
+
+  const addedBar = (n, names) => `<div class="added"><span><b>Добавлено: ${n}</b><br><span class="hint">${names}</span></span><button class="btn sec" type="button">Проверить</button></div>`;
+  const freqRow = ([n, s], open, body = "", btn = "") => open
+    ? `<div class="fi open"><b>${n}</b>${body}<button class="btn pri" type="button">${btn}</button></div>`
+    : `<div class="fi"><b>${n}</b><span>${s}</span><button class="pill" type="button">${icon("i-plus")}Добавить</button></div>`;
+  const milkEditBody = `<div class="edit">${milkEdit}</div>`;
+  const potatoEditBody = `<div class="edit">${potatoEdit}</div>`;
+  const FREQ2 = [["Хлеб бородинский", "1 буханка · Кухонный шкаф · ≈ до 31.10"], ["Яйца С1", "1 десяток · Холодильник · ≈ до 25.11"], ["Сыр российский", "1 кусок · Холодильник · ≈ до 16.11"], ["Гречка", "1 пачка · Кухонный шкаф · ≈ до 26.04.2028"]];
+  const conf = [["e-flower", "Молоко 3,2 %", "2 пакета · Холодильник · ≈ до 02.11"], ["e-grain", "Хлеб бородинский", "1 буханка · Кухонный шкаф · ≈ до 31.10"], ["e-berry", "Картофель", "3 кг · Балкон · ≈ до 25.12"]];
+  document.getElementById("shots-add").innerHTML =
+    phone("Добавить: что можно добавить", `${sbar}${backhead("Отмена", "Что купили?")}<div class="abody">${searchField("")}${freq}</div>`,
+      { note: "Под каждым продуктом — что подставится. «+ Добавить» раскрывает параметры." }) +
+    phone("У молока нажали «+ Добавить»", `${sbar}${backhead("Отмена", "Что купили?")}<div class="abody">${searchField("")}<span class="sub">Обычно покупаете</span><div class="freq group">${freqRow(FREQ[0], true, milkEditBody, "Добавить молоко")}${FREQ2.slice(0, 2).map(r => freqRow(r)).join("")}</div></div>`,
+      { note: "Параметры раскрыты прямо в списке; «Добавить молоко» сворачивает их и возвращает к списку." }) +
+    phone("Картофель с рынка: найден поиском", `${sbar}${backhead("Отмена", "Что купили?")}<div class="abody">${addedBar(1, "молоко")}${searchField("карт")}<div class="freq group">${freqRow(["Картофель", ""], true, potatoEditBody, "Добавить картофель")}</div></div>`,
+      { note: "Вверху — «Добавлено: 1». Килограммы или «сетка», место — как в прошлый раз, срок — типовой." }) +
+    phone("Подтверждение: что, сколько, куда", `${sbar}${backhead("К списку", "Проверьте")}<div class="abody"><div class="att"><div class="hd disp">Добавляем 3</div><p>Нажмите на продукт, чтобы поправить</p></div><div class="conf">${conf.map(([e, n, s]) => `<div class="ci">${emb(e)}<b>${n}</b><span>${s}</span><button class="ibtn" type="button" aria-label="Изменить: ${n}">${icon("i-right")}</button></div>`).join("")}</div></div><div class="dock"><button class="btn pri" type="button">Сохранить 3 продукта</button><button class="btn quiet" type="button">Добавить ещё</button></div>`,
+      { note: "Последний шаг: всё видно разом, «Сохранить» записывает. Так же будет выглядеть проверка чека в S2." });
+
+  // ---------- Карточка ----------
+  document.getElementById("shots-card").innerHTML =
+    phone("Карточка: молоко", `${sbar}${backhead("Запасы", "", true)}<div class="abody">${milkCard()}</div>${nav("stock")}`, { note: "Прокручивается внутри рамки." }) +
+    phone("Меню «⋯» у части в холодильнике", `${sbar}${backhead("Запасы", "", true)}<div class="abody">${milkCard({ menu: true, menuTop: 330 })}</div>${nav("stock")}`,
+      { note: "Редкие действия — в меню. «Выбросить» отменяется тостом." });
+
+  // ---------- Всегда дома и Сроки ----------
+  const arow = (i, acts, extra = "") => `<div class="arow"><div class="t"><b>${i.n}</b><span class="q">${i.q || ""}</span><span class="meta">${extra}${i.place ? `<span>${i.place}</span>` : ""}</span></div>${acts ? `<div class="acts">${acts}</div>` : ""}</div>`;
+  const eatActs = `<button class="pill" type="button">Съели</button><button class="pill" type="button">Выбросить</button>`;
+  const deadlinesBody = `<div class="att"><div class="hd disp">Сроки</div><p>Что съесть первым</p></div>
+    <div class="blk"><div class="hd">Просрочено <span>${expired.length}</span></div>${expired.map(i => arow(i, eatActs, status(i))).join("")}</div>
+    <div class="blk"><div class="hd">Скоро испортится <span>${expiring.length}</span></div>${expiring.map(i => arow(i, eatActs, status(i))).join("")}</div>`;
+  document.getElementById("shots-att").innerHTML =
+    phone("Всегда дома — вторая вкладка", `${sbar}${head()}${KAYMA}<div class="abody">${shopBody}</div>${nav("shop")}`,
+      { note: "Прокручивается внутри рамки. Только продукты с нормой дома." }) +
+    phone("Сроки (как в круге 1)", `${sbar}${head()}${KAYMA}<div class="abody">${deadlinesBody}</div>${nav("expiry")}`);
+
+  // ---------- Ревизия ----------
+  const crow = (n, meta, lv, changed) => `<div class="crow${changed ? " changed" : ""}"><span><span class="nm">${n}</span><br><span class="meta">${meta}</span></span>${lvbtn({ lv })}</div>`;
+  const checkBody = `<div class="progress">Холодильник · 1 из 4<span class="bar"><i style="width:25%"></i></span></div>
+    <p>Отметьте только то, что изменилось.</p>
+    <div class="rows">${crow("Творог 5 %", "½ пачки", 1)}${crow("Кефир 1 %", "отмечено: закончился", 0, true)}${crow("Сметана 20 %", "отмечено: испортилась", 0, true)}${crow("Молоко 3,2 %", "0,5 л", 3)}${crow("Яйца С1", "6 шт", 3)}${crow("Сыр российский", "250 г", 3)}${crow("Морковь", "", 2)}</div>`;
+  const summary = `<div class="att"><div class="hd disp">Сверили</div><p>4 места из 4 · прошлый раз — 3 недели назад</p></div>
+    <span class="sect">С прошлого раза закончились</span><div class="sumlist"><div class="li"><b>Кефир 1 %</b><span>Холодильник</span></div><div class="li"><b>Хлеб бородинский</b><span>Кухонный шкаф</span></div></div>
+    <span class="sect">Испортилось</span><div class="sumlist"><div class="li"><b>Сметана 20 %</b><span>Холодильник · 1 банка</span></div></div>
+    <span class="sect">Стало мало</span><div class="sumlist"><div class="li"><b>Гречка</b><span>≈ 1 стакан</span></div><div class="li"><b>Макароны</b><span>≈ ½ пачки</span></div></div>`;
+  document.getElementById("shots-rev").innerHTML =
+    phone("Ревизия: холодильник", `${sbar}${backhead("Отложить", "Сверим запасы")}<div class="abody">${checkBody}</div><div class="dock"><button class="btn pri" type="button">Остальное на месте</button></div>`,
+      { note: "Кефир — «Закончился», сметана — «Испортилась» (идёт в выброшенное). Остальное — одной кнопкой." }) +
+    phone("Итог ревизии", `${sbar}${backhead("Запасы")}<div class="abody">${summary}</div><div class="dock"><button class="btn pri" type="button">Открыть «Всегда дома»</button><button class="btn quiet" type="button">Готово</button></div>`,
+      { note: "Что закончилось и чего стало мало с прошлой ревизии." });
+
+  // ---------- Настройки ----------
+  const members = [["О", "--p1", "Ольга", "это вы"], ["С", "--p2", "Сергей", ""], ["Н", "--p3", "Нина Петровна", ""], ["А", "--p4", "Аня", ""]];
+  const setMain = `<div class="att"><div class="hd disp">Настройки</div><p>Дом «Квартира»</p></div>
+    <span class="sect">Кто живёт в доме</span>
+    <div class="group">${members.map(([l, c, n, s]) => `<div class="listrow"><span class="ava" style="background:var(${c})">${l}</span><span class="who">${n}${s ? `<span>${s}</span>` : ""}</span>${icon("i-right")}</div>`).join("")}</div>
+    <button class="btn pri" type="button">${icon("i-invite")}Пригласить</button>
+    <span class="sect">Дом</span><div class="group">
+    <div class="listrow">Места хранения<span class="v">4</span>${icon("i-right")}</div>
+    <div class="listrow">Сколько человек живёт<span class="v">4</span>${icon("i-right")}</div>
+    <div class="listrow">Предупреждать о сроке<span class="v">за 3 дня</span>${icon("i-right")}</div>
+    <div class="listrow">Часовой пояс<span class="v">Москва</span>${icon("i-right")}</div></div>`;
+  const PERIODS = ["Раз в неделю", "Раз в 2 недели", "Раз в 3 недели", "Раз в месяц", "Не предлагать"];
+  const setMine = `<span class="sect">Мои настройки</span>
+    <div class="field"><span class="lab">Оформление</span><div class="seg" role="radiogroup" aria-label="Оформление"><button class="on" type="button" role="radio" aria-checked="true">Как на устройстве</button><button type="button" role="radio" aria-checked="false">Светлое</button><button type="button" role="radio" aria-checked="false">Тёмное</button></div></div>
+    <div class="field"><span class="lab">Предлагать сверить запасы</span><div class="radios group" role="radiogroup" aria-label="Предлагать сверить запасы">${PERIODS.map((p, k) => `<div class="ri${k === 2 ? " on" : ""}" role="radio" aria-checked="${k === 2}"><i></i>${p}</div>`).join("")}</div><span class="hint">Только предложение: «Не сейчас» откладывает до следующего раза.</span></div>
+    <div class="group"><div class="listrow">Сменить дом<span class="v">Квартира</span>${icon("i-right")}</div><div class="listrow">Добавить дом${icon("i-right")}</div></div>
+    <button class="btn danger" type="button">Выйти</button>`;
+  document.getElementById("shots-set").innerHTML =
+    phone("Настройки", `${sbar}${head()}${KAYMA}<div class="abody">${setMain}</div>${nav("settings")}`, { note: "«Пригласить» открывает «Поделиться» со ссылкой." }) +
+    phone("Мои настройки: оформление и ревизия", `${sbar}${head()}${KAYMA}<div class="abody">${setMine}</div>${nav("settings")}`, { note: "Тот же экран «Настройки», ниже по прокрутке." });
+
+  // ---------- Вход (approved in round 1) ----------
+  document.getElementById("shots-entry").innerHTML =
+    phone("Вход", `${sbar}<div class="entry"><svg class="art" aria-hidden="true" viewBox="0 0 240 200"><use href="#e-izba"/></svg><div class="hd disp">Закрома</div><p class="lead">Что есть дома, сколько и до какого срока — для всей семьи.</p>
+      <div class="field"><label>Почта</label><div class="inp"><span class="val">olga@example.ru</span></div></div>
+      <div class="field"><label>Пароль</label><div class="inp"><span class="val">••••••••••</span><button class="tbtn" type="button">Показать</button></div></div>
+      <div class="btns"><button class="btn pri" type="button">Войти</button><button class="btn quiet" type="button">Создать аккаунт</button></div>
+      <p class="small">Забыли пароль? Попросите кого-нибудь из семьи сбросить его в «Настройках».</p></div>`) +
+    phone("Регистрация по приглашению, ошибка в поле", `${sbar}<div class="entry" style="gap:16px"><div class="empty" style="padding:0"><svg aria-hidden="true" viewBox="0 0 240 200" style="width:150px;height:126px"><use href="#e-izba"/></svg><div class="hd disp">Вас пригласили</div><p>Ольга зовёт вас в дом «Квартира». Создайте аккаунт — это займёт минуту.</p></div>
+      <div class="field"><label>Как вас зовут</label><div class="inp"><span class="val">Нина Петровна</span></div></div>
+      <div class="field"><label>Почта</label><div class="inp err" aria-invalid="true"><span class="val">nina.petrovna.mail.ru</span></div><span class="errmsg">${icon("i-alert")}В адресе нет «@». Проверьте, например: nina.petrovna@mail.ru</span></div>
+      <div class="field"><label>Пароль</label><div class="inp focus"><span class="val"><span class="caret"></span></span><button class="tbtn" type="button">Показать</button></div></div>
+      <div class="btns"><button class="btn pri" type="button">Создать аккаунт</button><button class="btn quiet" type="button">У меня уже есть аккаунт</button></div></div>`);
+
+  // ---------- Состояния (approved in round 1) ----------
+  const skelRow = (w1, w2) => `<div class="prow"><span class="txt"><span class="sk" style="width:${w1}px;height:18px"></span><span class="sk" style="width:${w2}px;height:14px"></span></span><span class="pside"><span class="sk" style="width:52px;height:18px"></span><span class="sk" style="width:84px;height:24px;border-radius:99px"></span></span><span></span></div>`;
+  const skelPlace = (name, e, n) => `<section class="place"><div class="ph">${emb(e)}<span class="hd disp">${name}</span></div><div class="rows">${Array.from({ length: n }, (_, k) => skelRow([140, 110, 170, 120][k % 4], [90, 120, 70, 100][k % 4])).join("")}</div></section>`;
+  document.getElementById("shots-states").innerHTML =
+    phone("Тост «Отменить»", stockScreen(`${greet}${tools()}${place(PLACES[0])}`, `<div class="toast" role="status" aria-live="polite"><span>Молоко: закончилось</span><button type="button">Отменить</button></div>`),
+      { note: "5 секунд; пауза, пока на тосте палец или фокус." }) +
+    phone("Загрузка", `${sbar}${head()}${KAYMA}<div class="abody"><div class="greet"><div class="hd disp">Добрый вечер</div><p><span class="sk" style="width:290px;height:16px;margin-top:6px"></span></p></div>${tools()}${skelPlace("Холодильник", "e-flower", 4)}${skelPlace("Морозилка", "e-snow", 2)}</div>${nav("stock")}`) +
+    phone("Нет сети", `${sbar}${backhead("Запасы")}<div class="abody"><div class="notice">${icon("i-offline")}<span>Нет сети. Показаны данные на 19:32. Изменять можно будет, когда сеть вернётся.</span></div>${milkCard({ offline: true, short: true })}</div>${nav("stock")}`) +
+    phone("Ошибка загрузки блока", `${sbar}${head()}${KAYMA}<div class="abody"><div class="att"><div class="hd disp">Сроки</div><p>Что съесть первым</p></div><div class="blkerr"><span>Не удалось загрузить сроки. Последние данные — на 19:32.</span><button class="btn quiet" type="button">Повторить</button></div></div>${nav("expiry")}`) +
+    phone("Пусто: в «Сроках» ничего нет", `${sbar}${head()}${KAYMA}<div class="abody"><div class="empty"><svg class="art" aria-hidden="true" viewBox="0 0 200 240"><use href="#e-window"/></svg><div class="hd disp">Ничего не портится</div><p>Когда у продукта подойдёт срок, он появится здесь — за 3 дня.</p></div></div>${nav("expiry")}`) +
+    phone("Первый вход: дом пустой", `${sbar}${head()}${KAYMA}<div class="abody"><div class="empty"><svg class="art" aria-hidden="true" viewBox="0 0 240 240"><use href="#e-big"/></svg><div class="hd disp">Здесь будет всё, что есть дома</div><p>Начните с того, что под рукой: молоко, хлеб, крупы.</p></div><div class="btns"><button class="btn pri" type="button">${icon("i-plus")}Добавить продукт</button><button class="btn quiet" type="button">Пригласить семью</button></div></div>${nav("stock")}`);
+
+  // ---------- Ornament sheet ----------
+  const motif = (t) => `<div class="app orn" data-t="${t}"><div class="hd">${t === "light" ? "Светлая тема · кобальт по фарфору" : "Тёмная тема · золото и киноварь по лаку"}</div>
+    <div class="set"><figure>${emb("e-flower")}<figcaption>Купавка — холодильник и прочие места</figcaption></figure><figure>${emb("e-snow")}<figcaption>Цветок-снежинка — морозилка</figcaption></figure><figure>${emb("e-grain")}<figcaption>Колос — шкаф</figcaption></figure><figure>${emb("e-berry")}<figcaption>Рябина — балкон</figcaption></figure></div>
+    ${KAYMA}
+    <div class="big"><figure><svg aria-hidden="true" viewBox="0 0 240 240"><use href="#e-big"/></svg><figcaption>Ветка — пустые экраны</figcaption></figure><figure><svg aria-hidden="true" viewBox="0 0 200 240"><use href="#e-window"/></svg><figcaption>Окно с наличником — пустые экраны</figcaption></figure><figure><svg aria-hidden="true" viewBox="0 0 240 200"><use href="#e-izba"/></svg><figcaption>Изба с коньком — экран входа</figcaption></figure></div></div>`;
+  document.getElementById("motifs").innerHTML = motif("light") + motif("dark");
+
+  // ---------- Theme switch for the mockups (per viewer, remembered when storage works) ----------
+  const root = document.documentElement;
+  const viewerDark = root.dataset.theme === "dark" || (!root.dataset.theme && matchMedia("(prefers-color-scheme: dark)").matches);
+  let saved = null;
+  try { saved = localStorage.getItem("zk-mock-theme"); } catch (e) { /* storage unavailable */ }
+  const apply = (choice) => {
+    const [theme, variant] = choice.split(":");
+    document.querySelectorAll(".app.follow").forEach(el => { el.dataset.t = theme; el.dataset.dv = variant || ""; });
+    document.querySelectorAll(".tsw button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.set === choice)));
+  };
+  const valid = ["light", "dark:grafit"];
+  apply(valid.includes(saved) ? saved : viewerDark ? "dark:grafit" : "light");
+  document.querySelectorAll(".tsw button").forEach(b => b.addEventListener("click", () => {
+    apply(b.dataset.set);
+    try { localStorage.setItem("zk-mock-theme", b.dataset.set); } catch (e) { /* storage unavailable */ }
+  }));
+
+  // Scale the desktop mock to its column.
+  const fit = () => document.querySelectorAll(".desk-scale").forEach(box => {
+    box.querySelector(".desk").style.setProperty("--ds", String(box.clientWidth / 1440));
+  });
+  fit();
+  if ("ResizeObserver" in window) new ResizeObserver(fit).observe(document.body);
+})();
+</script>

@@ -61,18 +61,20 @@ sequenceDiagram
     U->>S: вводит «мол»
     S->>A: GET /households/{hid}/products/search?q=мол (debounce 150 мс)
     A->>D: trigram-поиск products ∪ catalog_products
-    A-->>S: [Молоко 3,2% (catalog), …]
-    U->>S: выбирает, «Добавить» (1 упаковка)
-    S->>A: POST /households/{hid}/items {items:[{catalog_slug, location_id, packages:1}]}
+    A-->>S: [Молоко 3,2% (catalog, measures, defaults: холодильник, 1 пакет, ≈ 17.11), …]
+    U->>S: выбирает, «Добавить 1 продукт» (значения как в прошлый раз)
+    S->>A: POST /households/{hid}/items {items:[{catalog_slug, location_id, measure:"bag", count:1}]}
     A->>D: BEGIN
     A->>D: INSERT products (копия из catalog) ON CONFLICT (household_id, catalog_slug) DO NOTHING
-    A->>A: domain: quantity = 1 × package_size, expiry = estimate(purchased_on, shelf_life, location.kind)
+    A->>D: INSERT product_measures (копия мер справочника)
+    A->>A: domain: quantity = 1 × мера bag (930), expiry = estimate(purchased_on, shelf_life, location.kind)
     A->>D: INSERT inventory_items
     A->>D: INSERT stock_events (added, +930)
+    A->>D: UPDATE products SET default_location_id, last_added_quantity = 930
     A->>D: COMMIT
     A-->>S: 201 {items}
     S->>S: invalidate ['household', hid, 'stock'], ['…','attention']
-    S-->>U: тост «Добавлено: Молоко 930 мл · Отменить»
+    S-->>U: тост «Добавлено: молоко, 1 пакет · Отменить»
 ```
 
 ## 4. Списание на уровне продукта (FEFO)
@@ -84,9 +86,9 @@ sequenceDiagram
     participant S as SPA
     participant A as API
     participant D as DB
-    U->>S: Молоко → «−порция» (200 мл)
+    U->>S: Молоко → «Стакан» (мера use 200 мл, необязательное действие)
     S->>S: оптимистично уменьшить в кэше
-    S->>A: POST /households/{hid}/products/{pid}/consume {amount:200, reason:"consumed"}
+    S->>A: POST /households/{hid}/products/{pid}/consume {measure:"glass", count:1, reason:"consumed", location_id}
     A->>D: BEGIN, SELECT active items … FOR UPDATE
     A->>A: domain.fefo_plan(items, 200, today) → [(A, 200)]
     loop по каждой партии плана
@@ -95,7 +97,7 @@ sequenceDiagram
     end
     A->>D: COMMIT
     A-->>S: 200 {items, clamped:false}
-    S-->>U: тост «Списано 200 мл · Отменить»
+    S-->>U: тост «Молоко: −стакан · Отменить»
 ```
 
 ## 5. Конфликт версий

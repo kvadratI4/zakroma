@@ -9,14 +9,29 @@
   --color-surface: var(--zk-surface);
   --color-raised: var(--zk-raised);
   --color-line: var(--zk-border);
+  --color-line-control: var(--zk-border-control);
   --color-ink: var(--zk-text);
   --color-muted: var(--zk-muted);
   --color-accent: var(--zk-accent);
   --color-on-accent: var(--zk-on-accent);
   --color-ornament: var(--zk-ornament);
   --color-ornament-fill: var(--zk-ornament-fill);
+  --color-ornament-leaf: var(--zk-ornament-leaf);
   --color-negative: var(--zk-negative);
   --color-warning: var(--zk-warning);
+  /* Stock levels (docs/10-design.md §2): text-level-low-ink, bg-level-low-bg… */
+  --color-level-out-ink: var(--zk-level-out-ink);
+  --color-level-out-bg: var(--zk-level-out-bg);
+  --color-level-critical-ink: var(--zk-level-critical-ink);
+  --color-level-critical-bg: var(--zk-level-critical-bg);
+  --color-level-low-ink: var(--zk-level-low-ink);
+  --color-level-low-bg: var(--zk-level-low-bg);
+  --color-level-normal-ink: var(--zk-level-normal-ink);
+  --color-level-normal-bg: var(--zk-level-normal-bg);
+  --color-level-plenty-ink: var(--zk-level-plenty-ink);
+  --color-level-plenty-bg: var(--zk-level-plenty-bg);
+  --color-level-excess-ink: var(--zk-level-excess-ink);
+  --color-level-excess-bg: var(--zk-level-excess-bg);
 
   --font-sans: "Golos Text", "Segoe UI", system-ui, sans-serif;
   --font-display: "Triodion", "Old Standard TT", Georgia, serif;

@@ -39,6 +39,9 @@ CREATE TABLE users (
     display_name        text NOT NULL CHECK (length(btrim(display_name)) BETWEEN 1 AND 60),
     password_hash       text NOT NULL,                       -- Argon2id
     last_household_id   uuid,                                -- FK добавлен ниже (цикл)
+    -- Предложение ревизии (05 §9.2): период в днях, NULL — выключено; «Не сейчас» откладывает.
+    revision_reminder_days  smallint DEFAULT 21 CHECK (revision_reminder_days IN (7, 14, 21, 28)),
+    revision_snoozed_until  timestamptz,
     created_at          timestamptz NOT NULL DEFAULT now(),
     updated_at          timestamptz NOT NULL DEFAULT now()
 );
@@ -74,6 +77,7 @@ CREATE TABLE households (
     name            text NOT NULL CHECK (length(btrim(name)) BETWEEN 1 AND 60),
     timezone        text NOT NULL DEFAULT 'Europe/Moscow',
     expiring_days   smallint NOT NULL DEFAULT 3 CHECK (expiring_days BETWEEN 0 AND 60),
+    people_count    smallint CHECK (people_count BETWEEN 1 AND 20),   -- NULL = число участников дома (05 §5.2)
     archived_at     timestamptz,
     created_at      timestamptz NOT NULL DEFAULT now(),
     updated_at      timestamptz NOT NULL DEFAULT now(),
@@ -126,6 +130,18 @@ CREATE TABLE categories (
     sort_order      smallint NOT NULL DEFAULT 0
 );
 
+-- Бытовые меры (ADR-0013, 05-domain-rules §1.1): пачка, стакан, ложка, ломтик, банка…
+-- Формы: «1 пачка», «2 пачки», «5 пачек», «½ пачки» / «меньше пачки».
+CREATE TABLE measures (
+    slug            text PRIMARY KEY CHECK (slug ~ '^[a-z][a-z0-9_]*$'),
+    name_one        text NOT NULL,
+    name_few        text NOT NULL,
+    name_many       text NOT NULL,
+    name_gen        text NOT NULL,
+    halves          boolean NOT NULL DEFAULT false,         -- можно брать половину («½ пачки»)
+    sort_order      smallint NOT NULL DEFAULT 0
+);
+
 CREATE TABLE catalog_products (
     slug                    text PRIMARY KEY CHECK (slug ~ '^[a-z][a-z0-9_]*$'),
     name_ru                 text NOT NULL,
@@ -135,23 +151,35 @@ CREATE TABLE catalog_products (
     tracking_mode           text NOT NULL CHECK (tracking_mode IN ('exact', 'level')),
     default_location_kind   text NOT NULL CHECK (default_location_kind IN
                                 ('fridge', 'freezer', 'pantry', 'cellar', 'balcony', 'other')),
-    package_size            numeric(12,3) CHECK (package_size > 0),
-    portion                 numeric(12,3) CHECK (portion > 0),
+    critical_below          numeric(12,3) CHECK (critical_below > 0),
     low_below               numeric(12,3) CHECK (low_below >= 0),
     plenty_from             numeric(12,3) CHECK (plenty_from >= 0),
     excess_from             numeric(12,3) CHECK (excess_from >= 0),
     shelf_life_days         integer CHECK (shelf_life_days > 0),
     shelf_life_opened_days  integer CHECK (shelf_life_opened_days > 0),
     shelf_life_frozen_days  integer CHECK (shelf_life_frozen_days > 0),
-    keep_in_stock           boolean NOT NULL DEFAULT false,
+    keep_in_stock           boolean NOT NULL DEFAULT false,   -- норма дома по умолчанию (05 §3.7)
+    name_gender             text NOT NULL CHECK (name_gender IN ('m', 'f', 'n', 'pl')),  -- «Закончился / -ась / -ось / -ись» (05 §5.2)
     search_text             text GENERATED ALWAYS AS (zk_search_fold(name_ru || ' ' || aliases)) STORED,
     CONSTRAINT catalog_thresholds_ordered CHECK (
-        coalesce(portion, 0) <= coalesce(low_below, portion, 0)
-        AND coalesce(low_below, portion, 0) <= coalesce(plenty_from, low_below, portion, 0)
-        AND coalesce(plenty_from, low_below, portion, 0) <= coalesce(excess_from, plenty_from, low_below, portion, 0)
+        coalesce(critical_below, 0) <= coalesce(low_below, critical_below, 0)
+        AND coalesce(low_below, critical_below, 0) <= coalesce(plenty_from, low_below, critical_below, 0)
+        AND coalesce(plenty_from, low_below, critical_below, 0) <= coalesce(excess_from, plenty_from, low_below, critical_below, 0)
     )
 );
 CREATE INDEX catalog_products_search_trgm ON catalog_products USING gin (search_text gin_trgm_ops);
+
+-- Меры позиции справочника: как покупают (buy, не больше одной) и как берут (use, до двух —
+-- проверяют валидатор CSV и сервис). amount — в базовой единице позиции.
+CREATE TABLE catalog_product_measures (
+    catalog_slug    text NOT NULL REFERENCES catalog_products (slug) ON DELETE CASCADE,
+    role            text NOT NULL CHECK (role IN ('buy', 'use')),
+    measure_slug    text NOT NULL REFERENCES measures (slug),
+    amount          numeric(12,3) NOT NULL CHECK (amount > 0),
+    sort_order      smallint NOT NULL DEFAULT 0,
+    PRIMARY KEY (catalog_slug, role, measure_slug)
+);
+CREATE UNIQUE INDEX catalog_product_measures_one_buy_uq ON catalog_product_measures (catalog_slug) WHERE role = 'buy';
 
 -- -----------------------------------------------------------------------------
 -- Места хранения
@@ -163,6 +191,7 @@ CREATE TABLE storage_locations (
     name            text NOT NULL CHECK (length(btrim(name)) BETWEEN 1 AND 40),
     kind            text NOT NULL CHECK (kind IN ('fridge', 'freezer', 'pantry', 'cellar', 'balcony', 'other')),
     sort_order      smallint NOT NULL DEFAULT 0,
+    checked_at      timestamptz,                             -- последняя «Проверка места» (05 §9)
     created_at      timestamptz NOT NULL DEFAULT now(),
     updated_at      timestamptz NOT NULL DEFAULT now(),
     version         integer NOT NULL DEFAULT 1,
@@ -183,16 +212,17 @@ CREATE TABLE products (
     category_slug           text NOT NULL REFERENCES categories (slug),
     unit                    text NOT NULL CHECK (unit IN ('g', 'ml', 'pcs')),
     tracking_mode           text NOT NULL CHECK (tracking_mode IN ('exact', 'level')),
-    default_location_id     uuid,
-    package_size            numeric(12,3) CHECK (package_size > 0),
-    portion                 numeric(12,3) CHECK (portion > 0),
+    default_location_id     uuid,                             -- «как в прошлый раз» (05 §8)
+    critical_below          numeric(12,3) CHECK (critical_below > 0),
     low_below               numeric(12,3) CHECK (low_below >= 0),
     plenty_from             numeric(12,3) CHECK (plenty_from >= 0),
     excess_from             numeric(12,3) CHECK (excess_from >= 0),
     shelf_life_days         integer CHECK (shelf_life_days > 0),
     shelf_life_opened_days  integer CHECK (shelf_life_opened_days > 0),
     shelf_life_frozen_days  integer CHECK (shelf_life_frozen_days > 0),
-    keep_in_stock           boolean NOT NULL DEFAULT false,
+    keep_in_stock           boolean NOT NULL DEFAULT false,   -- норма дома = keep_in_stock + low_below
+    name_gender             text NOT NULL DEFAULT 'n' CHECK (name_gender IN ('m', 'f', 'n', 'pl')),
+    last_added_quantity     numeric(12,3) CHECK (last_added_quantity > 0),  -- «как в прошлый раз»
     archived_at             timestamptz,
     search_text             text GENERATED ALWAYS AS (zk_search_fold(name || ' ' || aliases)) STORED,
     created_at              timestamptz NOT NULL DEFAULT now(),
@@ -202,14 +232,28 @@ CREATE TABLE products (
     FOREIGN KEY (household_id, default_location_id)
         REFERENCES storage_locations (household_id, id) ON DELETE SET NULL (default_location_id),
     CONSTRAINT products_thresholds_ordered CHECK (
-        coalesce(portion, 0) <= coalesce(low_below, portion, 0)
-        AND coalesce(low_below, portion, 0) <= coalesce(plenty_from, low_below, portion, 0)
-        AND coalesce(plenty_from, low_below, portion, 0) <= coalesce(excess_from, plenty_from, low_below, portion, 0)
+        coalesce(critical_below, 0) <= coalesce(low_below, critical_below, 0)
+        AND coalesce(low_below, critical_below, 0) <= coalesce(plenty_from, low_below, critical_below, 0)
+        AND coalesce(plenty_from, low_below, critical_below, 0) <= coalesce(excess_from, plenty_from, low_below, critical_below, 0)
     )
 );
 CREATE UNIQUE INDEX products_catalog_uq ON products (household_id, catalog_slug) WHERE catalog_slug IS NOT NULL;
 CREATE UNIQUE INDEX products_name_active_uq ON products (household_id, zk_search_norm(name)) WHERE archived_at IS NULL;
 CREATE INDEX products_search_trgm ON products USING gin (search_text gin_trgm_ops);
+
+-- Меры продукта дома: копия мер справочника при создании продукта, правится в настройках.
+CREATE TABLE product_measures (
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    household_id    uuid NOT NULL REFERENCES households (id) ON DELETE CASCADE,
+    product_id      uuid NOT NULL,
+    role            text NOT NULL CHECK (role IN ('buy', 'use')),
+    measure_slug    text NOT NULL REFERENCES measures (slug),
+    amount          numeric(12,3) NOT NULL CHECK (amount > 0),
+    sort_order      smallint NOT NULL DEFAULT 0,
+    FOREIGN KEY (household_id, product_id) REFERENCES products (household_id, id) ON DELETE CASCADE,
+    UNIQUE (product_id, role, measure_slug)
+);
+CREATE UNIQUE INDEX product_measures_one_buy_uq ON product_measures (product_id) WHERE role = 'buy';
 
 -- -----------------------------------------------------------------------------
 -- Партии (текущее состояние запасов)
@@ -263,6 +307,7 @@ CREATE TABLE stock_events (
     actor_user_id       uuid REFERENCES users (id) ON DELETE SET NULL,
     occurred_at         timestamptz NOT NULL DEFAULT now(),
     note                text,
+    source              text NOT NULL DEFAULT 'action' CHECK (source IN ('action', 'check')),  -- check: проверка места / ревизия (05 §9)
     FOREIGN KEY (household_id, item_id)    REFERENCES inventory_items (household_id, id),
     FOREIGN KEY (household_id, product_id) REFERENCES products (household_id, id),
     CONSTRAINT events_consume_negative CHECK (

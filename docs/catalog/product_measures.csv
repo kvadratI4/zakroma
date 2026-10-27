@@ -1,0 +1,433 @@
+product,product_name,role,measure,measure_name,amount,unit,sort_order
+potato,Картофель,buy,net,сетка,2500,г,0
+potato,Картофель,use,piece,штука,150,г,1
+onion,Лук репчатый,buy,net,сетка,1000,г,0
+onion,Лук репчатый,use,piece,штука,100,г,1
+red_onion,Лук красный,use,piece,штука,100,г,0
+garlic,Чеснок,buy,bulb,головка,50,г,0
+garlic,Чеснок,use,clove,зубчик,5,г,1
+carrot,Морковь,use,piece,штука,120,г,0
+beet,Свёкла,use,piece,штука,250,г,0
+cabbage,Капуста белокочанная,buy,head,кочан,2000,г,0
+red_cabbage,Капуста краснокочанная,buy,head,кочан,1500,г,0
+chinese_cabbage,Капуста пекинская,buy,head,кочан,800,г,0
+cauliflower,Капуста цветная,buy,head,кочан,700,г,0
+broccoli,Брокколи,buy,head,кочан,400,г,0
+cucumber,Огурцы,use,piece,штука,120,г,0
+tomato,Помидоры,use,piece,штука,120,г,0
+cherry_tomato,Помидоры черри,buy,package,упаковка,250,г,0
+cherry_tomato,Помидоры черри,use,handful,горсть,50,г,1
+bell_pepper,Перец болгарский,use,piece,штука,150,г,0
+chili_pepper,Перец острый (чили),use,piece,штука,10,г,0
+zucchini,Кабачки,use,piece,штука,300,г,0
+eggplant,Баклажаны,use,piece,штука,300,г,0
+pumpkin,Тыква,buy,piece,штука,2000,г,0
+pumpkin,Тыква,use,chunk,кусок,300,г,1
+radish,Редис,buy,bunch,пучок,200,г,0
+daikon,"Редька, дайкон",use,piece,штука,500,г,0
+celery_root,Сельдерей корневой,use,piece,штука,400,г,0
+celery_stalk,Сельдерей черешковый,buy,bunch,пучок,300,г,0
+leek,Лук-порей,use,piece,штука,250,г,0
+ginger,Имбирь,use,chunk,кусок,50,г,0
+sweet_potato,Батат,use,piece,штука,300,г,0
+asparagus,Спаржа,buy,bunch,пучок,250,г,0
+green_beans,Фасоль стручковая,use,handful,горсть,50,г,0
+champignons,Шампиньоны,buy,package,упаковка,400,г,0
+oyster_mushrooms,Вешенки,buy,package,упаковка,300,г,0
+dried_mushrooms,Грибы сушёные,buy,packet,пакетик,50,г,0
+apple,Яблоки,use,piece,штука,180,г,0
+banana,Бананы,use,piece,штука,150,г,0
+orange,Апельсины,use,piece,штука,200,г,0
+mandarin,Мандарины,use,piece,штука,80,г,0
+pear,Груши,use,piece,штука,180,г,0
+grapes,Виноград,buy,cluster,гроздь,500,г,0
+grapes,Виноград,use,handful,горсть,100,г,1
+persimmon,Хурма,use,piece,штука,200,г,0
+plum,Сливы,use,handful,горсть,100,г,0
+peach,Персики,use,piece,штука,150,г,0
+apricot,Абрикосы,use,handful,горсть,100,г,0
+strawberry,Клубника,buy,package,упаковка,500,г,0
+strawberry,Клубника,use,handful,горсть,100,г,1
+raspberry,Малина,buy,package,упаковка,125,г,0
+raspberry,Малина,use,handful,горсть,50,г,1
+blueberry,"Голубика, черника",buy,package,упаковка,125,г,0
+blueberry,"Голубика, черника",use,handful,горсть,50,г,1
+cherry,"Черешня, вишня",use,handful,горсть,100,г,0
+cranberry,"Клюква, брусника",use,glass,стакан,150,г,0
+dill,Укроп,buy,bunch,пучок,50,г,0
+parsley,Петрушка,buy,bunch,пучок,50,г,0
+cilantro,Кинза,buy,bunch,пучок,50,г,0
+green_onion,Лук зелёный,buy,bunch,пучок,50,г,0
+basil,Базилик свежий,buy,bunch,пучок,30,г,0
+lettuce,Салат листовой,buy,head,кочан,300,г,0
+arugula,Руккола,buy,package,упаковка,125,г,0
+spinach,Шпинат,buy,bunch,пучок,100,г,0
+mint,Мята,buy,bunch,пучок,30,г,0
+sorrel,Щавель,buy,bunch,пучок,100,г,0
+milk,Молоко,buy,bag,пакет,930,мл,0
+milk,Молоко,use,glass,стакан,200,мл,1
+milk_uht,Молоко ультрапастеризованное,buy,bag,пакет,1000,мл,0
+milk_uht,Молоко ультрапастеризованное,use,glass,стакан,200,мл,1
+kefir,Кефир,buy,bag,пакет,930,мл,0
+kefir,Кефир,use,glass,стакан,200,мл,1
+ryazhenka,Ряженка,buy,bottle,бутылка,500,мл,0
+ryazhenka,Ряженка,use,glass,стакан,200,мл,1
+prostokvasha,Простокваша,buy,bottle,бутылка,500,мл,0
+prostokvasha,Простокваша,use,glass,стакан,200,мл,1
+ayran,"Айран, тан",buy,bottle,бутылка,500,мл,0
+ayran,"Айран, тан",use,glass,стакан,200,мл,1
+drinking_yogurt,Йогурт питьевой,buy,bottle,бутылка,270,мл,0
+yogurt,Йогурт,buy,cup,стаканчик,125,г,0
+cottage_cheese,Творог,buy,pack,пачка,180,г,0
+curd_snack,Сырок глазированный,buy,piece,штука,1,шт,0
+sour_cream,Сметана,buy,jar,банка,300,г,0
+sour_cream,Сметана,use,tbsp,ложка,20,г,1
+cream,Сливки,buy,package,упаковка,200,мл,0
+cream,Сливки,use,tbsp,ложка,15,мл,1
+butter,Масло сливочное,buy,pack,пачка,180,г,0
+plant_milk,Растительное молоко,buy,package,упаковка,1000,мл,0
+plant_milk,Растительное молоко,use,glass,стакан,200,мл,1
+baked_milk,Молоко топлёное,buy,bottle,бутылка,950,мл,0
+baked_milk,Молоко топлёное,use,glass,стакан,200,мл,1
+hard_cheese,Сыр твёрдый,buy,chunk,кусок,200,г,0
+hard_cheese,Сыр твёрдый,use,slice,ломтик,20,г,1
+mozzarella,Моцарелла,buy,package,упаковка,125,г,0
+feta,"Брынза, фета",buy,package,упаковка,200,г,0
+processed_cheese,Сыр плавленый,buy,package,упаковка,200,г,0
+processed_cheese,Сыр плавленый,use,tbsp,ложка,20,г,1
+cream_cheese,Сыр сливочный (творожный),buy,package,упаковка,180,г,0
+cream_cheese,Сыр сливочный (творожный),use,tbsp,ложка,20,г,1
+parmesan,Пармезан,buy,chunk,кусок,150,г,0
+suluguni,Сулугуни,buy,chunk,кусок,300,г,0
+suluguni,Сулугуни,use,slice,ломтик,20,г,1
+mascarpone,Маскарпоне,buy,jar,банка,250,г,0
+mascarpone,Маскарпоне,use,tbsp,ложка,20,г,1
+adyghe_cheese,Сыр адыгейский,buy,chunk,кусок,300,г,0
+adyghe_cheese,Сыр адыгейский,use,slice,ломтик,30,г,1
+ricotta,Рикотта,buy,package,упаковка,250,г,0
+ricotta,Рикотта,use,tbsp,ложка,20,г,1
+blue_cheese,Сыр с плесенью,buy,chunk,кусок,100,г,0
+chicken_eggs,Яйца куриные,buy,dozen,десяток,10,шт,0
+chicken_eggs,Яйца куриные,use,piece,штука,1,шт,1
+quail_eggs,Яйца перепелиные,buy,package,упаковка,20,шт,0
+quail_eggs,Яйца перепелиные,use,piece,штука,1,шт,1
+minced_beef,Фарш говяжий,buy,tray,лоток,400,г,0
+minced_mixed,Фарш свино-говяжий,buy,tray,лоток,400,г,0
+chicken_whole,Курица целая,buy,carcass,тушка,1500,г,0
+chicken_breast,Куриное филе,buy,tray,лоток,800,г,0
+chicken_thigh,Куриные бёдра,buy,tray,лоток,800,г,0
+chicken_wings,Куриные крылья,buy,tray,лоток,800,г,0
+chicken_drumstick,Куриные голени,buy,tray,лоток,800,г,0
+turkey_fillet,Филе индейки,buy,tray,лоток,600,г,0
+minced_chicken,Фарш куриный,buy,tray,лоток,400,г,0
+chicken_liver,Печень куриная,buy,tray,лоток,500,г,0
+chicken_hearts,Сердечки куриные,buy,tray,лоток,500,г,0
+salted_salmon,Красная рыба слабосолёная,buy,package,упаковка,150,г,0
+salted_salmon,Красная рыба слабосолёная,use,slice,ломтик,15,г,1
+white_fish_fillet,Филе белой рыбы (замороженное),buy,package,упаковка,400,г,0
+herring,Сельдь солёная,buy,jar,банка,300,г,0
+smoked_mackerel,Скумбрия копчёная,use,piece,штука,300,г,0
+shrimp,Креветки,buy,package,упаковка,500,г,0
+mussels,Мидии,buy,package,упаковка,500,г,0
+crab_sticks,Крабовые палочки,buy,package,упаковка,200,г,0
+red_caviar,Икра красная,buy,jar,банка,100,г,0
+red_caviar,Икра красная,use,tsp,чайная ложка,10,г,1
+boiled_sausage,Колбаса варёная,buy,baton,батон,400,г,0
+boiled_sausage,Колбаса варёная,use,slice,ломтик,15,г,1
+smoked_sausage,"Колбаса варёно-копчёная, сервелат",buy,stick,палка,350,г,0
+smoked_sausage,"Колбаса варёно-копчёная, сервелат",use,slice,ломтик,10,г,1
+dry_sausage,Колбаса сыровяленая,buy,stick,палка,250,г,0
+dry_sausage,Колбаса сыровяленая,use,slice,ломтик,5,г,1
+frankfurters,Сосиски,buy,package,упаковка,400,г,0
+frankfurters,Сосиски,use,piece,штука,45,г,1
+sardelki,Сардельки,buy,package,упаковка,500,г,0
+sardelki,Сардельки,use,piece,штука,100,г,1
+ham,Ветчина,buy,package,упаковка,300,г,0
+ham,Ветчина,use,slice,ломтик,15,г,1
+bacon,Бекон,buy,package,упаковка,200,г,0
+bacon,Бекон,use,slice,ломтик,10,г,1
+buzhenina,"Буженина, карбонад",buy,chunk,кусок,300,г,0
+buzhenina,"Буженина, карбонад",use,slice,ломтик,20,г,1
+smoked_chicken,Курица копчёная,use,chunk,кусок,200,г,0
+salo,Сало,buy,chunk,кусок,300,г,0
+salo,Сало,use,slice,ломтик,10,г,1
+homemade_soup,Суп домашний,use,plate,тарелка,300,мл,0
+leftovers,Готовое блюдо (остатки),use,portion,порция,250,г,0
+homemade_cutlets,Котлеты домашние,use,piece,штука,80,г,0
+salad_ready,Салат готовый,use,portion,порция,200,г,0
+cooked_porridge,Каша варёная,use,portion,порция,250,г,0
+buckwheat,Гречка,buy,pack,пачка,900,г,0
+buckwheat,Гречка,use,glass,стакан,170,г,1
+rice,Рис,buy,pack,пачка,900,г,0
+rice,Рис,use,glass,стакан,180,г,1
+rice_basmati,Рис басмати / жасмин,buy,pack,пачка,500,г,0
+rice_basmati,Рис басмати / жасмин,use,glass,стакан,180,г,1
+oat_flakes,Овсяные хлопья,buy,pack,пачка,400,г,0
+oat_flakes,Овсяные хлопья,use,glass,стакан,90,г,1
+millet,Пшено,buy,pack,пачка,900,г,0
+millet,Пшено,use,glass,стакан,180,г,1
+semolina,Манка,buy,pack,пачка,700,г,0
+semolina,Манка,use,tbsp,ложка,25,г,1
+pearl_barley,Перловка,buy,pack,пачка,900,г,0
+pearl_barley,Перловка,use,glass,стакан,180,г,1
+barley_grits,Ячневая крупа,buy,pack,пачка,700,г,0
+barley_grits,Ячневая крупа,use,glass,стакан,180,г,1
+wheat_grits,Пшеничная крупа,buy,pack,пачка,700,г,0
+wheat_grits,Пшеничная крупа,use,glass,стакан,180,г,1
+corn_grits,Кукурузная крупа,buy,pack,пачка,700,г,0
+corn_grits,Кукурузная крупа,use,glass,стакан,180,г,1
+bulgur,Булгур,buy,pack,пачка,400,г,0
+bulgur,Булгур,use,glass,стакан,170,г,1
+couscous,Кускус,buy,pack,пачка,400,г,0
+couscous,Кускус,use,glass,стакан,170,г,1
+quinoa,Киноа,buy,pack,пачка,400,г,0
+quinoa,Киноа,use,glass,стакан,170,г,1
+lentils,Чечевица,buy,pack,пачка,450,г,0
+lentils,Чечевица,use,glass,стакан,180,г,1
+split_peas,Горох колотый,buy,pack,пачка,800,г,0
+split_peas,Горох колотый,use,glass,стакан,180,г,1
+dry_beans,Фасоль сухая,buy,pack,пачка,450,г,0
+dry_beans,Фасоль сухая,use,glass,стакан,180,г,1
+chickpeas,Нут,buy,pack,пачка,450,г,0
+chickpeas,Нут,use,glass,стакан,180,г,1
+muesli,"Мюсли, гранола",buy,pack,пачка,400,г,0
+muesli,"Мюсли, гранола",use,portion,порция,50,г,1
+corn_flakes,Хлопья для завтрака,buy,box,коробка,250,г,0
+corn_flakes,Хлопья для завтрака,use,portion,порция,30,г,1
+pasta_generic,Макароны,buy,pack,пачка,450,г,0
+spaghetti,Спагетти,buy,pack,пачка,450,г,0
+penne,Макароны перья (пенне),buy,pack,пачка,450,г,0
+fusilli,Спиральки (фузилли),buy,pack,пачка,450,г,0
+farfalle,Бантики (фарфалле),buy,pack,пачка,400,г,0
+horns,Рожки,buy,pack,пачка,450,г,0
+shells,Ракушки,buy,pack,пачка,450,г,0
+vermicelli,Вермишель,buy,pack,пачка,450,г,0
+egg_noodles,Лапша яичная,buy,pack,пачка,400,г,0
+rice_noodles,Лапша рисовая,buy,pack,пачка,200,г,0
+soba,Лапша гречневая (соба),buy,pack,пачка,300,г,0
+instant_noodles,Лапша быстрого приготовления,buy,pack,пачка,1,шт,0
+lasagna_sheets,Листы для лазаньи,buy,pack,пачка,500,г,0
+wheat_flour,Мука пшеничная,buy,bag,пакет,2000,г,0
+wheat_flour,Мука пшеничная,use,glass,стакан,130,г,1
+wholegrain_flour,Мука цельнозерновая,buy,bag,пакет,1000,г,0
+wholegrain_flour,Мука цельнозерновая,use,glass,стакан,130,г,1
+rye_flour,Мука ржаная,buy,bag,пакет,1000,г,0
+rye_flour,Мука ржаная,use,glass,стакан,130,г,1
+corn_starch,Крахмал,buy,pack,пачка,200,г,0
+corn_starch,Крахмал,use,tbsp,ложка,10,г,1
+baking_powder,Разрыхлитель,buy,packet,пакетик,15,г,0
+baking_powder,Разрыхлитель,use,tsp,чайная ложка,5,г,1
+baking_soda,Сода пищевая,buy,pack,пачка,500,г,0
+baking_soda,Сода пищевая,use,tsp,чайная ложка,5,г,1
+dry_yeast,Дрожжи сухие,buy,packet,пакетик,11,г,0
+fresh_yeast,Дрожжи прессованные,buy,pack,пачка,100,г,0
+vanilla_sugar,"Ванильный сахар, ванилин",buy,packet,пакетик,8,г,0
+gelatin,Желатин,buy,packet,пакетик,10,г,0
+breadcrumbs,Сухари панировочные,buy,pack,пачка,200,г,0
+breadcrumbs,Сухари панировочные,use,tbsp,ложка,10,г,1
+coconut_flakes,Кокосовая стружка,buy,packet,пакетик,100,г,0
+baking_chocolate,"Шоколад для выпечки, капли",buy,bar,плитка,100,г,0
+white_bread,"Хлеб белый, батон",buy,baton,батон,400,г,0
+white_bread,"Хлеб белый, батон",use,slice,ломтик,25,г,1
+rye_bread,"Хлеб ржаной, бородинский",buy,loaf,буханка,400,г,0
+rye_bread,"Хлеб ржаной, бородинский",use,slice,ломтик,30,г,1
+baguette,Багет,buy,piece,штука,1,шт,0
+buns,Булочки,buy,piece,штука,1,шт,0
+lavash,Лаваш,buy,package,упаковка,250,г,0
+tortilla,Тортильи,buy,package,упаковка,6,шт,0
+tortilla,Тортильи,use,piece,штука,1,шт,1
+pita,Пита,buy,package,упаковка,5,шт,0
+pita,Пита,use,piece,штука,1,шт,1
+crispbread,Хлебцы,buy,pack,пачка,100,г,0
+sushki,"Сушки, баранки",buy,bag,пакет,200,г,0
+stewed_meat,Тушёнка,buy,jar,банка,1,шт,0
+canned_tuna,Тунец консервированный,buy,jar,банка,1,шт,0
+sprats,Шпроты,buy,jar,банка,1,шт,0
+canned_fish,"Рыбные консервы (сайра, сардины)",buy,jar,банка,1,шт,0
+canned_corn,Кукуруза консервированная,buy,jar,банка,1,шт,0
+canned_peas,Горошек зелёный консервированный,buy,jar,банка,1,шт,0
+canned_beans,Фасоль консервированная,buy,jar,банка,1,шт,0
+canned_tomatoes,Томаты в собственном соку,buy,jar,банка,1,шт,0
+tomato_paste,Томатная паста,buy,jar,банка,270,г,0
+tomato_paste,Томатная паста,use,tbsp,ложка,25,г,1
+olives,"Оливки, маслины",buy,jar,банка,1,шт,0
+pickled_cucumbers,Огурцы маринованные,buy,jar,банка,1,шт,0
+pickled_mushrooms,Грибы маринованные,buy,jar,банка,1,шт,0
+canned_pineapple,Ананасы консервированные,buy,jar,банка,1,шт,0
+canned_peaches,Персики консервированные,buy,jar,банка,1,шт,0
+squash_caviar,Икра кабачковая,buy,jar,банка,1,шт,0
+lecho,Лечо,buy,jar,банка,1,шт,0
+liver_pate,Паштет,buy,jar,банка,1,шт,0
+coconut_milk,Кокосовое молоко,buy,jar,банка,400,мл,0
+home_preserves,Домашние заготовки,buy,jar,банка,1,шт,0
+mayonnaise,Майонез,buy,package,упаковка,400,г,0
+mayonnaise,Майонез,use,tbsp,ложка,25,г,1
+ketchup,Кетчуп,buy,bottle,бутылка,350,г,0
+ketchup,Кетчуп,use,tbsp,ложка,20,г,1
+mustard,Горчица,buy,jar,банка,100,г,0
+mustard,Горчица,use,tsp,чайная ложка,5,г,1
+horseradish,Хрен,buy,jar,банка,140,г,0
+horseradish,Хрен,use,tsp,чайная ложка,7,г,1
+soy_sauce,Соевый соус,buy,bottle,бутылка,250,мл,0
+soy_sauce,Соевый соус,use,tbsp,ложка,15,мл,1
+vinegar,Уксус столовый,buy,bottle,бутылка,500,мл,0
+vinegar,Уксус столовый,use,tbsp,ложка,15,мл,1
+apple_vinegar,"Уксус яблочный, винный",buy,bottle,бутылка,500,мл,0
+apple_vinegar,"Уксус яблочный, винный",use,tbsp,ложка,15,мл,1
+balsamic,Бальзамический уксус,buy,bottle,бутылка,250,мл,0
+balsamic,Бальзамический уксус,use,tbsp,ложка,15,мл,1
+adjika,Аджика,buy,jar,банка,200,г,0
+adjika,Аджика,use,tbsp,ложка,20,г,1
+tkemali,Ткемали,buy,bottle,бутылка,300,мл,0
+tkemali,Ткемали,use,tbsp,ложка,15,мл,1
+pesto,Песто,buy,jar,банка,190,г,0
+pesto,Песто,use,tbsp,ложка,20,г,1
+pasta_sauce,Соус томатный для пасты,buy,jar,банка,500,г,0
+sweet_chili,Соус сладкий чили,buy,bottle,бутылка,200,мл,0
+sweet_chili,Соус сладкий чили,use,tbsp,ложка,15,мл,1
+teriyaki,Соус терияки,buy,bottle,бутылка,250,мл,0
+teriyaki,Соус терияки,use,tbsp,ложка,15,мл,1
+tahini,Тахини,buy,jar,банка,300,г,0
+tahini,Тахини,use,tbsp,ложка,20,г,1
+hummus,Хумус,buy,package,упаковка,200,г,0
+hummus,Хумус,use,tbsp,ложка,20,г,1
+sour_cream_sauce,"Соус сырный, чесночный",buy,package,упаковка,200,г,0
+sour_cream_sauce,"Соус сырный, чесночный",use,tbsp,ложка,20,г,1
+salt,Соль,buy,pack,пачка,1000,г,0
+black_pepper,Перец чёрный молотый,buy,packet,пакетик,15,г,0
+black_pepper_whole,Перец чёрный горошком,buy,packet,пакетик,15,г,0
+allspice,Перец душистый,buy,packet,пакетик,15,г,0
+red_pepper,"Перец красный молотый, чили",buy,packet,пакетик,15,г,0
+paprika,Паприка,buy,packet,пакетик,15,г,0
+turmeric,Куркума,buy,packet,пакетик,15,г,0
+cumin,Зира (кумин),buy,packet,пакетик,15,г,0
+coriander_seed,Кориандр,buy,packet,пакетик,15,г,0
+bay_leaf,Лавровый лист,buy,packet,пакетик,10,г,0
+cinnamon,Корица,buy,packet,пакетик,15,г,0
+oregano,Орегано,buy,packet,пакетик,15,г,0
+dried_basil,Базилик сушёный,buy,packet,пакетик,15,г,0
+italian_herbs,Итальянские травы,buy,packet,пакетик,15,г,0
+khmeli_suneli,Хмели-сунели,buy,packet,пакетик,15,г,0
+curry,Карри,buy,packet,пакетик,15,г,0
+ground_ginger,Имбирь молотый,buy,packet,пакетик,15,г,0
+dried_garlic,Чеснок сушёный,buy,packet,пакетик,15,г,0
+nutmeg,Мускатный орех,buy,packet,пакетик,15,г,0
+cloves,Гвоздика,buy,packet,пакетик,15,г,0
+thyme,"Тимьян, чабрец",buy,packet,пакетик,15,г,0
+rosemary,Розмарин,buy,packet,пакетик,15,г,0
+dried_dill,Укроп сушёный,buy,packet,пакетик,15,г,0
+plov_spice,Приправа для плова,buy,packet,пакетик,15,г,0
+universal_seasoning,Приправа универсальная,buy,packet,пакетик,15,г,0
+sesame,Кунжут,buy,packet,пакетик,50,г,0
+sesame,Кунжут,use,tsp,чайная ложка,4,г,1
+bouillon_cubes,Бульонные кубики,buy,box,коробка,8,шт,0
+bouillon_cubes,Бульонные кубики,use,cube,кубик,1,шт,1
+sunflower_oil,Масло подсолнечное,buy,bottle,бутылка,1000,мл,0
+sunflower_oil,Масло подсолнечное,use,tbsp,ложка,15,мл,1
+olive_oil,Масло оливковое,buy,bottle,бутылка,500,мл,0
+olive_oil,Масло оливковое,use,tbsp,ложка,15,мл,1
+ghee,Масло топлёное (гхи),buy,jar,банка,200,г,0
+ghee,Масло топлёное (гхи),use,tbsp,ложка,15,г,1
+margarine,"Маргарин, спред",buy,pack,пачка,200,г,0
+linseed_oil,Масло льняное,buy,bottle,бутылка,250,мл,0
+linseed_oil,Масло льняное,use,tbsp,ложка,15,мл,1
+sesame_oil,Масло кунжутное,buy,bottle,бутылка,250,мл,0
+sesame_oil,Масло кунжутное,use,tsp,чайная ложка,5,мл,1
+sugar,Сахар,buy,pack,пачка,1000,г,0
+sugar,Сахар,use,glass,стакан,200,г,1
+cane_sugar,Сахар тростниковый,buy,pack,пачка,900,г,0
+powdered_sugar,Сахарная пудра,buy,pack,пачка,250,г,0
+honey,Мёд,buy,jar,банка,500,г,0
+honey,Мёд,use,tbsp,ложка,25,г,1
+jam,"Варенье, джем",buy,jar,банка,400,г,0
+jam,"Варенье, джем",use,tbsp,ложка,25,г,1
+condensed_milk,Сгущённое молоко,buy,jar,банка,380,г,0
+condensed_milk,Сгущённое молоко,use,tbsp,ложка,25,г,1
+chocolate,Шоколад,buy,bar,плитка,90,г,0
+candies,Конфеты,buy,box,коробка,200,г,0
+cookies,Печенье,buy,pack,пачка,200,г,0
+gingerbread,Пряники,buy,pack,пачка,300,г,0
+wafers,Вафли,buy,pack,пачка,200,г,0
+zefir,"Зефир, пастила",buy,box,коробка,250,г,0
+marmalade,Мармелад,buy,package,упаковка,250,г,0
+halva,Халва,buy,package,упаковка,250,г,0
+chocolate_spread,Шоколадная паста,buy,jar,банка,350,г,0
+chocolate_spread,Шоколадная паста,use,tbsp,ложка,20,г,1
+syrup,"Сироп, топпинг",buy,bottle,бутылка,300,мл,0
+syrup,"Сироп, топпинг",use,tbsp,ложка,15,мл,1
+black_tea,Чай чёрный листовой,buy,pack,пачка,100,г,0
+tea_bags,Чай в пакетиках,buy,box,коробка,100,шт,0
+tea_bags,Чай в пакетиках,use,packet,пакетик,1,шт,1
+green_tea,Чай зелёный,buy,pack,пачка,100,г,0
+herbal_tea,"Чай травяной, иван-чай",buy,box,коробка,50,г,0
+coffee_beans,Кофе в зёрнах,buy,pack,пачка,1000,г,0
+ground_coffee,Кофе молотый,buy,pack,пачка,250,г,0
+instant_coffee,Кофе растворимый,buy,jar,банка,95,г,0
+coffee_capsules,Кофе в капсулах,buy,box,коробка,10,шт,0
+coffee_capsules,Кофе в капсулах,use,capsule,капсула,1,шт,1
+cocoa,Какао-порошок,buy,pack,пачка,100,г,0
+chicory,Цикорий,buy,jar,банка,100,г,0
+water,Вода питьевая,buy,bottle,бутылка,5000,мл,0
+water,Вода питьевая,use,glass,стакан,250,мл,1
+mineral_water,Вода минеральная,buy,bottle,бутылка,1500,мл,0
+mineral_water,Вода минеральная,use,glass,стакан,250,мл,1
+juice,Сок,buy,package,упаковка,1000,мл,0
+juice,Сок,use,glass,стакан,200,мл,1
+mors,"Морс, компот",buy,bottle,бутылка,1000,мл,0
+mors,"Морс, компот",use,glass,стакан,200,мл,1
+soda,"Газировка, лимонад",buy,bottle,бутылка,1500,мл,0
+soda,"Газировка, лимонад",use,glass,стакан,250,мл,1
+kvass,Квас,buy,bottle,бутылка,1500,мл,0
+kvass,Квас,use,glass,стакан,250,мл,1
+beer,Пиво,buy,bottle,бутылка,500,мл,0
+wine,Вино,buy,bottle,бутылка,750,мл,0
+spirits,Крепкий алкоголь,buy,bottle,бутылка,500,мл,0
+pelmeni,Пельмени,buy,pack,пачка,800,г,0
+pelmeni,Пельмени,use,portion,порция,250,г,1
+vareniki,Вареники,buy,pack,пачка,900,г,0
+vareniki,Вареники,use,portion,порция,250,г,1
+khinkali,"Хинкали, манты",buy,pack,пачка,800,г,0
+khinkali,"Хинкали, манты",use,portion,порция,250,г,1
+frozen_blini,Блинчики замороженные,buy,pack,пачка,400,г,0
+frozen_cutlets,"Котлеты, наггетсы (полуфабрикат)",buy,pack,пачка,500,г,0
+frozen_cutlets,"Котлеты, наггетсы (полуфабрикат)",use,piece,штука,80,г,1
+frozen_veg_mix,Овощная смесь замороженная,buy,pack,пачка,400,г,0
+frozen_berries,Ягоды замороженные,buy,pack,пачка,300,г,0
+frozen_berries,Ягоды замороженные,use,handful,горсть,50,г,1
+frozen_broccoli,"Брокколи, цветная капуста замороженные",buy,pack,пачка,400,г,0
+frozen_green_beans,Фасоль стручковая замороженная,buy,pack,пачка,400,г,0
+frozen_mushrooms,Грибы замороженные,buy,pack,пачка,400,г,0
+french_fries,Картофель фри,buy,pack,пачка,1000,г,0
+french_fries,Картофель фри,use,portion,порция,150,г,1
+frozen_pizza,Пицца замороженная,buy,piece,штука,1,шт,0
+puff_pastry,Тесто слоёное,buy,pack,пачка,500,г,0
+ice_cream,Мороженое,buy,package,упаковка,400,г,0
+frozen_dough,Тесто дрожжевое замороженное,buy,pack,пачка,500,г,0
+walnuts,Грецкие орехи,buy,bag,пакет,200,г,0
+walnuts,Грецкие орехи,use,handful,горсть,30,г,1
+peanuts,Арахис,buy,bag,пакет,200,г,0
+peanuts,Арахис,use,handful,горсть,30,г,1
+almonds,Миндаль,buy,bag,пакет,200,г,0
+almonds,Миндаль,use,handful,горсть,30,г,1
+cashews,Кешью,buy,bag,пакет,200,г,0
+cashews,Кешью,use,handful,горсть,30,г,1
+hazelnuts,Фундук,buy,bag,пакет,200,г,0
+hazelnuts,Фундук,use,handful,горсть,30,г,1
+sunflower_seeds,Семечки подсолнечные,buy,bag,пакет,200,г,0
+sunflower_seeds,Семечки подсолнечные,use,handful,горсть,30,г,1
+pumpkin_seeds,Семечки тыквенные,buy,bag,пакет,150,г,0
+pumpkin_seeds,Семечки тыквенные,use,handful,горсть,30,г,1
+raisins,Изюм,buy,bag,пакет,200,г,0
+raisins,Изюм,use,handful,горсть,30,г,1
+dried_apricots,Курага,buy,bag,пакет,200,г,0
+dried_apricots,Курага,use,handful,горсть,30,г,1
+prunes,Чернослив,buy,bag,пакет,200,г,0
+prunes,Чернослив,use,handful,горсть,30,г,1
+dates,Финики,buy,bag,пакет,200,г,0
+dates,Финики,use,handful,горсть,30,г,1
+peanut_butter,Арахисовая паста,buy,jar,банка,340,г,0
+peanut_butter,Арахисовая паста,use,tbsp,ложка,20,г,1
+chips,Чипсы,buy,pack,пачка,150,г,0
+crackers,"Крекеры, сухарики",buy,pack,пачка,200,г,0
+cereal_bars,Батончики злаковые,buy,piece,штука,1,шт,0
+popcorn,Попкорн,buy,pack,пачка,100,г,0

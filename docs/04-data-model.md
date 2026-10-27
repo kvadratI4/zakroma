@@ -1,6 +1,22 @@
 # 04. Модель данных
 
-Проектная DDL MVP — [db/schema_design.sql](db/schema_design.sql) (проверена на PostgreSQL 16 и 18; инварианты — [db/schema_smoke_test.sql](db/schema_smoke_test.sql)). Реализованная схема (дамп после миграций) — [db/schema.sql](db/schema.sql). Решения — [ADR-0005](adr/0005-inventory-batches-and-event-log.md), [ADR-0006](adr/0006-quantity-levels-thresholds.md), [ADR-0007](adr/0007-household-products-from-catalog.md).
+Проектная DDL MVP — [db/schema_design.sql](db/schema_design.sql) (проверена на PostgreSQL 16 и 18; инварианты — [db/schema_smoke_test.sql](db/schema_smoke_test.sql)). Реализованная схема (дамп после миграций) — [db/schema.sql](db/schema.sql). Решения — [ADR-0005](adr/0005-inventory-batches-and-event-log.md), [ADR-0006](adr/0006-quantity-levels-thresholds.md), [ADR-0007](adr/0007-household-products-from-catalog.md), [ADR-0013](adr/0013-presence-tracking-household-measures.md).
+
+## 0. Что хранит модель и зачем
+
+Модель отвечает на вопрос семьи **«что есть дома, чего нет и что купить»** ([01-vision](01-vision.md#миссия)):
+
+| Вопрос | Откуда ответ |
+|---|---|
+| Что лежит и где | активные партии (`inventory_items`) по местам (`storage_locations`) |
+| Сколько примерно | количество партии в базовой единице **или** уровень; показывается в бытовых мерах (`measures`, `product_measures`) |
+| Чего нет и что купить | сводный уровень продукта и **норма дома** (`products.keep_in_stock` + `low_below`) |
+| Что съесть первым | сроки партий (`expires_on`, `opened_on`) |
+| Что подставить при покупке | «как в прошлый раз»: `products.default_location_id`, `last_added_quantity`, меры, типовой срок |
+| Насколько учёт свежий | `storage_locations.checked_at` (проверка места); предложение ревизии — `users.revision_reminder_days`, `revision_snoozed_until` |
+| На сколько хватит, сколько выбрасываем (S4) | журнал `stock_events`: покупки, закрытия, выбросы |
+
+Записи «кто сколько съел» в модели возможны, но **не обязательны**: модель остаётся верной на одних отметках «закончилось», «мало» и покупках.
 
 ## 1. ER-диаграмма (MVP)
 
@@ -14,6 +30,10 @@ erDiagram
     households ||--o{ storage_locations : ""
     households ||--o{ products : ""
     categories ||--o{ catalog_products : ""
+    catalog_products ||--o{ catalog_product_measures : "меры"
+    measures ||--o{ catalog_product_measures : ""
+    products ||--o{ product_measures : "меры"
+    measures ||--o{ product_measures : ""
     categories ||--o{ products : ""
     catalog_products |o--o{ products : "скопирован из"
     storage_locations |o--o{ products : "место по умолчанию"
@@ -28,6 +48,8 @@ erDiagram
         text display_name
         text password_hash
         uuid last_household_id FK
+        smallint revision_reminder_days
+        timestamptz revision_snoozed_until
     }
     households {
         uuid id PK
@@ -47,6 +69,28 @@ erDiagram
         text name
         text kind
         smallint sort_order
+        timestamptz checked_at
+    }
+    measures {
+        text slug PK
+        text name_one
+        text name_few
+        text name_many
+        text name_gen
+        bool halves
+    }
+    catalog_product_measures {
+        text catalog_slug PK
+        text role PK
+        text measure_slug PK
+        numeric amount
+    }
+    product_measures {
+        uuid id PK
+        uuid product_id FK
+        text role
+        text measure_slug FK
+        numeric amount
     }
     catalog_products {
         text slug PK
@@ -54,7 +98,7 @@ erDiagram
         text category_slug FK
         text unit
         text tracking_mode
-        numeric portion
+        numeric critical_below
         numeric low_below
         numeric plenty_from
         numeric excess_from
@@ -68,13 +112,14 @@ erDiagram
         text name
         text unit
         text tracking_mode
-        numeric package_size
-        numeric portion
+        uuid default_location_id FK
+        numeric critical_below
         numeric low_below
         numeric plenty_from
         numeric excess_from
         int shelf_life_days
         bool keep_in_stock
+        numeric last_added_quantity
         int version
     }
     inventory_items {
@@ -109,19 +154,22 @@ erDiagram
 
 | Таблица | Назначение | Ключевые инварианты |
 |---|---|---|
-| `users` | Учётные записи | email в нижнем регистре, уникален |
+| `users` | Учётные записи; личная настройка предложения ревизии | email в нижнем регистре, уникален; период ревизии 7/14/21/28 дней или выключено |
 | `sessions` | Серверные сессии | хранится только `sha256(token)` |
 | `login_attempts` | Ограничение перебора | чистится задачей обслуживания (> 1 суток) |
-| `households` | Дом/квартира | архивируется, а не удаляется |
+| `households` | Дом/квартира; `people_count` — сколько человек едят дома (кнопка «на всех») | архивируется, а не удаляется |
 | `household_members` | Членство (все равны) | PK (дом, пользователь) |
 | `household_invites` | Ссылки-приглашения | хеш токена, срок, отзыв |
 | `password_reset_tokens` | Ссылки сброса | одноразовые (`used_at`) |
 | `categories` | Категории (глобально) | slug `^[a-z][a-z0-9_]*$` |
+| `measures` | Словарь бытовых мер (глобально) | формы числа и падежа заполнены |
 | `catalog_products` | Глобальный справочник | пороги упорядочены |
-| `storage_locations` | Места хранения дома | уникальное имя в доме (без учёта регистра и ё) |
-| `products` | Продукты дома | один продукт на `catalog_slug` в доме; уникальное активное имя; пороги упорядочены |
+| `catalog_product_measures` | Меры позиции справочника | не больше одной меры `buy`; количество > 0 |
+| `storage_locations` | Места хранения дома; `checked_at` — последняя проверка места | уникальное имя в доме (без учёта регистра и ё) |
+| `products` | Продукты дома; норма дома (`keep_in_stock` + `low_below`); «как в прошлый раз» (`default_location_id`, `last_added_quantity`); род названия `name_gender` для «Закончился / Закончилась…» | один продукт на `catalog_slug` в доме; уникальное активное имя; пороги упорядочены |
+| `product_measures` | Меры продукта дома (копия справочника, правится) | не больше одной меры `buy`; продукт того же дома |
 | `inventory_items` | Партии | количество или уровень обязательно; `expiry_source='none'` ⇔ нет даты; продукт и место — того же дома |
-| `stock_events` | Журнал изменений | только INSERT (триггеры); знак дельты соответствует типу |
+| `stock_events` | Журнал изменений; `source = check` — отметка при проверке места или ревизии | только INSERT (триггеры); знак дельты соответствует типу |
 
 ## 3. Принадлежность дому
 
@@ -167,7 +215,7 @@ LIMIT :limit;
 - Alembic, имена ревизий `YYYYMMDD_HHMM_<описание>`.
 - Проект и факт разделены: `docs/db/schema_design.sql` — проект всей схемы MVP (не теряется, правится только по согласованию), `docs/db/schema.sql` — дамп реальной БД после миграций.
 - Первая миграция (T-003) — расширение `pg_trgm` и функции `zk_search_norm`/`zk_search_fold`. Таблицы переносятся из проекта в миграции задачами, которые вводят их модели (T-010, T-011, T-020, T-031…), DDL — как в `schema_design.sql`, если задача явно не меняет проект.
-- Загрузка справочника — отдельная data-миграция, читающая `docs/catalog/*.csv` (upsert по `slug`, чтобы повторные загрузки обновляли справочник).
+- Загрузка справочника — отдельная data-миграция, читающая `docs/catalog/*.csv` (upsert по `slug`, чтобы повторные загрузки обновляли справочник): категории, словарь мер (`measures.csv`), позиции (`products.csv`) и их меры (`product_measures.csv`).
 - После каждой миграции схемы: `pg_dump --schema-only --no-owner` из dev-БД → обновить `docs/db/schema.sql` (команда — в шапке файла; задача DoD).
 - Имена ограничений: соглашение `MetaData` повторяет имена Postgres по умолчанию (`<таблица>_pkey`, `_<колонки>_key`, `_fkey`, `_idx`); `CHECK` — только с явным именем.
 - Удаление/переименование колонок — в два релиза (expand → contract).

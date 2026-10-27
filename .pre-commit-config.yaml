@@ -50,7 +50,7 @@ repos:
         # language: python instead of system: on Windows `python3` may be a Microsoft Store stub.
         language: python
         entry: python docs/catalog/validate_catalog.py
-        files: ^docs/catalog/.*\.csv$
+        files: ^docs/catalog/.*\.(csv|py)$
         pass_filenames: false
 
       # Linters below run tool versions pinned in backend/uv.lock and frontend/pnpm-lock.yaml.
