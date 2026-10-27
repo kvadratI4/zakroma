@@ -17,9 +17,9 @@ export function SettingsScreen() {
   const { choice, setChoice } = useThemeChoice();
   const mineId = useId();
   return (
-    <div className="grid gap-5">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-5">
       <ScreenTitle>{t("settings.title")}</ScreenTitle>
-      <section aria-labelledby={mineId} className="grid gap-4">
+      <section aria-labelledby={mineId} className="grid grid-cols-[minmax(0,1fr)] gap-4">
         <h2 id={mineId} className="px-1 text-[15px] font-semibold text-muted">
           {t("settings.mine.title")}
         </h2>

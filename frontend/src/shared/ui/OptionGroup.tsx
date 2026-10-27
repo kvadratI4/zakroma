@@ -29,7 +29,7 @@ const OPTION: Record<Look, string> = {
   chips:
     "min-h-11 rounded-full border border-line-control bg-raised px-3.5 text-base text-ink has-[:checked]:border-ink has-[:checked]:bg-ink has-[:checked]:font-medium has-[:checked]:text-ground",
   segments:
-    "min-h-11 rounded-full px-4 text-[15px] text-muted has-[:checked]:bg-ink has-[:checked]:font-medium has-[:checked]:text-ground",
+    "min-h-11 justify-center rounded-full px-3 text-center text-[15px] leading-tight text-muted has-[:checked]:bg-ink has-[:checked]:font-medium has-[:checked]:text-ground",
   rows: "min-h-[52px] gap-3 border-t border-line px-3.5 text-base text-ink first:border-t-0",
 };
 
@@ -48,7 +48,8 @@ export function OptionGroup<V extends string>({
   const name = useId();
   const labelId = `${name}-label`;
   return (
-    <div className="grid gap-1.5">
+    // minmax(0, 1fr): on a narrow phone the options wrap instead of pushing past the screen edge.
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-1.5">
       <span id={labelId} className={hideLabel ? "sr-only" : "text-[15px] font-medium text-ink"}>
         {label}
       </span>
