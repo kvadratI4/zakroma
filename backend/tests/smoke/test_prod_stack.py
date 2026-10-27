@@ -99,8 +99,26 @@ def test_dev_showcase_is_not_shipped(client: httpx.Client) -> None:
         assert "zakroma-dev-showcase" not in client.get(src).text
 
 
+def test_theme_is_applied_before_the_app(client: httpx.Client) -> None:
+    """T-009, AC-4, AC-6: a chosen theme is set by a same-origin script that comes first in <head>,
+    before the stylesheet and the app, so the CSP stays `script-src 'self'`."""
+    first = re.search(r"<head>\s*(<script\b[^>]*>)", client.get("/").text)
+    assert first is not None
+    boot = re.fullmatch(r'<script src="(/assets/theme-boot-[0-9a-f]{8}\.js)">', first.group(1))
+    assert boot is not None, first.group(1)
+
+    response = client.get(boot.group(1))
+
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("text/javascript")
+    assert response.headers["cache-control"] == "public, max-age=31536000, immutable"
+    assert "zakroma.theme" in response.text
+
+
 def test_hashed_assets_are_cached_and_compressed(client: httpx.Client) -> None:
-    script = re.search(r'src="(/assets/[^"]+\.js)"', client.get("/").text)
+    # The app bundle, not the first script: the theme boot script comes first (T-009) and, at
+    # ~130 bytes, is below Caddy's 512-byte compression threshold (operator, 2026-10-28).
+    script = re.search(r'<script type="module"[^>]*src="(/assets/[^"]+\.js)"', client.get("/").text)
     assert script is not None
 
     response = client.get(script.group(1), headers={"Accept-Encoding": "zstd, gzip"})
