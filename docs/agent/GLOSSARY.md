@@ -5,6 +5,7 @@
 | Дом | дом (одна квартира, дача) | `household` |
 | Кто живёт в доме, участник | член дома | `member`, `household_members` |
 | Настройки (раздел меню, бывш. «Семья») | настройки дома и пользователя | `settings` |
+| Оформление: Как на устройстве / Светлое / Тёмное | ручной выбор темы (на устройстве) | `ThemeChoice` (`system`, `light`, `dark`), `localStorage` `zakroma.theme`, `<html data-theme>` |
 | Место (Холодильник…) | место хранения | `storage_location`, `location`, `kind` |
 | Проверить холодильник, Остальное на месте | проверка места | `storage_locations.checked_at`, `POST …/locations/{id}/checked` |
 | Сверим запасы?, Не сейчас, Предлагать сверить запасы | предложение ревизии | `revision`, `users.revision_reminder_days`, `revision_snoozed_until`, `stock_events.source = check` |
