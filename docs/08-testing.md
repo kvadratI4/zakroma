@@ -30,7 +30,7 @@ flowchart LR
 | Integration (API) | Эндпоинты + реальный Postgres: права, транзакции, события, конфликты версий | pytest, pytest-asyncio, httpx `AsyncClient`, testcontainers (Postgres) | `backend/tests/integration/` | секунды |
 | Migration | Alembic upgrade на пустой БД; downgrade не поддерживаем; сверка моделей и миграций (`alembic check`) | pytest + alembic | `backend/tests/migrations/` | секунды |
 | Frontend unit | Утилиты (форматирование количеств, дат), хуки | Vitest | `frontend/src/**/*.test.ts` | мс |
-| Frontend component | Компоненты и экраны с моком API | Vitest + Testing Library + MSW | `frontend/src/**/*.test.tsx` | мс–с |
+| Frontend component | Компоненты и экраны с моком API; доступность — `axe-core` через `expectAccessible` (`src/test/a11y.ts`), все общие компоненты — в `src/shared/ui/accessible.test.tsx` (T-008b) | Vitest + Testing Library + MSW + axe-core | `frontend/src/**/*.test.tsx` | мс–с |
 | E2E | Критические сценарии в реальном браузере на собранном стеке | Playwright (Chromium + WebKit, мобильный viewport) | `frontend/e2e/` | минуты |
 
 ### Инварианты для property-based тестов (hypothesis)

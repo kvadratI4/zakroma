@@ -83,9 +83,10 @@ cd backend && uv run alembic check             # модели = миграции
 #   export PATH="/c/Program Files/nodejs:$(cygpath -u "$APPDATA")/npm:$PATH"
 cd frontend && pnpm install --frozen-lockfile    # зависимости по pnpm-lock.yaml
 cd frontend && pnpm dev                          # dev-сервер http://127.0.0.1:5173; /api → backend на 127.0.0.1:8000
+#   витрина компонентов (T-008b): http://127.0.0.1:5173/dev/ui — только в dev-сборке
 cd frontend && pnpm test && pnpm lint && pnpm typecheck && pnpm format:check
 cd frontend && pnpm test:coverage                # тесты + пороги покрытия 70 % (как в CI)
-cd frontend && pnpm build && pnpm size           # сборка + JS первого экрана ≤ 300 КБ gzip
+cd frontend && pnpm build && pnpm size           # сборка + JS первого экрана ≤ 300 КБ gzip + витрины /dev/ui нет в сборке
 cd frontend && pnpm preview                      # собранная версия на http://127.0.0.1:4173
 # стиль: docs/10-design.md; цвета — только из src/shared/theme/tokens.ts
 # API-клиент (T-005, ADR-0008): после любого изменения API backend — перегенерировать и закоммитить
