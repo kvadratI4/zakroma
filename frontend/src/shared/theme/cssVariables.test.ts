@@ -16,6 +16,12 @@ describe("themeCss", () => {
     );
   });
 
+  it("follows a dark system setting before any script runs, unless light is chosen (T-009)", () => {
+    expect(css).toMatch(
+      /@media \(prefers-color-scheme: dark\)\s*\{\s*:root:not\(\[data-theme="light"\]\)\s*\{[^}]*--zk-ground:\s*#1f2226;[^}]*color-scheme:\s*dark;[^}]*\}\s*\}/,
+    );
+  });
+
   it("declares the control outline and leaf roles in both themes (T-008b)", () => {
     expect(css).toMatch(/:root\s*\{[^}]*--zk-border-control:\s*#8a96ae;/);
     expect(css).toMatch(/:root\[data-theme="dark"\][^}]*--zk-border-control:\s*#767d86;/);

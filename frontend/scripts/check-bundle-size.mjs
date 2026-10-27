@@ -38,3 +38,29 @@ if (leaked.length > 0) {
   process.exit(1);
 }
 console.log("dev showcase: not in the build");
+
+// T-009, AC-4: the theme is right at the first paint. The boot script is the first thing in <head>,
+// before the stylesheet and the app; the tokens are in the stylesheet, not set up by the app.
+const firstInHead = html.match(/<head>\s*<script\b[^>]*>/)?.[0] ?? "";
+const boot = firstInHead.match(/src="\/(assets\/theme-boot-[0-9a-f]{8}\.js)"/)?.[1];
+if (!boot || firstInHead.includes('type="module"')) {
+  console.error("The theme boot script is not the first classic script in <head>.");
+  process.exit(1);
+}
+readFileSync(join(dist, boot));
+const css = readdirSync(join(dist, "assets"))
+  .filter((name) => name.endsWith(".css"))
+  .map((name) => readFileSync(join(dist, "assets", name), "utf8"))
+  .join("\n");
+if (!/prefers-color-scheme:\s*dark/.test(css) || !css.includes("--zk-ground")) {
+  console.error("The theme tokens are not in the stylesheet.");
+  process.exit(1);
+}
+const appSetsTokens = readdirSync(join(dist, "assets"))
+  .filter((name) => name.endsWith(".js"))
+  .some((name) => readFileSync(join(dist, "assets", name), "utf8").includes("adoptedStyleSheets"));
+if (appSetsTokens) {
+  console.error("The app still sets the theme tokens from JS (adoptedStyleSheets).");
+  process.exit(1);
+}
+console.log(`theme: ${boot} first in <head>, tokens in the stylesheet`);
