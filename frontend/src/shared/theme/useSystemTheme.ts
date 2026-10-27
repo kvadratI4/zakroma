@@ -1,4 +1,4 @@
-import { useEffect, useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
 
 import type { ThemeName } from "./tokens";
 
@@ -14,11 +14,7 @@ function snapshot(): ThemeName {
   return window.matchMedia(DARK_QUERY).matches ? "dark" : "light";
 }
 
-/** The system light/dark setting (NFR-UX-05), mirrored to `<html data-theme>` for the CSS tokens. */
+/** The system light/dark setting (NFR-UX-05); useThemeChoice applies it when nothing is chosen. */
 export function useSystemTheme(): ThemeName {
-  const theme = useSyncExternalStore(subscribe, snapshot, () => "light" as const);
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-  }, [theme]);
-  return theme;
+  return useSyncExternalStore(subscribe, snapshot, () => "light" as const);
 }

@@ -31,13 +31,20 @@ afterEach(() => {
 });
 
 describe("useSystemTheme (NFR-UX-05)", () => {
-  it("follows a dark system setting and marks the document", () => {
+  it("follows a dark system setting", () => {
     mockColourScheme(true);
 
     const { result } = renderHook(() => useSystemTheme());
 
     expect(result.current).toBe("dark");
-    expect(document.documentElement.dataset.theme).toBe("dark");
+  });
+
+  it("leaves <html data-theme> to the theme choice (T-009)", () => {
+    mockColourScheme(true);
+
+    renderHook(() => useSystemTheme());
+
+    expect(document.documentElement.dataset.theme).toBeUndefined();
   });
 
   it("switches when the system setting changes", () => {
@@ -48,6 +55,5 @@ describe("useSystemTheme (NFR-UX-05)", () => {
     act(() => system.setDark(true));
 
     expect(result.current).toBe("dark");
-    expect(document.documentElement.dataset.theme).toBe("dark");
   });
 });
