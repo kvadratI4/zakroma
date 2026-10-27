@@ -6,10 +6,10 @@
   "nav": {
     "label": "Разделы",
     "stock": "Запасы",
-    "expiry": "Сроки",
+    "always": "Всегда дома",
     "add": "Добавить",
-    "shopping": "Покупки",
-    "family": "Семья"
+    "expiry": "Сроки",
+    "settings": "Настройки"
   },
   "household": {
     "placeholder": "Мой дом"

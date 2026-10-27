@@ -5,25 +5,25 @@ import { renderApp } from "../test/renderApp";
 
 const SECTIONS = [
   { link: "Запасы", path: "/", heading: /добр(ое|ый|ой)/i },
-  { link: "Сроки", path: "/expiry", heading: "Сроки" },
+  { link: "Всегда дома", path: "/always", heading: "Всегда дома" },
   { link: "Добавить", path: "/add", heading: "Добавить продукт" },
-  { link: "Покупки", path: "/shopping", heading: "Покупки" },
-  { link: "Семья", path: "/family", heading: "Семья" },
+  { link: "Сроки", path: "/expiry", heading: "Сроки" },
+  { link: "Настройки", path: "/settings", heading: "Настройки" },
 ];
 
 function sectionsNav() {
   return screen.getByRole("navigation", { name: "Разделы" });
 }
 
-describe("app shell (AC-3)", () => {
-  it("shows five sections with «Добавить» in the middle", () => {
+describe("app shell (AC-3; T-009, AC-7)", () => {
+  it("shows five sections with «Добавить» in the middle (10-design §6)", () => {
     renderApp("/");
 
     const names = within(sectionsNav())
       .getAllByRole("link")
       .map((link) => link.textContent);
 
-    expect(names).toEqual(["Запасы", "Сроки", "Добавить", "Покупки", "Семья"]);
+    expect(names).toEqual(["Запасы", "Всегда дома", "Добавить", "Сроки", "Настройки"]);
   });
 
   it("shows the product name and the household in the header", () => {
@@ -35,7 +35,7 @@ describe("app shell (AC-3)", () => {
   });
 
   it.each(SECTIONS)("opens «$link» and marks it as current", async ({ link, heading }) => {
-    const { user } = renderApp("/family");
+    const { user } = renderApp("/settings");
 
     await user.click(within(sectionsNav()).getByRole("link", { name: link }));
 

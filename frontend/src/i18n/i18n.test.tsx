@@ -11,7 +11,7 @@ afterEach(async () => {
 });
 
 describe("interface texts come from i18n resources (AC-4)", () => {
-  it.each(["/", "/expiry", "/add", "/shopping", "/family", "/missing"])(
+  it.each(["/", "/always", "/add", "/expiry", "/settings", "/missing"])(
     "%s has no Cyrillic outside the resources",
     async (path) => {
       await i18n.changeLanguage("cimode"); // t() returns keys instead of texts
