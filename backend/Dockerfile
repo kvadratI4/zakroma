@@ -2,9 +2,9 @@
 # api image (T-007): FastAPI under uvicorn; also runs migrations (compose service `migrate`).
 # Base images are pinned by digest (a tag can be moved); Dependabot updates them.
 
-FROM ghcr.io/astral-sh/uv:0.13.5@sha256:32a7bb39b496babbd997b0a39a4d66c126bdaf5661b302bf6f06abda8deca6ff AS uv
+FROM ghcr.io/astral-sh/uv:0.13.8@sha256:5cc1805e2426484abca4ad46ea783bab281fdb225fd82d8ce6d66a81254bac85 AS uv
 
-FROM python:3.13-slim@sha256:d98cc29d3266e535dd9da1099688d9cb3ca4753813571e071763d17725460962 AS build
+FROM python:3.15-slim@sha256:65a65fc7b30b06cb6df4930fd4650697cb23f4c2698ab81fc87e4b031bc36928 AS build
 COPY --from=uv /uv /bin/uv
 # The image's own Python, no download; bytecode compiled at build time for a read-only runtime.
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy UV_PYTHON_DOWNLOADS=never
@@ -15,7 +15,7 @@ COPY alembic.ini ./
 COPY alembic ./alembic
 COPY app ./app
 
-FROM python:3.13-slim@sha256:d98cc29d3266e535dd9da1099688d9cb3ca4753813571e071763d17725460962
+FROM python:3.15-slim@sha256:65a65fc7b30b06cb6df4930fd4650697cb23f4c2698ab81fc87e4b031bc36928
 RUN useradd --system --uid 10001 --no-create-home --shell /usr/sbin/nologin zakroma
 WORKDIR /app
 COPY --from=build /app /app
